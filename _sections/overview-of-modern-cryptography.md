@@ -1,0 +1,9 @@
+Modern cryptography begins with two, related, desires. First, in all of the ciphers we've seen so far, we assume that Alice and Bob have some way of sharing a key. We haven't said much about how that actually happens, and we've also seen that perfect secrecy requires very long keys (and even if we're not aiming for theoretically *perfect* secrecy, we'll still need long keys in order to have even a reasonable guarantee of security!). But how can Alice and Bob share a long key with each other without Eve finding out about it? This may be hard to make happen in practice!
+
+Second, none of the ciphers we've seen so far is robust against chosen-plaintext attacks; if Eve has the ability to request the ciphertexts for any plaintexts she likes, she can gradually get more and more information about the key until she can break the code. Recall that the one-time pad is only safe if the key is only used one time...! 
+
+What we'd like, then, is a cryptosystem where the *decryption* key is known *only* to Bob alone. Alice and Eve and everyone else in the world have access to Bob's *encryption* key and can encrypt messages for Bob to see, but then only Bob can recover the plaintext. This would let us avoid Alice and Bob having to share a common key. It would also allow Eve to generate ciphertexts for any plaintext of her choosing, and the cryptosystem should be safe against chosen-ciphertext attacks. 
+
+It turns out that there are a number of cryptosystems of this type, and they all fall under the heading of *public-key cryptography*, because the encryption key can be made public to the world. A recurring theme behind public-key cryptosystems is a "one-way function," which is a function that's easy to compute but hard to invert. We'll see numerous examples of one-way functions below. 
+
+Before we get to the cryptosystems, though, we'll need to develop some mathematical background.

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="{{ site.baseurl }}/css/style.css" type="text/css" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage", "evalButtonText": "Run", "hide": ["permalink"]});</script>
+
+<title>
+Introduction to Cryptography — {{ page.title }}
+</title>
+
+</head>
+
+<body>
+
+<nav>
+<header>
+<h1><a href="{{ site.baseurl }}/">Introduction to Cryptography</a></h1>
+<span>
+Shishir Agrawal
+</span>
+</header>
+
+<div>
+<h1>Contents</h1>
+<ol>
+{% for chapter in site.data.toc.chapters %}
+<li><a href="{{ site.baseurl }}/{{ chapter.name | slugify: 'latin' }}">{{ chapter.name }}</a></li>
+{% endfor %}
+</ol>
+</div>
+
+<div>
+<h1>SageCells</h1>
+<ul>
+{% for chapter in site.data.toc.chapters %}
+{% for sagecell in chapter.sagecells %}
+<li><a href="{{ site.baseurl }}/{{ chapter.name | slugify: 'latin' }}#sagecell-{{ sagecell | slugify: 'latin' }}">{{ sagecell }}</a></li>
+{% endfor %}
+{% endfor %}
+</ul>
+</div>
+
+<div>
+Start: 2022-10-28 <br/>
+Update: {{ 'now' | date: "%Y-%m-%d" }} <br/>
+<a href="https://github.com/sagrawalx/crypt">Source</a> <br/>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
+</div>
+
+<br/><br/>
+</nav>
+
+<main>
+{{ content }}
+</main>
+
+
+</body>
+
+</html>

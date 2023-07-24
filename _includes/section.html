@@ -1,0 +1,26 @@
+{% for c in site.data.toc.chapters %}
+{% if include.title == c.name %}
+{% assign chapter_name = c.name %}
+{% assign chapter_sections = c.sections %}
+{% assign chapter_number = forloop.index %}
+{% endif %}
+{% endfor %}
+
+<style>
+div.element span.label::after {
+    content: " {{ chapter_number }}." counter(section) "." counter(element) ". ";
+}
+</style>
+
+# {{ chapter_number }}. {{ chapter_name }} {#{{ chapter_name | slugify: 'latin'}}}
+
+<ol class="section-navigation">
+{% for section in chapter_sections %}
+<li>{{ chapter_number }}.{{ forloop.index }}. <a href="#{{ section | remove: 'Interlude: ' | slugify: 'latin' }}">{{ section }}</a></li>
+{% endfor %}
+</ol>
+
+{% for section in chapter_sections %}
+## {{ chapter_number }}.{{ forloop.index }}. {{ section }} {#{{ section | remove: 'Interlude: ' | slugify: 'latin'}}}
+{% include_relative _sections/{{ section | remove: "Interlude: " | slugify: "latin" }}.md %}
+{% endfor %}
