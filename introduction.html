@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="/crypt/css/style.css" type="text/css" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script>
+<script>sagecell.makeSagecell({"inputLocation": ".sage", "evalButtonText": "Run", "hide": ["permalink"]});</script>
+
+<title>
+Introduction to Cryptography — Introduction
+</title>
+
+</head>
+
+<body>
+
+<nav>
+<header>
+<h1><a href="/crypt/">Introduction to Cryptography</a></h1>
+<span>
+Shishir Agrawal
+</span>
+</header>
+
+<div>
+<h1>Contents</h1>
+<ol>
+
+<li><a href="/crypt/introduction">Introduction</a></li>
+
+<li><a href="/crypt/classical-cryptosystems">Classical Cryptosystems</a></li>
+
+<li><a href="/crypt/codebreaking">Codebreaking</a></li>
+
+<li><a href="/crypt/modern-cryptography">Modern Cryptography</a></li>
+
+</ol>
+</div>
+
+<div>
+<h1>SageCells</h1>
+<ul>
+
+
+
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-rectangular-transposition">Rectangular Transposition</a></li>
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-caesar-knob">Caesar Knob</a></li>
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-caesar-cipher">Caesar Cipher</a></li>
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-affine-cipher">Affine Cipher</a></li>
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-simple-substitution">Simple Substitution</a></li>
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-hill-cipher">Hill Cipher</a></li>
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-playfair-cipher">Playfair Cipher</a></li>
+
+<li><a href="/crypt/classical-cryptosystems#sagecell-vignere-cipher">Vignère Cipher</a></li>
+
+
+
+<li><a href="/crypt/codebreaking#sagecell-frequency-comparison">Frequency Comparison</a></li>
+
+<li><a href="/crypt/codebreaking#sagecell-frequency-analysis">Frequency Analysis</a></li>
+
+<li><a href="/crypt/codebreaking#sagecell-breaking-rectangular-transposition">Breaking Rectangular Transposition</a></li>
+
+<li><a href="/crypt/codebreaking#sagecell-index-of-coincidence-comparison">Index of Coincidence Comparison</a></li>
+
+<li><a href="/crypt/codebreaking#sagecell-breaking-vignere">Breaking Vignère</a></li>
+
+<li><a href="/crypt/codebreaking#sagecell-known-plaintext-attack">Known Plaintext Attack</a></li>
+
+
+
+<li><a href="/crypt/modern-cryptography#sagecell-integer-representations">Integer Representations</a></li>
+
+<li><a href="/crypt/modern-cryptography#sagecell-rsa">RSA</a></li>
+
+<li><a href="/crypt/modern-cryptography#sagecell-elliptic-curve-encoding">Elliptic Curve Encoding</a></li>
+
+<li><a href="/crypt/modern-cryptography#sagecell-elliptic-curve-elgamal">Elliptic Curve Elgamal</a></li>
+
+
+</ul>
+</div>
+
+<div>
+Start: 2022-10-28 <br/>
+Update: 2023-07-23 <br/>
+<a href="https://github.com/sagrawalx/crypt">Source</a> <br/>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
+</div>
+
+<br/><br/>
+</nav>
+
+<main>
+<h1 id="intro">Introduction</h1>
+<h2 id="brief-history">Brief History</h2>
+<p>The word <em>cryptography</em> comes to us from the Ancient Greek words κρυπτός (kruptós), meaning “hidden, secret,” and γραφή (graphḗ), meaning “writing.” It refers broadly to a variety of techniques for secure communication.</p>
+<p>Cryptography has a long <a href="https://en.wikipedia.org/wiki/History_of_cryptography">history</a>. The earliest recorded use of cryptography dates to about 1900 BCE, in Egypt. Further records of cryptography are found in classical works of people from many other regions around the world, including Greece, Arabia, Persia, and India. The first known printed books on cryptography are <em>Steganographia</em> and <em>Polygraphiae</em> by <a href="https://en.wikipedia.org/wiki/Johannes_Trithemius">Johannes Trithemius</a> (1462–1516). His work included occult writing systems, like the <a href="https://en.wikipedia.org/wiki/Theban_alphabet">Theban alphabet</a> depicted below.</p>
+<figure>
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Theban.jpg"/>
+</figure>
+<p>Cryptography advanced dramatically with the advent of computers, and it has become ubiquitous in the information age. We are constantly sending sensitive information (passwords, bank information, credit card numbers, etc) over the internet, and all of these communications are protected by suites of cryptographic protocols. It is not much of an overstatement to say that contemporary human society would not exist without cryptography!</p>
+<h2 id="exercises">Exercises</h2>
+<p>You’ll find exercises scattered throughout the text. Do them when you run into them! Doing exercises is crucial to actually developing an understanding of the concepts.</p>
+<h2 id="sagecells">SageCells</h2>
+<p>As mentioned above, many of the most exciting parts of cryptography only became possible after the advent of computers. There’s a good reason for this: cryptography relies crucially on computations that are difficult to do, so trying to do the calculations by hand frequently gets very tedious!</p>
+<p>You don’t need to have prior programming experience for this course. But, to make things interesting and interactive, this text incorporates “SageCells.” Sage is a thin wrapper for the programming language Python that makes mathematical computations especially convenient. A SageCell contains some code, and hitting “Run” below the code will run the code and display the output of the last line.</p>
+<p>The code in a SageCell can be edited, and I <em>urge</em> you to play with these code snippets, even if you don’t know how to program! Try tweaking things and see what happens. Part of the reason for the popularity of Sage/Python is that it’s a very beginner-friendly programming language, and the best way to learn to program is to just try things. If you break something, no worries: just hit reload and try again.</p>
+<p>I promise it’ll be fun!</p>
+<div class="element">
+<p><span class="label">SageCell</span> Here is your first SageCell, which introduces you to basic arithmetic in Sage. Hit “Run” to compute <code>1+1</code>. Then try replacing the code with things like <code>100-2</code> or <code>2*6</code> or <code>6/4</code> or <code>2^100</code>. You’ll have to hit “Run” after each time you change the code.</p>
+<div class="sage">
+<script type="text/x-sage">
+1+1
+</script>
+</div>
+<p>You may or may not be disappointed in the output of <code>6/4</code>. Division is a little quirky in Sage (and different from vanilla Python) because Sage prefers keeping things exact. If you really want a decimal output, you can put a decimal somewhere in your input: try typing in something like <code>6.0/4</code>.</p>
+</div>
+<div class="element">
+<span class="label">SageCells</span> Here are three more things to know about Sage for now. First, comments: lines beginning with a <code>#</code> sign are “comments” and don’t do anything. They’re used to write human-readable sentences in there to explain what’s going on. For example:
+<div class="sage">
+<script type="text/x-sage">
+# The following line of code adds 1 to itself
+1+1
+</script>
+</div>
+Second, variables: you can assign and work with variables. For example, in the following code, the first line assigns the value 2 to the variable <code>x</code>, and we then add 15 to <code>x</code>.
+<div class="sage">
+<script type="text/x-sage">
+x = 2
+x + 15
+</script>
+</div>
+Third, functions: you can define functions which take something as input and output something based on that input. Python and Sage come with a lot of useful pre-built functions, but it’s still often useful to define some of your own. For a weird example, suppose you want to <code>add_fifteen</code> to be a function that adds 15 to the input. You would do this as follows:
+<div class="sage">
+<script type="text/x-sage">
+# This is how you define a function which
+# takes the variable x as input and returns x + 15. 
+def add_fifteen(x):
+    return x + 15
+
+# This is how you call the function you've just defined
+add_fifteen(2)
+</script>
+</div>
+<p>You can name your variables and functions whatever you like, but it’s usually best to give them names that describe what they do.</p>
+</div>
+<h2 id="terminology">Terminology</h2>
+<p>This section contains a whole slew of words. This is a little tedious, but fixing terminology at the outset will help us communicate better and identify patterns as we go through the course.</p>
+<p>A cryptographic method for confidential communication is called a <em>cryptosystem</em> or a <em>cipher</em>. It includes algorithms for <em>encryption</em> and <em>decryption</em>, which are inverse processes that convert between plainly readable information called <em>plaintext</em> and unintelligible information called <em>ciphertext</em>. A <em>sender</em>, often named “Alice” in abstract cryptographic discussions, encrypts her plaintext into ciphertext. She then sends the ciphertext to <em>receiver</em>, often named “Bob,” who must then decrypt (or decipher) the ciphertext back into plaintext. Bob will often use a <em>key</em> involved during decryption (also called a <em>private key</em> or a <em>decryption key</em>).</p>
+<p>Before encryption, there will usually be a preliminary step where the message is converted into a format which can then be encrypted; this is called <em>encoding</em>. Encoded text is not secure; it is only secure after encryption. If a message had to be encoded before encryption, it will also have to be <em>decoded</em> after decryption. Again, this is usually easy. Be careful: the words “encode” and “encrypt” sound similar, but mean different things in technical parlance!</p>
+<p>Of course, we would like for it to be the case that only Bob can decrypt the ciphertext.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If the ciphertext is intercepted in transit by <em>adversary</em> (often named “Eve”) who does not have access to Bob’s decryption key at the beginning but who does know what cryptosystem was used to encrypt the message, the hope is that she should be unable to decrypt the message. If she manages to figure out the plaintext, she has <em>broken</em> the code!</p>
+<figure>
+<svg width="500" height="350">
+<defs> <marker
+      id="arrow"
+      viewBox="0 0 10 10"
+      refX="5"
+      refY="5"
+      markerWidth="6"
+      markerHeight="6"
+      orient="auto-start-reverse"> <path d="M 0 0 L 10 5 L 0 10 z" /> </marker> </defs> <circle cx="100" cy="100" r="30" 
+    stroke="#444"
+    fill="none" /> <!-- Alice: x=cx, y=cy --> <text x="100" y="100"
+    text-anchor="middle"
+    dominant-baseline="middle"> Alice </text> <!-- PT: x=cx-2r --> <rect x="40" y="50" width="15" height="20" 
+    stroke="#444" fill="none"/> <!-- CT: x=cx+2r-width --> <rect x="145" y="50" width="15" height="20" 
+    stroke="#444" fill="#444"/> <!-- encrypt-line: y=y+10, xstart=PTx+25 xend=CTx-10 --> <polyline
+    points="65,60 135,60"
+    fill="none"
+    stroke="#444"
+    marker-end="url(#arrow)" /> <!-- encrypt-text: y=encrypt-line-y-2.5 --> <text x="100" y="55"
+    text-anchor="middle"
+    dominant-baseline="bottom"
+    font-size="0.75em"> encrypt </text> <circle cx="400" cy="100" r="30" 
+    stroke="#444"
+    fill="none" /> <text x="400" y="100"
+    text-anchor="middle"
+    dominant-baseline="middle"> Bob </text> <rect x="340" y="50" width="15" height="20" 
+    stroke="#444" fill="#444"/> <rect x="445" y="50" width="15" height="20" 
+    stroke="#444" fill="none"/> <polyline
+    points="365,60 435,60"
+    fill="none"
+    stroke="#444"
+    marker-end="url(#arrow)" /> <text x="400" y="55"
+    text-anchor="middle"
+    dominant-baseline="bottom"
+    font-size="0.75em"> decrypt </text> <!-- send arrow--> <polyline
+    points="170,60 330,60"
+    stroke="#444"
+    marker-end="url(#arrow)" /> <text x="250" y="55"
+    text-anchor="middle"
+    dominant-baseline="bottom"
+    font-size="0.75em"> send </text> <circle cx="400" cy="300" r="30" 
+    stroke="#444"
+    fill="none" /> <text x="400" y="300"
+    text-anchor="middle"
+    dominant-baseline="middle"> Eve </text> <rect x="340" y="250" width="15" height="20" 
+    stroke="#444" fill="#444"/> <rect x="445" y="250" width="15" height="20" 
+    stroke="#444" fill="none"/> <polyline
+    points="365,260 435,260"
+    stroke="#444" stroke-dasharray="2,2"
+    marker-end="url(#arrow)" /> <text x="400" y="255"
+    text-anchor="middle"
+    dominant-baseline="bottom"
+    font-size="0.75em"> codebreak </text> <path d="M 180,60 C 270,60 230,260 330,260"
+    stroke="#444"
+    fill="none"
+    marker-end="url(#arrow)" /> <text x="215" y="175"
+    text-anchor="middle"
+    dominant-baseline="bottom"
+    font-size="0.75em"> intercept </text>
+</svg>
+</figure>
+<p>An <em>attack model</em> specifies what Eve is allowed to do in order to break the code. Here are some of the most common attack models:</p>
+<ul>
+<li>Ciphertext-only attack: Eve must recover the plaintext using only the ciphertext.</li>
+<li>Known-plaintext attack: Eve may have access to some information about the plaintext (eg, knowledge of portions of the plaintext), and she may use this to recover the plaintext.</li>
+<li>Chosen-plaintext attack: Eve can request or generate ciphertexts corresponding to any plaintext message of her choosing, and she can use this information to recover the plaintext.</li>
+</ul>
+<p>Classical cryptography was mostly concerned with assuring security against ciphertext-only and/or known-plaintext attacks. Modern cryptography tries to assure security against chosen-plaintext attacks as well.</p>
+<h2 id="course-overview">Course Overview</h2>
+<p>We’ll start with a discussion of classical cryptosystems (like the Caesar cipher). Many of these are no longer secure, and we’ll then discuss the mathematics of breaking these classical cryptosystems. Finally, we’ll move on to modern cryptosystems (like RSA or elliptic curve cryptography). Along the way, we’ll see lots of interesting mathematical theory that is useful in cryptography, including the basics of number theory, probability theory, and information theory.</p>
+<p>Let’s get started!</p>
+<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Well, maybe it’s also okay for Alice to be able to decrypt the ciphertext, but Alice <em>already knows</em> the original plaintext, so maybe this goes without saying.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main>
+
+
+</body>
+
+</html>
