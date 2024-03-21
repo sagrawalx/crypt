@@ -40,6 +40,13 @@ body {
         list-style: square;
     }
     
+    code, div.sourceCode {
+        font-family: monospace;
+        overflow: auto;
+        max-height: 40em;
+        @import url("code.css");
+    }
+    
     nav {
         overflow-y: auto;
         position: fixed;
@@ -176,9 +183,6 @@ body {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
-
-
-
 
 div.sagecell_interactOutput {
     padding: 0em;
