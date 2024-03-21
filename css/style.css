@@ -24,6 +24,12 @@ body ol, body ul {
 body ul {
   list-style: square;
 }
+body code, body div.sourceCode {
+  font-family: monospace;
+  overflow: auto;
+  max-height: 40em;
+  @import url("code.css");
+}
 body nav {
   overflow-y: auto;
   position: fixed;

@@ -97,7 +97,7 @@ Shishir Agrawal
 
 <div>
 Start: 2022-10-28 <br/>
-Update: 2023-07-23 <br/>
+Update: 2024-03-21 <br/>
 <a href="https://github.com/sagrawalx/crypt">Source</a> <br/>
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
 </div>
@@ -114,7 +114,8 @@ div.element span.label::after {
 <h1 id="classical-cryptosystems">2. Classical Cryptosystems</h1>
 <ol class="section-navigation">
 <li>
-2.1. <a href="#overview-of-classical-cryptosystems">Overview of Classical Cryptosystems</a>
+2.1. <a href="#overview-of-classical-cryptosystems">Overview of
+Classical Cryptosystems</a>
 </li>
 <li>
 2.2. <a href="#rectangular-transposition">Rectangular Transposition</a>
@@ -141,7 +142,8 @@ div.element span.label::after {
 2.9. <a href="#polybius-square">Polybius Square</a>
 </li>
 <li>
-2.10. <a href="#modular-linear-algebra">Interlude: Modular Linear Algebra</a>
+2.10. <a href="#modular-linear-algebra">Interlude: Modular Linear
+Algebra</a>
 </li>
 <li>
 2.11. <a href="#hill-cipher">Hill Cipher</a>
@@ -156,53 +158,97 @@ div.element span.label::after {
 2.14. <a href="#one-time-pad">One-Time Pad</a>
 </li>
 </ol>
-<h2 id="overview-of-classical-cryptosystems">2.1. Overview of Classical Cryptosystems</h2>
-<p>We start with some classical cryptosystems. It’s useful to group these into a few different types. To do this, let’s introduce some more terminology before getting started. An <em><span class="math inline">\(n\)</span>-gram</em> is a sequence of <span class="math inline">\(n\)</span> letters: a 1-gram is just a single letter, a 2-gram (also called a <em>bigram</em>) is a pair of letters, and so forth. The encryption strategies we’ll encounter below are the following:</p>
+<h2 id="overview-of-classical-cryptosystems">2.1. Overview of Classical
+Cryptosystems</h2>
+<p>We start with some classical cryptosystems. It’s useful to group
+these into a few different types. To do this, let’s introduce some more
+terminology before getting started. An <em><span
+class="math inline">\(n\)</span>-gram</em> is a sequence of <span
+class="math inline">\(n\)</span> letters: a 1-gram is just a single
+letter, a 2-gram (also called a <em>bigram</em>) is a pair of letters,
+and so forth. The encryption strategies we’ll encounter below are the
+following:</p>
 <ul>
-<li><p><em>Transposition</em> involves rearranging units of plaintext according to some pattern. We’ll see just one example of this type of cipher below: rectangular transposition.</p></li>
-<li><p><em>Substitition</em> involves replacing units of plaintext with units of ciphertext. Substitution ciphers can be grouped further into some subtypes:</p>
+<li><p><em>Transposition</em> involves rearranging units of plaintext
+according to some pattern. We’ll see just one example of this type of
+cipher below: rectangular transposition.</p></li>
+<li><p><em>Substitition</em> involves replacing units of plaintext with
+units of ciphertext. Substitution ciphers can be grouped further into
+some subtypes:</p>
 <ul>
-<li><p>Simple substitution: In these ciphers, single letters of plaintext are replaced by ciphertext. The substitution scheme stays the same over the course of the entire message. We’ve already seen a simple substitution above: Trithemius’s Theban alphabet. The simple substitition ciphers we’ll meet below are:</p>
+<li><p>Simple substitution: In these ciphers, single letters of
+plaintext are replaced by ciphertext. The substitution scheme stays the
+same over the course of the entire message. We’ve already seen a simple
+substitution above: Trithemius’s Theban alphabet. The simple
+substitition ciphers we’ll meet below are:</p>
 <ul>
 <li>Masonic cipher.</li>
 <li>Caesar cipher.</li>
 <li>Affine cipher.</li>
 <li>Polybius square.</li>
 </ul></li>
-<li><p>Polygraphic substitution: In these ciphers, groups of letters in the plaintext are replaced by ciphertext (a group of <span class="math inline">\(n\)</span> letters is called an “<span class="math inline">\(n\)</span>-gram”). The substitution scheme stays fixed over the entire message. The polygraphic substitition ciphers we’ll meet below are:</p>
+<li><p>Polygraphic substitution: In these ciphers, groups of letters in
+the plaintext are replaced by ciphertext (a group of <span
+class="math inline">\(n\)</span> letters is called an “<span
+class="math inline">\(n\)</span>-gram”). The substitution scheme stays
+fixed over the entire message. The polygraphic substitition ciphers
+we’ll meet below are:</p>
 <ul>
 <li>Hill cipher.</li>
 <li>Playfair cipher.</li>
 </ul></li>
-<li><p>Polyalphabetic substitution: In these ciphers, single letters in the plaintext are replaced by ciphertext, and the substitution scheme changes over the course of the message. The polyalphabetic substitition ciphers we’ll meet below are:</p>
+<li><p>Polyalphabetic substitution: In these ciphers, single letters in
+the plaintext are replaced by ciphertext, and the substitution scheme
+changes over the course of the message. The polyalphabetic substitition
+ciphers we’ll meet below are:</p>
 <ul>
 <li>Vignère cipher.</li>
 <li>One-time pad.</li>
 </ul></li>
 </ul></li>
 </ul>
-<p>Most cryptosystems used in practice employ a combination of these strategies. For example, we’ll meet the ADFGVX cipher below; this was a cipher used by the Imperial German Army during World War I, and it combined a simple substitution (a Polybius square) with rectangular transposition.</p>
+<p>Most cryptosystems used in practice employ a combination of these
+strategies. For example, we’ll meet the ADFGVX cipher below; this was a
+cipher used by the Imperial German Army during World War I, and it
+combined a simple substitution (a Polybius square) with rectangular
+transposition.</p>
 <h2 id="rectangular-transposition">2.2. Rectangular Transposition</h2>
-<p><em>Rectangular transposition</em> (also called <em>regular columnar transposition</em>) is a transposition cipher: the ciphertext is obtained by permuting the letters of the plaintext in a particular pattern. The pattern is determined by a secret keyword. The strategy is best explained through example.</p>
-<p>Suppose that Alice and Bob share the keyword <code>GUARD</code>, and that Alice wants to send the following message to Bob:</p>
+<p><em>Rectangular transposition</em> (also called <em>regular columnar
+transposition</em>) is a transposition cipher: the ciphertext is
+obtained by permuting the letters of the plaintext in a particular
+pattern. The pattern is determined by a secret keyword. The strategy is
+best explained through example.</p>
+<p>Suppose that Alice and Bob share the keyword <code>GUARD</code>, and
+that Alice wants to send the following message to Bob:</p>
 <pre><code>Hide! The baboons are coming for you.</code></pre>
-<p>As a first preliminary step, she removes spaces and punctuation and capitalizes all letters:</p>
+<p>As a first preliminary step, she removes spaces and punctuation and
+capitalizes all letters:</p>
 <pre><code>HIDETHEBABOONSARECOMINGFORYOU</code></pre>
-<p>This is the “encoded” message; notice that this is not yet remotely secure! It must still be encrypted. Since the keyword <code>GUARD</code> has 5 letters, she breaks up the message into 5-grams and stacks them into rows:</p>
+<p>This is the “encoded” message; notice that this is not yet remotely
+secure! It must still be encrypted. Since the keyword <code>GUARD</code>
+has 5 letters, she breaks up the message into 5-grams and stacks them
+into rows:</p>
 <pre><code>HIDET
 HEBAB
 OONSA
 RECOM
 INGFO
 RYOU</code></pre>
-<p>She then inserts nonsense letters at the end of the message to fill out any missing spaces:</p>
+<p>She then inserts nonsense letters at the end of the message to fill
+out any missing spaces:</p>
 <pre><code>HIDET
 HEBAB
 OONSA
 RECOM
 INGFO
 RYOUQ</code></pre>
-<p>Now she rearranges the letters in each row. Observe that the alphabetical rankings of the letters of the keyword <code>GUARD</code> are 3, 5, 1, 4, 2. So she rearranges the letters in each row by putting the first letter of each row in the 3rd position, the second letter of each row in the 5th position, the third letter of each row in the 1st position, the fourth letter of each row in the 4th position, and the fifth letter of each row in the 2nd position.</p>
+<p>Now she rearranges the letters in each row. Observe that the
+alphabetical rankings of the letters of the keyword <code>GUARD</code>
+are 3, 5, 1, 4, 2. So she rearranges the letters in each row by putting
+the first letter of each row in the 3rd position, the second letter of
+each row in the 5th position, the third letter of each row in the 1st
+position, the fourth letter of each row in the 4th position, and the
+fifth letter of each row in the 2nd position.</p>
 <pre><code>DTHEI
 BBHAE
 NAOSO
@@ -211,14 +257,22 @@ GOIFN
 OQRUY</code></pre>
 <p>She then undoes the stacking to get the ciphertext:</p>
 <pre><code>DTHEIBBHAENAOSOCMROEGOIFNOQRUY</code></pre>
-<p>This ciphertext is then sent to Bob, who can undo this same process using the keyword to recover the plaintext. Let’s work this out. Bob first takes the letters of the ciphertext and stacks them into rows of 5, since <code>GUARD</code> has 5 letters:</p>
+<p>This ciphertext is then sent to Bob, who can undo this same process
+using the keyword to recover the plaintext. Let’s work this out. Bob
+first takes the letters of the ciphertext and stacks them into rows of
+5, since <code>GUARD</code> has 5 letters:</p>
 <pre><code>DTHEI
 BBHAE
 NAOSO
 CMROE
 GOIFN
 OQRUY</code></pre>
-<p>Bob also knows that the alphabetical ranking of the letters of <code>GUARD</code> is 3, 5, 1, 4, 2. This means that, to decrypt the message, he has to move the 3rd letter of each row to the first position, the 5th letter to the second position, the 1st letter to the third position, the 4th letter to the fourth position, and the 2nd letter to the fifth position.</p>
+<p>Bob also knows that the alphabetical ranking of the letters of
+<code>GUARD</code> is 3, 5, 1, 4, 2. This means that, to decrypt the
+message, he has to move the 3rd letter of each row to the first
+position, the 5th letter to the second position, the 1st letter to the
+third position, the 4th letter to the fourth position, and the 2nd
+letter to the fifth position.</p>
 <pre><code>HIDET
 HEBAB
 OONSA
@@ -227,19 +281,27 @@ INGFO
 RYOUQ</code></pre>
 <p>He then undoes the stacking:</p>
 <pre><code>HIDETHEBABOONSARECOMINGFORYOUQ</code></pre>
-<p>He then has to make an educated guess that the letter <code>Q</code> is nonsense and that the correctly punctuated message must be</p>
+<p>He then has to make an educated guess that the letter <code>Q</code>
+is nonsense and that the correctly punctuated message must be</p>
 <pre><code>Hide! The baboons are coming for you.</code></pre>
 <p>Now you try it!</p>
 <div class="element">
-<p><span class="label">Exercise</span> Suppose Alice and Bob share the keyword <code>CRASH</code>. Mimic the process above to do the following:</p>
+<p><span class="label">Exercise</span> Suppose Alice and Bob share the
+keyword <code>CRASH</code>. Mimic the process above to do the
+following:</p>
 <ul>
 <li>Encrypt the message <code>There is always hope</code>.</li>
 <li>Decrypt the message <code>ETIHGFREAFRSLAESOXOE</code>.</li>
 </ul>
 </div>
-<p>Once you have a hang of doing this by hand with short examples, here’s a SageCell you can play with to encrypt and decrypt longer messages using rectangular transposition.</p>
+<p>Once you have a hang of doing this by hand with short examples,
+here’s a SageCell you can play with to encrypt and decrypt longer
+messages using rectangular transposition.</p>
 <div id="sagecell-rectangular-transposition" class="element">
-<span class="label">SageCell</span> There’s a lot that may be new to you in the code here. Start by just hitting “Run” and playing with what you see; later, you might decide to play with the code to figure out how it works!
+<span class="label">SageCell</span> There’s a lot that may be new to you
+in the code here. Start by just hitting “Run” and playing with what you
+see; later, you might decide to play with the code to figure out how it
+works!
 <div class="sage">
 <script type="text/x-sage">
 from re import sub
@@ -318,16 +380,33 @@ def _(key=input_box(default="CRASH", label="Key", height=2, width=80),
 </div>
 </div>
 <div class="element">
-<p><span class="label">Sage Exercise</span> What does the SageCell above do when you try setting your key word to be something that has a repeated letter? Here’s something different that that would be reasonable for the code to do when it encounters this situation: it could decide to drop any repeats from the key word before proceeding with the encryption. For example, if the user enters <code>BANANA</code>, it would instead use <code>BAN</code> to encrypt the message. Edit the code above so that this happens!</p>
+<p><span class="label">Sage Exercise</span> What does the SageCell above
+do when you try setting your key word to be something that has a
+repeated letter? Here’s something different that that would be
+reasonable for the code to do when it encounters this situation: it
+could decide to drop any repeats from the key word before proceeding
+with the encryption. For example, if the user enters
+<code>BANANA</code>, it would instead use <code>BAN</code> to encrypt
+the message. Edit the code above so that this happens!</p>
 </div>
 <h2 id="masonic-cipher">2.3. Masonic Cipher</h2>
-<p>The <em>masonic cipher</em> (also called the <em>pigpen cipher</em> or the <em>tic-tac-toe cipher</em>) is a simple substitution cipher that replaces individual letters with certain geometric shapes. It is called the masonic cipher because the Freemasons used it very frequently, but it likely <a href="https://en.wikipedia.org/wiki/Pigpen_cipher#History">originated</a> with Hebrew rabbis. The encryption and decryption scheme of this cipher is described by the following diagram.</p>
+<p>The <em>masonic cipher</em> (also called the <em>pigpen cipher</em>
+or the <em>tic-tac-toe cipher</em>) is a simple substitution cipher that
+replaces individual letters with certain geometric shapes. It is called
+the masonic cipher because the Freemasons used it very frequently, but
+it likely <a
+href="https://en.wikipedia.org/wiki/Pigpen_cipher#History">originated</a>
+with Hebrew rabbis. The encryption and decryption scheme of this cipher
+is described by the following diagram.</p>
 <figure style="text-align: center;">
 <svg width="100" height="100">
 <line x1="33%" y1="0%" x2="33%" y2="100%"
-    stroke="#444" stroke-width="2" /> <line x1="66%" y1="0%" x2="66%" y2="100%"
-    stroke="#444" stroke-width="2" /> <line x1="0%" y1="33%" x2="100%" y2="33%"
-    stroke="#444" stroke-width="2" /> <line x1="0%" y1="66%" x2="100%" y2="66%"
+    stroke="#444" stroke-width="2" />
+<line x1="66%" y1="0%" x2="66%" y2="100%"
+    stroke="#444" stroke-width="2" />
+<line x1="0%" y1="33%" x2="100%" y2="33%"
+    stroke="#444" stroke-width="2" />
+<line x1="0%" y1="66%" x2="100%" y2="66%"
     stroke="#444" stroke-width="2" /> <text x="16.5%" y="16.5%"
     text-anchor="middle"
     dominant-baseline="middle"
@@ -368,9 +447,12 @@ def _(key=input_box(default="CRASH", label="Key", height=2, width=80),
 </svg>
 <svg width="100" height="100" style="margin-left: 1em;">
 <line x1="33%" y1="0%" x2="33%" y2="100%"
-    stroke="#444" stroke-width="2" /> <line x1="66%" y1="0%" x2="66%" y2="100%"
-    stroke="#444" stroke-width="2" /> <line x1="0%" y1="33%" x2="100%" y2="33%"
-    stroke="#444" stroke-width="2" /> <line x1="0%" y1="66%" x2="100%" y2="66%"
+    stroke="#444" stroke-width="2" />
+<line x1="66%" y1="0%" x2="66%" y2="100%"
+    stroke="#444" stroke-width="2" />
+<line x1="0%" y1="33%" x2="100%" y2="33%"
+    stroke="#444" stroke-width="2" />
+<line x1="0%" y1="66%" x2="100%" y2="66%"
     stroke="#444" stroke-width="2" /> <text x="16.5%" y="16.5%"
     text-anchor="middle"
     dominant-baseline="middle"
@@ -420,7 +502,8 @@ def _(key=input_box(default="CRASH", label="Key", height=2, width=80),
 </svg>
 <svg width="100" height="100" style="margin-left: 1em;">
 <line x1="0%" y1="0%" x2="100%" y2="100%"
-    stroke="#444" stroke-width="2" /> <line x1="100%" y1="0%" x2="0%" y2="100%"
+    stroke="#444" stroke-width="2" />
+<line x1="100%" y1="0%" x2="0%" y2="100%"
     stroke="#444" stroke-width="2" /> <text x="50%" y="16.5%"
     text-anchor="middle"
     dominant-baseline="middle"
@@ -441,7 +524,8 @@ def _(key=input_box(default="CRASH", label="Key", height=2, width=80),
 </svg>
 <svg width="100" height="100" style="margin-left: 1em;">
 <line x1="0%" y1="0%" x2="100%" y2="100%"
-    stroke="#444" stroke-width="2" /> <line x1="100%" y1="0%" x2="0%" y2="100%"
+    stroke="#444" stroke-width="2" />
+<line x1="100%" y1="0%" x2="0%" y2="100%"
     stroke="#444" stroke-width="2" /> <text x="50%" y="16.5%"
     text-anchor="middle"
     dominant-baseline="middle"
@@ -465,21 +549,55 @@ def _(key=input_box(default="CRASH", label="Key", height=2, width=80),
     fill="#444" />
 </svg>
 </figure>
-<p>Each letter of the alphabet is replaced by the shape that encloses that letter (possibly including the dot). For example, <code>A</code> would be replaced by <svg width="1em" height="1em"><line x1="90%" y1="10%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /><line x1="10%" y1="90%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /></svg> and <code>Q</code> would be replaced by <svg width="1em" height="1em"><line x1="10%" y1="10%" x2="90%" y2="10%" stroke="#444" stroke-width="1.5" /><line x1="10%" y1="10%" x2="10%" y2="90%" stroke="#444" stroke-width="1.5" /><line x1="90%" y1="10%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /><circle cx="50%" cy="50%"  r="15%" fill="#444" /></svg> and <code>U</code> would be replaced by <svg width="0.6em" height="1em"><line x1="90%" y1="10%" x2="10%" y2="50%" stroke="#444" stroke-width="1.5" /><line x1="10%" y1="50%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /></svg>.</p>
+<p>Each letter of the alphabet is replaced by the shape that encloses
+that letter (possibly including the dot). For example, <code>A</code>
+would be replaced by
+<svg width="1em" height="1em"><line x1="90%" y1="10%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /><line x1="10%" y1="90%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /></svg>
+and <code>Q</code> would be replaced by
+<svg width="1em" height="1em"><line x1="10%" y1="10%" x2="90%" y2="10%" stroke="#444" stroke-width="1.5" /><line x1="10%" y1="10%" x2="10%" y2="90%" stroke="#444" stroke-width="1.5" /><line x1="90%" y1="10%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /><circle cx="50%" cy="50%"  r="15%" fill="#444" /></svg>
+and <code>U</code> would be replaced by
+<svg width="0.6em" height="1em"><line x1="90%" y1="10%" x2="10%" y2="50%" stroke="#444" stroke-width="1.5" /><line x1="10%" y1="50%" x2="90%" y2="90%" stroke="#444" stroke-width="1.5" /></svg>.</p>
 <div class="element">
-<p><span class="label">Exercise</span> Encrypt the following messages using the masonic cipher:</p>
+<p><span class="label">Exercise</span> Encrypt the following messages
+using the masonic cipher:</p>
 <ol type="a">
 <li><code>MEET AT GEISEL</code></li>
 <li><code>BONFIRE AT SUNSET</code></li>
 </ol>
 </div>
-<p>A very similar substitution cipher that replaces letters of the alphabet by geometric shapes is the <a href="https://www.dcode.fr/templars-cipher">Knights Templar Cipher</a>.</p>
-<p>Under the attack model we described in the introduction, this cryptosystem is <em>extremely</em> insecure. Recall that we typically assume that the adversary knows the decryption function, but does not know the key. For the masonic cipher, there is only a decryption function and no key! This means the adversary, who knows that a message was encrypted using a masonic cipher, can recover the plaintext just as easily as the intended recipient!</p>
-<p>From this point of view, a slightly better simple substitution cipher is the one we discuss next, which at least does have a key.</p>
+<p>A very similar substitution cipher that replaces letters of the
+alphabet by geometric shapes is the <a
+href="https://www.dcode.fr/templars-cipher">Knights Templar
+Cipher</a>.</p>
+<p>Under the attack model we described in the introduction, this
+cryptosystem is <em>extremely</em> insecure. Recall that we typically
+assume that the adversary knows the decryption function, but does not
+know the key. For the masonic cipher, there is only a decryption
+function and no key! This means the adversary, who knows that a message
+was encrypted using a masonic cipher, can recover the plaintext just as
+easily as the intended recipient!</p>
+<p>From this point of view, a slightly better simple substitution cipher
+is the one we discuss next, which at least does have a key.</p>
 <h2 id="caesar-cipher">2.4. Caesar Cipher</h2>
-<p>The <em>Caesar cipher</em> (also called a <em>shift cipher</em>) is also a simple substitution cipher. The key for a Caesar cipher is a shift, which can be any integer. For example, if we choose a shift of 3, every letter gets shifted forward by 3 during encryption: <code>A</code> becomes <code>D</code>, <code>B</code> becomes <code>E</code>, and so forth. What happens with <code>X</code>? There is no letter that is 3 after <code>X</code>, but we simply cycle back to beginning so that <code>X</code> becomes <code>A</code>, <code>Y</code> becomes <code>B</code>, and <code>Z</code> becomes <code>C</code>. This is reversed during decryption.</p>
+<p>The <em>Caesar cipher</em> (also called a <em>shift cipher</em>) is
+also a simple substitution cipher. The key for a Caesar cipher is a
+shift, which can be any integer. For example, if we choose a shift of 3,
+every letter gets shifted forward by 3 during encryption: <code>A</code>
+becomes <code>D</code>, <code>B</code> becomes <code>E</code>, and so
+forth. What happens with <code>X</code>? There is no letter that is 3
+after <code>X</code>, but we simply cycle back to beginning so that
+<code>X</code> becomes <code>A</code>, <code>Y</code> becomes
+<code>B</code>, and <code>Z</code> becomes <code>C</code>. This is
+reversed during decryption.</p>
 <div id="sagecell-caesar-knob" class="element">
-<span class="label">SageCell</span> It may be useful to understand a Caesar cipher in terms of a dial with 26 notches; hit “Run” below to see such a dial. Each notch is labeled with a letter of the alphabet, both on the dial itself (in black in the picture below) and outside the dial (in gray in the picture below), and the “shift” is the number of notches through which the dial is turned (clockwise in the picture below). To encrypt, we convert each gray letter to the corresponding black letter. To decrypt, we go backwards.
+<span class="label">SageCell</span> It may be useful to understand a
+Caesar cipher in terms of a dial with 26 notches; hit “Run” below to see
+such a dial. Each notch is labeled with a letter of the alphabet, both
+on the dial itself (in black in the picture below) and outside the dial
+(in gray in the picture below), and the “shift” is the number of notches
+through which the dial is turned (clockwise in the picture below). To
+encrypt, we convert each gray letter to the corresponding black letter.
+To decrypt, we go backwards.
 <div class="sage">
 <script type="text/x-sage">
 from functools import reduce
@@ -527,9 +645,15 @@ def _(shift=slider(-5, 30, 1, 3, label="Shift")):
     show(graph, axes=False)
 </script>
 </div>
-<p>Play with the slider to try out a few different shifts. What’s going on with a shift of 0? What about with a shift of 26? How does a shift of 27 compare with a shift of 1? What do negative shifts mean? What positive shift is a shift of <span class="math inline">\(-1\)</span> the same as?</p>
+<p>Play with the slider to try out a few different shifts. What’s going
+on with a shift of 0? What about with a shift of 26? How does a shift of
+27 compare with a shift of 1? What do negative shifts mean? What
+positive shift is a shift of <span class="math inline">\(-1\)</span> the
+same as?</p>
 </div>
-<p>As with rectangular transposition, it is typical to first encode the message by removing all non-alphabetic characters and capitalizing everything. Thus a message like</p>
+<p>As with rectangular transposition, it is typical to first encode the
+message by removing all non-alphabetic characters and capitalizing
+everything. Thus a message like</p>
 <pre><code>University of California San Diego</code></pre>
 <p>would get encoded to:</p>
 <pre><code>UNIVERSITYOFCALIFORNIASANDIEGO
@@ -539,36 +663,95 @@ def _(shift=slider(-5, 30, 1, 3, label="Shift")):
 <div class="element">
 <p><span class="label">Exercise</span></p>
 <ol type="a">
-<li>Using a shift of 3, encrypt the message <code>Meet at La Jolla Shores</code>.</li>
-<li>Using a shift of 3, decrypt the message <code>PHHWDWVXQJRGODZQ</code>.</li>
-<li>Using a shift of 10, encrypt the message <code>On the Ides of March</code>.</li>
+<li>Using a shift of 3, encrypt the message
+<code>Meet at La Jolla Shores</code>.</li>
+<li>Using a shift of 3, decrypt the message
+<code>PHHWDWVXQJRGODZQ</code>.</li>
+<li>Using a shift of 10, encrypt the message
+<code>On the Ides of March</code>.</li>
 </ol>
 </div>
 <div class="element">
-<p><span class="label">Exercise</span> You are Eve. You have just intercepted the following message that Alice was trying to send to Bob:</p>
+<p><span class="label">Exercise</span> You are Eve. You have just
+intercepted the following message that Alice was trying to send to
+Bob:</p>
 <p><code>Q TQDM IB QPWCAM</code></p>
-<p>You know that Alice used a Caesar cipher, but she didn’t remove spaces before encrypting: she left the spaces in her original message as-is. What is the original message? <em>Hint</em>. Apparently just the single letter <code>Q</code> is the encryption of a word; what word(s) could it be?</p>
+<p>You know that Alice used a Caesar cipher, but she didn’t remove
+spaces before encrypting: she left the spaces in her original message
+as-is. What is the original message? <em>Hint</em>. Apparently just the
+single letter <code>Q</code> is the encryption of a word; what word(s)
+could it be?</p>
 </div>
-<p>It might feel a little tedious to do these encryptions and decryptions by hand, and it is. But computers can do this very quickly! To understand how, we pause our discussion of ciphers to discuss a fundamental idea in number theory: modular arithmetic.</p>
+<p>It might feel a little tedious to do these encryptions and
+decryptions by hand, and it is. But computers can do this very quickly!
+To understand how, we pause our discussion of ciphers to discuss a
+fundamental idea in number theory: modular arithmetic.</p>
 <h2 id="modular-arithmetic">2.5. Interlude: Modular Arithmetic</h2>
 <div class="element">
 <p><span class="label">Exercise</span> Suppose it is 11:10am.</p>
 <ol type="a">
-<li>Your friend Alice asks you if you want to get lunch together in 2 hours. What time is she proposing having lunch?</li>
-<li>Your friend Bob tells you that he just woke up 15 minutes ago. What time did he wake up?</li>
+<li>Your friend Alice asks you if you want to get lunch together in 2
+hours. What time is she proposing having lunch?</li>
+<li>Your friend Bob tells you that he just woke up 15 minutes ago. What
+time did he wake up?</li>
 </ol>
 </div>
-<p>If you can do this exercise, you already know modular arithmetic at an intuitive level! What we’re going to do here is introduce some notation to be able to talk about this “clock arithmetic” that you all already know in a rigorous way.</p>
+<p>If you can do this exercise, you already know modular arithmetic at
+an intuitive level! What we’re going to do here is introduce some
+notation to be able to talk about this “clock arithmetic” that you all
+already know in a rigorous way.</p>
 <h3 id="division">Quotients and Remainders</h3>
-<p>When an integer is divided by a positive integer, we get a quotient and a remainder. For example, when 17 is divided by 5, we get a quotient of 3 and a remainder of 2. The formal statement is the following:</p>
+<p>When an integer is divided by a positive integer, we get a quotient
+and a remainder. For example, when 17 is divided by 5, we get a quotient
+of 3 and a remainder of 2. The formal statement is the following:</p>
 <div class="element">
-<p><span class="label">Euclid’s Division Lemma</span> For any integer <span class="math inline">\(a\)</span> and positive integer <span class="math inline">\(n\)</span>, there exists a unique pair of integers <span class="math inline">\(q\)</span> and <span class="math inline">\(r\)</span> such that <span class="math inline">\(0 \leq r &lt; n\)</span> and <span class="math inline">\(a = qn + r\)</span>. The integers <span class="math inline">\(q\)</span> and <span class="math inline">\(r\)</span> are called the <em>quotient</em> and <em>remainder</em>, respectively. We also write <span class="math inline">\(a \bmod{n}\)</span> to refer to the remainder.</p>
+<p><span class="label">Euclid’s Division Lemma</span> For any integer
+<span class="math inline">\(a\)</span> and positive integer <span
+class="math inline">\(n\)</span>, there exists a unique pair of integers
+<span class="math inline">\(q\)</span> and <span
+class="math inline">\(r\)</span> such that <span class="math inline">\(0
+\leq r &lt; n\)</span> and <span class="math inline">\(a = qn +
+r\)</span>. The integers <span class="math inline">\(q\)</span> and
+<span class="math inline">\(r\)</span> are called the <em>quotient</em>
+and <em>remainder</em>, respectively. We also write <span
+class="math inline">\(a \bmod{n}\)</span> to refer to the remainder.</p>
 </div>
-<p>The basic idea of the proof for the existence statement is that you keep subtracting (or adding) <span class="math inline">\(n\)</span> from <span class="math inline">\(a\)</span> until you wind up in the range <span class="math inline">\([0, n)\)</span>. The number of times you had to subtract (or add) <span class="math inline">\(n\)</span> is the quotient, and the number in the range <span class="math inline">\([0, n)\)</span> that you wind up with at the end is your remainder.</p>
-<p>This is likely to be very familiar to you when <span class="math inline">\(a \geq 0\)</span>. Let’s consider again the example of dividing <span class="math inline">\(a = 17\)</span> by <span class="math inline">\(n = 5\)</span>. Subtracting <span class="math inline">\(5\)</span> once yields <span class="math inline">\(12\)</span>, twice yields <span class="math inline">\(7\)</span>, and thrice yields <span class="math inline">\(2\)</span>. Since we’ve reached a number in the range <span class="math inline">\([0, 5)\)</span>, we stop subtracting. The number <span class="math inline">\(2\)</span> that we ended up with is the remainder, and since we had to subtract <span class="math inline">\(5\)</span> thrice, the quotient is <span class="math inline">\(3\)</span>.</p>
-<p>This may be less familiar to you when <span class="math inline">\(a &lt; 0\)</span>, but it works the same way; we just have to add instead! Suppose, for example, that we want to divide <span class="math inline">\(a = -7\)</span> by <span class="math inline">\(n = 5\)</span>. Adding <span class="math inline">\(5\)</span> once gives us <span class="math inline">\(-2\)</span> and twice gives us <span class="math inline">\(3\)</span>. Thus the quotient is <span class="math inline">\(-2\)</span> (negative because we had <em>add</em> 5, instead of subtracting <span class="math inline">\(5\)</span> like we did above), and the remainder is <span class="math inline">\(3\)</span>.</p>
+<p>The basic idea of the proof for the existence statement is that you
+keep subtracting (or adding) <span class="math inline">\(n\)</span> from
+<span class="math inline">\(a\)</span> until you wind up in the range
+<span class="math inline">\([0, n)\)</span>. The number of times you had
+to subtract (or add) <span class="math inline">\(n\)</span> is the
+quotient, and the number in the range <span class="math inline">\([0,
+n)\)</span> that you wind up with at the end is your remainder.</p>
+<p>This is likely to be very familiar to you when <span
+class="math inline">\(a \geq 0\)</span>. Let’s consider again the
+example of dividing <span class="math inline">\(a = 17\)</span> by <span
+class="math inline">\(n = 5\)</span>. Subtracting <span
+class="math inline">\(5\)</span> once yields <span
+class="math inline">\(12\)</span>, twice yields <span
+class="math inline">\(7\)</span>, and thrice yields <span
+class="math inline">\(2\)</span>. Since we’ve reached a number in the
+range <span class="math inline">\([0, 5)\)</span>, we stop subtracting.
+The number <span class="math inline">\(2\)</span> that we ended up with
+is the remainder, and since we had to subtract <span
+class="math inline">\(5\)</span> thrice, the quotient is <span
+class="math inline">\(3\)</span>.</p>
+<p>This may be less familiar to you when <span class="math inline">\(a
+&lt; 0\)</span>, but it works the same way; we just have to add instead!
+Suppose, for example, that we want to divide <span
+class="math inline">\(a = -7\)</span> by <span class="math inline">\(n =
+5\)</span>. Adding <span class="math inline">\(5\)</span> once gives us
+<span class="math inline">\(-2\)</span> and twice gives us <span
+class="math inline">\(3\)</span>. Thus the quotient is <span
+class="math inline">\(-2\)</span> (negative because we had <em>add</em>
+5, instead of subtracting <span class="math inline">\(5\)</span> like we
+did above), and the remainder is <span
+class="math inline">\(3\)</span>.</p>
 <div class="element">
-<p><span class="label">Exercise</span> For each of the following, calculate the quotient and remainder when <span class="math inline">\(a\)</span> is divided by <span class="math inline">\(n\)</span>. Do these calculations by hand.</p>
+<p><span class="label">Exercise</span> For each of the following,
+calculate the quotient and remainder when <span
+class="math inline">\(a\)</span> is divided by <span
+class="math inline">\(n\)</span>. Do these calculations by hand.</p>
 <ol type="a">
 <li><span class="math inline">\(a = 13, n = 3\)</span></li>
 <li><span class="math inline">\(a = 134, n = 10\)</span></li>
@@ -578,7 +761,8 @@ def _(shift=slider(-5, 30, 1, 3, label="Shift")):
 </ol>
 </div>
 <div class="element">
-<span class="label">SageCell</span> You can calculate quotients in Sage using the <code>//</code> operator:
+<span class="label">SageCell</span> You can calculate quotients in Sage
+using the <code>//</code> operator:
 <div class="sage">
 <script type="text/x-sage">
 17 // 5
@@ -591,43 +775,147 @@ And you can calculate remainders using the <code>%</code> operator:
 </script>
 </div>
 </div>
-<p>Suppose <span class="math inline">\(a\)</span> and <span class="math inline">\(n\)</span> are integers and <span class="math inline">\(n &gt; 0\)</span>. All of the following sentences mean <em>exactly</em> the same thing:</p>
+<p>Suppose <span class="math inline">\(a\)</span> and <span
+class="math inline">\(n\)</span> are integers and <span
+class="math inline">\(n &gt; 0\)</span>. All of the following sentences
+mean <em>exactly</em> the same thing:</p>
 <ul>
 <li><span class="math inline">\(a \bmod{n} = 0\)</span>.</li>
-<li>There is no remainder when <span class="math inline">\(a\)</span> is divided by <span class="math inline">\(n\)</span>.</li>
-<li><span class="math inline">\(a\)</span> is a multiple of <span class="math inline">\(n\)</span>.</li>
-<li><span class="math inline">\(a\)</span> is divisible by <span class="math inline">\(n\)</span>.</li>
-<li><span class="math inline">\(n\)</span> is a divisor of <span class="math inline">\(a\)</span>.</li>
-<li><span class="math inline">\(n\)</span> is a factor of <span class="math inline">\(a\)</span>.</li>
-<li><span class="math inline">\(n\)</span> divides <span class="math inline">\(a\)</span> (in notation: <span class="math inline">\(n \mid a\)</span>, where the vertical bar is read as “divides”).</li>
+<li>There is no remainder when <span class="math inline">\(a\)</span> is
+divided by <span class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(a\)</span> is a multiple of <span
+class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(a\)</span> is divisible by <span
+class="math inline">\(n\)</span>.</li>
+<li><span class="math inline">\(n\)</span> is a divisor of <span
+class="math inline">\(a\)</span>.</li>
+<li><span class="math inline">\(n\)</span> is a factor of <span
+class="math inline">\(a\)</span>.</li>
+<li><span class="math inline">\(n\)</span> divides <span
+class="math inline">\(a\)</span> (in notation: <span
+class="math inline">\(n \mid a\)</span>, where the vertical bar is read
+as “divides”).</li>
 <li><span class="math inline">\(a/n\)</span> is an integer.</li>
 </ul>
-<p>You’re probably already familiar with some of these, but it will be beneficial for you to become comfortable with all of them. It’ll feel strange at first that we have so many ways of saying exactly the same thing, but it’s surprisingly useful.</p>
+<p>You’re probably already familiar with some of these, but it will be
+beneficial for you to become comfortable with all of them. It’ll feel
+strange at first that we have so many ways of saying exactly the same
+thing, but it’s surprisingly useful.</p>
 <h3 id="congruences">Congruences</h3>
 <div class="element">
-<p><span class="label">Definition</span> Fix a positive integer <span class="math inline">\(n\)</span>. If <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are integers, we say that “<span class="math inline">\(a\)</span> is congruent to <span class="math inline">\(b\)</span> mod <span class="math inline">\(n\)</span>,” or that “<span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are congruent mod <span class="math inline">\(n\)</span>,” if <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> have the same remainder when each is divided by <span class="math inline">\(n\)</span>. This can be denoted in symbols as follows:</p>
+<p><span class="label">Definition</span> Fix a positive integer <span
+class="math inline">\(n\)</span>. If <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are integers, we say that “<span
+class="math inline">\(a\)</span> is congruent to <span
+class="math inline">\(b\)</span> mod <span
+class="math inline">\(n\)</span>,” or that “<span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are congruent mod <span
+class="math inline">\(n\)</span>,” if <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> have the same remainder when each is
+divided by <span class="math inline">\(n\)</span>. This can be denoted
+in symbols as follows:</p>
 <p><span class="math display">\[ a \equiv b \pmod{n} \]</span></p>
 </div>
-<p>For example, we have <span class="math inline">\(19 \equiv 7 \pmod{4}\)</span> since <span class="math inline">\(19\)</span> and <span class="math inline">\(7\)</span> both have remainder <span class="math inline">\(3\)</span> when divded by <span class="math inline">\(4\)</span>. Observe also that <span class="math inline">\(19 - 7 = 12\)</span> is a multiple of 4. This observation is generalized by the following:</p>
+<p>For example, we have <span class="math inline">\(19 \equiv 7
+\pmod{4}\)</span> since <span class="math inline">\(19\)</span> and
+<span class="math inline">\(7\)</span> both have remainder <span
+class="math inline">\(3\)</span> when divded by <span
+class="math inline">\(4\)</span>. Observe also that <span
+class="math inline">\(19 - 7 = 12\)</span> is a multiple of 4. This
+observation is generalized by the following:</p>
 <div class="element">
-<p><span class="label">Lemma</span> Fix a positive integer <span class="math inline">\(n\)</span>. Two integers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are congruent mod <span class="math inline">\(n\)</span> if and only if <span class="math inline">\(a-b\)</span> is a multiple of <span class="math inline">\(n\)</span>.</p>
+<p><span class="label">Lemma</span> Fix a positive integer <span
+class="math inline">\(n\)</span>. Two integers <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are congruent mod <span
+class="math inline">\(n\)</span> if and only if <span
+class="math inline">\(a-b\)</span> is a multiple of <span
+class="math inline">\(n\)</span>.</p>
 </div>
-<p><em>Proof of lemma</em>. Divide <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> by <span class="math inline">\(n\)</span> to write <span class="math inline">\(a = q_1n + r_1\)</span> and <span class="math inline">\(b = q_2n + r_2\)</span>. If <span class="math inline">\(a \equiv b \pmod{n}\)</span>, this by definition means that <span class="math inline">\(r_1 = r_2\)</span>, so <span class="math display">\[ a-b = (q_1n + r_1) - (q_2n + r_2) = q_1n - q_2n = n(q_1 - q_2), \]</span> so <span class="math inline">\(a-b\)</span> is a multiple of <span class="math inline">\(n\)</span>. Conversely, suppose <span class="math inline">\(a-b\)</span> is a multiple of <span class="math inline">\(n\)</span>. Then <span class="math display">\[ (a-b) - (q_1 - q_2)n = ((q_1n + r_1) - (q_2 n + r_2)) - (q_1 - q_2)n = r_1 - r_2 \]</span> is a multiple of <span class="math inline">\(n\)</span> also. But <span class="math inline">\(0 \leq r_1, r_2 &lt; n\)</span>, so we must have <span class="math inline">\(|r_1 - r_2| &lt; n\)</span> and the only way that <span class="math inline">\(r_1 - r_2\)</span> can be a multiple of <span class="math inline">\(n\)</span> is if <span class="math inline">\(r_1 - r_2 = 0\)</span>, ie, if <span class="math inline">\(r_1 = r_2\)</span>. This means that <span class="math inline">\(a \equiv b \pmod{n}\)</span>. <span style="float: right;"><span class="math inline">\(\Box\)</span></span></p>
-<p>Here’s a crucial property of congruences that we’ll find ourselves using frequently.</p>
+<p><em>Proof of lemma</em>. Divide <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> by <span
+class="math inline">\(n\)</span> to write <span class="math inline">\(a
+= q_1n + r_1\)</span> and <span class="math inline">\(b = q_2n +
+r_2\)</span>. If <span class="math inline">\(a \equiv b
+\pmod{n}\)</span>, this by definition means that <span
+class="math inline">\(r_1 = r_2\)</span>, so <span
+class="math display">\[ a-b = (q_1n + r_1) - (q_2n + r_2) = q_1n - q_2n
+= n(q_1 - q_2), \]</span> so <span class="math inline">\(a-b\)</span> is
+a multiple of <span class="math inline">\(n\)</span>. Conversely,
+suppose <span class="math inline">\(a-b\)</span> is a multiple of <span
+class="math inline">\(n\)</span>. Then <span class="math display">\[
+(a-b) - (q_1 - q_2)n = ((q_1n + r_1) - (q_2 n + r_2)) - (q_1 - q_2)n =
+r_1 - r_2 \]</span> is a multiple of <span
+class="math inline">\(n\)</span> also. But <span class="math inline">\(0
+\leq r_1, r_2 &lt; n\)</span>, so we must have <span
+class="math inline">\(|r_1 - r_2| &lt; n\)</span> and the only way that
+<span class="math inline">\(r_1 - r_2\)</span> can be a multiple of
+<span class="math inline">\(n\)</span> is if <span
+class="math inline">\(r_1 - r_2 = 0\)</span>, ie, if <span
+class="math inline">\(r_1 = r_2\)</span>. This means that <span
+class="math inline">\(a \equiv b \pmod{n}\)</span>. <span
+style="float: right;"><span
+class="math inline">\(\Box\)</span></span></p>
+<p>Here’s a crucial property of congruences that we’ll find ourselves
+using frequently.</p>
 <div class="element">
-<p><span class="label">Modular Arithmetic Theorem</span> Fix a positive integer <span class="math inline">\(n\)</span>. Suppose <span class="math inline">\(a, a&#39;, b, b&#39;\)</span> are integers such that <span class="math inline">\(a \equiv a&#39; \bmod{n}\)</span> and <span class="math inline">\(b \equiv b&#39; \bmod{n}\)</span>, and <span class="math inline">\(k\)</span> is any positive integer. Then all of the following are also true: <span class="math display">\[ \begin{aligned}
+<p><span class="label">Modular Arithmetic Theorem</span> Fix a positive
+integer <span class="math inline">\(n\)</span>. Suppose <span
+class="math inline">\(a, a&#39;, b, b&#39;\)</span> are integers such
+that <span class="math inline">\(a \equiv a&#39; \bmod{n}\)</span> and
+<span class="math inline">\(b \equiv b&#39; \bmod{n}\)</span>, and <span
+class="math inline">\(k\)</span> is any positive integer. Then all of
+the following are also true: <span class="math display">\[
+\begin{aligned}
 a + b &amp;\equiv a&#39; + b&#39; &amp;&amp;\pmod{n} \\
 a - b &amp;\equiv a&#39; - b&#39; &amp;&amp;\pmod{n} \\
 ab &amp;\equiv a&#39;b&#39; &amp;&amp;\pmod{n} \\
 a^k &amp;\equiv (a&#39;)^k &amp;&amp;\pmod{n}
 \end{aligned} \]</span></p>
 </div>
-<p><em>Proof</em>. Let <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span> be integers such that <span class="math inline">\(a - a&#39; = nr\)</span> and <span class="math inline">\(b - b&#39; = ns\)</span>. Then <span class="math display">\[(a + b) - (a&#39; + b&#39;) = (a - a&#39;) + (b - b&#39;) = nr + ns = n(r+s)\]</span> is a multiple of <span class="math inline">\(n\)</span>, so <span class="math inline">\(a+b \equiv a&#39; + b&#39; \pmod{n}\)</span>. The proof for subtraction is almost identical and is omitted. For multiplication, observe that <span class="math display">\[ ab - a&#39;b&#39; = ab - ab&#39; + ab&#39; - a&#39;b&#39; = a(b-b&#39;) + (a-a&#39;)b&#39; = ans + nrb&#39; = n(as + rb&#39;) \]</span> is also a multiple of <span class="math inline">\(n\)</span>, so <span class="math inline">\(ab \equiv a&#39;b&#39; \pmod{n}\)</span>. The final statement regarding exponentiation follows by inducting on the statement about multiplication. <span style="float: right;"><span class="math inline">\(\Box\)</span></span></p>
-<p>You may notice that division is missing in this theorem. This is because division in modular arithmetic is a little subtle; we’ll return to this soon.</p>
-<p>The upshot of this theorem is that, if we’re just interested in remainders after dividing by <span class="math inline">\(n\)</span>, we can “take remainders mod <span class="math inline">\(n\)</span>” at every step of our addition/subtraction/multiplication to make our calculations easier. For example, suppose we want to calculate <span class="math inline">\(123 \cdot 24 \bmod{10}\)</span>. We could do this by calculating <span class="math inline">\(123 \cdot 24 = 2952\)</span> and then taking a remainder to get 2, but that multiplication is not so easy to do in your head. It is easier to observe that <span class="math inline">\(123 \equiv 3 \pmod{10}\)</span>, and <span class="math inline">\(24 \equiv 4 \pmod{10}\)</span>, so the theorem tells us that <span class="math display">\[ 123 \cdot 24 \equiv 3 \cdot 4 = 12 \equiv 2 \pmod{10}. \]</span> In other words, we have reached the same answer <em>without</em> having to multiply large numbers together!</p>
+<p><em>Proof</em>. Let <span class="math inline">\(r\)</span> and <span
+class="math inline">\(s\)</span> be integers such that <span
+class="math inline">\(a - a&#39; = nr\)</span> and <span
+class="math inline">\(b - b&#39; = ns\)</span>. Then <span
+class="math display">\[(a + b) - (a&#39; + b&#39;) = (a - a&#39;) + (b -
+b&#39;) = nr + ns = n(r+s)\]</span> is a multiple of <span
+class="math inline">\(n\)</span>, so <span class="math inline">\(a+b
+\equiv a&#39; + b&#39; \pmod{n}\)</span>. The proof for subtraction is
+almost identical and is omitted. For multiplication, observe that <span
+class="math display">\[ ab - a&#39;b&#39; = ab - ab&#39; + ab&#39; -
+a&#39;b&#39; = a(b-b&#39;) + (a-a&#39;)b&#39; = ans + nrb&#39; = n(as +
+rb&#39;) \]</span> is also a multiple of <span
+class="math inline">\(n\)</span>, so <span class="math inline">\(ab
+\equiv a&#39;b&#39; \pmod{n}\)</span>. The final statement regarding
+exponentiation follows by inducting on the statement about
+multiplication. <span style="float: right;"><span
+class="math inline">\(\Box\)</span></span></p>
+<p>You may notice that division is missing in this theorem. This is
+because division in modular arithmetic is a little subtle; we’ll return
+to this soon.</p>
+<p>The upshot of this theorem is that, if we’re just interested in
+remainders after dividing by <span class="math inline">\(n\)</span>, we
+can “take remainders mod <span class="math inline">\(n\)</span>” at
+every step of our addition/subtraction/multiplication to make our
+calculations easier. For example, suppose we want to calculate <span
+class="math inline">\(123 \cdot 24 \bmod{10}\)</span>. We could do this
+by calculating <span class="math inline">\(123 \cdot 24 = 2952\)</span>
+and then taking a remainder to get 2, but that multiplication is not so
+easy to do in your head. It is easier to observe that <span
+class="math inline">\(123 \equiv 3 \pmod{10}\)</span>, and <span
+class="math inline">\(24 \equiv 4 \pmod{10}\)</span>, so the theorem
+tells us that <span class="math display">\[ 123 \cdot 24 \equiv 3 \cdot
+4 = 12 \equiv 2 \pmod{10}. \]</span> In other words, we have reached the
+same answer <em>without</em> having to multiply large numbers
+together!</p>
 <div class="element">
 <p><span class="label">Exercise</span></p>
-<p>Use the Modular Arithmetic Theorem to quickly calculate the following.</p>
+<p>Use the Modular Arithmetic Theorem to quickly calculate the
+following.</p>
 <ol type="a">
 <li><span class="math inline">\(417 \cdot 22 \bmod{10}\)</span>.</li>
 <li><span class="math inline">\(333333 + 666 \bmod{3}\)</span>.</li>
@@ -635,23 +923,71 @@ a^k &amp;\equiv (a&#39;)^k &amp;&amp;\pmod{n}
 </ol>
 </div>
 <div class="element">
-<p><span class="label">Exercise</span> Fix positive integers <span class="math inline">\(k\)</span> and <span class="math inline">\(n\)</span>. Suppose <span class="math inline">\(a\)</span> and <span class="math inline">\(a&#39;\)</span> are integers such that <span class="math inline">\(a \equiv a&#39; \pmod{n}\)</span>. It is not true in general that <span class="math inline">\(k^a \equiv k^{a&#39;} \pmod{n}\)</span>. Show this by example: in other words, find <span class="math inline">\(k\)</span>, <span class="math inline">\(n\)</span>, <span class="math inline">\(a\)</span>, and <span class="math inline">\(a&#39;\)</span> such that <span class="math inline">\(a \equiv a&#39; \pmod{n}\)</span>, but <span class="math inline">\(k^a \not\equiv k^{a&#39;} \pmod{n}\)</span>.</p>
+<p><span class="label">Exercise</span> Fix positive integers <span
+class="math inline">\(k\)</span> and <span
+class="math inline">\(n\)</span>. Suppose <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(a&#39;\)</span> are integers such that <span
+class="math inline">\(a \equiv a&#39; \pmod{n}\)</span>. It is not true
+in general that <span class="math inline">\(k^a \equiv k^{a&#39;}
+\pmod{n}\)</span>. Show this by example: in other words, find <span
+class="math inline">\(k\)</span>, <span
+class="math inline">\(n\)</span>, <span
+class="math inline">\(a\)</span>, and <span
+class="math inline">\(a&#39;\)</span> such that <span
+class="math inline">\(a \equiv a&#39; \pmod{n}\)</span>, but <span
+class="math inline">\(k^a \not\equiv k^{a&#39;} \pmod{n}\)</span>.</p>
 </div>
 <div class="element">
-<p><span class="label">Harder Exercise</span> Suppose that the number <span class="math inline">\(273x49y5\)</span>, where <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are unknown digits, is divisible by 495. Find <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
+<p><span class="label">Harder Exercise</span> Suppose that the number
+<span class="math inline">\(273x49y5\)</span>, where <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are unknown digits, is divisible by
+495. Find <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>.</p>
 </div>
 <h3 id="caesar-revisited">Caesar Cipher Revisited</h3>
-<p>Imagine that we want to apply the Caesar cipher with a shift of 5 to encrypt the letter <code>Y</code>. Before we see how the Caesar cipher relates to modular arithmetic, convince yourself that the encryption of <code>Y</code> is the letter <code>D</code>.</p>
-<p>Suppose we identify the letters <code>A</code> through <code>Z</code> with the numbers 0 through 25, in order. So, for example, <code>A</code> corresponds to 0, <code>B</code> corresponds to 1, and so forth. The letter <code>Y</code> that we are hoping to encrypt corresponds to 24. Now consider the function <span class="math display">\[ E(x) = (x+5) \bmod{26}. \]</span> Then <span class="math inline">\(E(24) = (24+5) \bmod{26} = 29 \bmod{26} = 3\)</span>, which corresponds precisely to the letter <code>D</code>. In other words, if we identify letters with numbers, the function <span class="math inline">\(E\)</span> is precisely the encryption function of the Caesar cipher. As you might expect, the decryption function is <span class="math display">\[ D(y) = (y-5) \bmod{26}. \]</span> For example, to decrypt the letter <code>D</code>, we look at the corresponding number 3, and <span class="math inline">\(D(3) = (3-5) \bmod{26} = -2 \bmod{26} = 24\)</span>, which corresponds to <code>Y</code>.</p>
-<p>The fact that adding 5 mod 26 and subtracting 5 mod 26 are are inverse operations might seem obvious, but it’s worth noting that it is actually a consequence of the Modular Arithmetic Theorem. Set <span class="math inline">\(y = E(x)\)</span> and observe that <span class="math inline">\(y \equiv x+5 \pmod{26}\)</span> and that <span class="math inline">\(D(y) \equiv y-5 \bmod{26}\)</span>. Thus <span class="math display">\[ \begin{aligned}
+<p>Imagine that we want to apply the Caesar cipher with a shift of 5 to
+encrypt the letter <code>Y</code>. Before we see how the Caesar cipher
+relates to modular arithmetic, convince yourself that the encryption of
+<code>Y</code> is the letter <code>D</code>.</p>
+<p>Suppose we identify the letters <code>A</code> through <code>Z</code>
+with the numbers 0 through 25, in order. So, for example, <code>A</code>
+corresponds to 0, <code>B</code> corresponds to 1, and so forth. The
+letter <code>Y</code> that we are hoping to encrypt corresponds to 24.
+Now consider the function <span class="math display">\[ E(x) = (x+5)
+\bmod{26}. \]</span> Then <span class="math inline">\(E(24) = (24+5)
+\bmod{26} = 29 \bmod{26} = 3\)</span>, which corresponds precisely to
+the letter <code>D</code>. In other words, if we identify letters with
+numbers, the function <span class="math inline">\(E\)</span> is
+precisely the encryption function of the Caesar cipher. As you might
+expect, the decryption function is <span class="math display">\[ D(y) =
+(y-5) \bmod{26}. \]</span> For example, to decrypt the letter
+<code>D</code>, we look at the corresponding number 3, and <span
+class="math inline">\(D(3) = (3-5) \bmod{26} = -2 \bmod{26} =
+24\)</span>, which corresponds to <code>Y</code>.</p>
+<p>The fact that adding 5 mod 26 and subtracting 5 mod 26 are are
+inverse operations might seem obvious, but it’s worth noting that it is
+actually a consequence of the Modular Arithmetic Theorem. Set <span
+class="math inline">\(y = E(x)\)</span> and observe that <span
+class="math inline">\(y \equiv x+5 \pmod{26}\)</span> and that <span
+class="math inline">\(D(y) \equiv y-5 \bmod{26}\)</span>. Thus <span
+class="math display">\[ \begin{aligned}
 D(E(x)) &amp;= D(y) \\
 &amp;\equiv (y - 5) \pmod{26} \\
 &amp;\equiv ((x+5)-5) \pmod{26} \\
 &amp;= x.
-\end{aligned} \]</span> We have used the Modular Arithmetic Theorem for the second-to-last step. There is, of course, nothing special about the shift 5 in this argument; any other shift works exactly the same way.</p>
-<p>The upshot is that the Caesar cipher “is” just modular arithmetic, and computers can do modular arithmetic very quickly.</p>
+\end{aligned} \]</span> We have used the Modular Arithmetic Theorem for
+the second-to-last step. There is, of course, nothing special about the
+shift 5 in this argument; any other shift works exactly the same
+way.</p>
+<p>The upshot is that the Caesar cipher “is” just modular arithmetic,
+and computers can do modular arithmetic very quickly.</p>
 <div id="sagecell-caesar-cipher" class="element">
-<span class="label">SageCell</span> Your friend Alice has just sent you the following message, encrypted using the Caesar cipher with a shift of 7: <code>TLLAHANYHMMPAPOHSSHATPKUPNOA</code>. Here is some code that implements the Caeser cipher; hit “Run.” What is the plaintext message?
+<span class="label">SageCell</span> Your friend Alice has just sent you
+the following message, encrypted using the Caesar cipher with a shift of
+7: <code>TLLAHANYHMMPAPOHSSHATPKUPNOA</code>. Here is some code that
+implements the Caeser cipher; hit “Run.” What is the plaintext message?
 <div class="sage">
 <script type="text/x-sage">
 from re import sub
@@ -699,59 +1035,139 @@ def _(shift=slider(0, 25, 1, 7, label="Shift"),
     output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
 </script>
 </div>
-<p>Once you’ve decrypted the message, play with the SageCell! You can use it to encrypt as well as decrypt messages using the Caesar cipher with any shift. What is the plaintext corresponding to <code>VSSWIZIPX</code> with a shift of 4? What is the ciphertext for the message <code>Muir College</code> with a shift of 2?</p>
+<p>Once you’ve decrypted the message, play with the SageCell! You can
+use it to encrypt as well as decrypt messages using the Caesar cipher
+with any shift. What is the plaintext corresponding to
+<code>VSSWIZIPX</code> with a shift of 4? What is the ciphertext for the
+message <code>Muir College</code> with a shift of 2?</p>
 </div>
-<p>At this point, we’re also ready to <em>start</em> thinking about codebreaking for a Caesar cipher. We’ll develop more machinery later on that’ll help us think more deeply and systemtically about this.</p>
+<p>At this point, we’re also ready to <em>start</em> thinking about
+codebreaking for a Caesar cipher. We’ll develop more machinery later on
+that’ll help us think more deeply and systemtically about this.</p>
 <div class="element">
-<p><span class="label">Exercise</span> You have just intercepted the following ciphertext that was sent out to a politically active student group on campus:</p>
+<p><span class="label">Exercise</span> You have just intercepted the
+following ciphertext that was sent out to a politically active student
+group on campus:</p>
 <pre><code>KLGJELZWJWYWFLKEWWLAFYSFVVWESFVVWUSJTGFARSLAGF</code></pre>
-<p>You know that the message was encrypted using a Caesar cipher, but you don’t know the shift. What is the plaintext? <em>Hint</em>. There are “only” 26 possible shifts to try…!</p>
+<p>You know that the message was encrypted using a Caesar cipher, but
+you don’t know the shift. What is the plaintext? <em>Hint</em>. There
+are “only” 26 possible shifts to try…!</p>
 </div>
 <h2 id="gcds">2.6. Interlude: GCDs</h2>
 <div class="element">
-<p><span class="label">Definition</span> The <em>greatest common divisor</em> (or <em>GCD</em>) of two integers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> that are not both zero is denoted <span class="math inline">\(\gcd(a, b)\)</span> and is defined to be the largest integer which is both a divisor of <span class="math inline">\(a\)</span> and a divisor of <span class="math inline">\(b\)</span>.</p>
+<p><span class="label">Definition</span> The <em>greatest common
+divisor</em> (or <em>GCD</em>) of two integers <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> that are not both zero is denoted <span
+class="math inline">\(\gcd(a, b)\)</span> and is defined to be the
+largest integer which is both a divisor of <span
+class="math inline">\(a\)</span> and a divisor of <span
+class="math inline">\(b\)</span>.</p>
 </div>
-<p>For example, suppose we’re interested in <span class="math inline">\(\gcd(14, 21)\)</span>. The factors of 14 are 1, 2, 7, and 14. The factors of 21 are 1, 3, 7, and 21. The largest one that both have in common is 7, so <span class="math inline">\(\gcd(14, 21) = 7\)</span>.</p>
-<p>What we just did, while intuitive, is actually not the best way of finding GCDs. Finding the factors of a number is, in general, very difficult; in fact, we’ll see later that the difficulty of factoring can be used to create cryptosystems that are secure even by modern standards! But calculating GCDs is not difficult, thanks to the euclidean algorithm, which we will get to shortly.</p>
+<p>For example, suppose we’re interested in <span
+class="math inline">\(\gcd(14, 21)\)</span>. The factors of 14 are 1, 2,
+7, and 14. The factors of 21 are 1, 3, 7, and 21. The largest one that
+both have in common is 7, so <span class="math inline">\(\gcd(14, 21) =
+7\)</span>.</p>
+<p>What we just did, while intuitive, is actually not the best way of
+finding GCDs. Finding the factors of a number is, in general, very
+difficult; in fact, we’ll see later that the difficulty of factoring can
+be used to create cryptosystems that are secure even by modern
+standards! But calculating GCDs is not difficult, thanks to the
+euclidean algorithm, which we will get to shortly.</p>
 <div class="element">
-<p><span class="label">Exercise</span> Suppose <span class="math inline">\(a\)</span> is a nonzero integer. What is <span class="math inline">\(\gcd(a, 0)\)</span>?</p>
-<p><em>Note</em>. Make sure that your answer works for negative values of <span class="math inline">\(a\)</span> also!</p>
+<p><span class="label">Exercise</span> Suppose <span
+class="math inline">\(a\)</span> is a nonzero integer. What is <span
+class="math inline">\(\gcd(a, 0)\)</span>?</p>
+<p><em>Note</em>. Make sure that your answer works for negative values
+of <span class="math inline">\(a\)</span> also!</p>
 </div>
 <h3 id="euclidean">Euclidean Algorithm</h3>
-<p>The euclidean algorithm for computing GCDs relies on the following observation.</p>
+<p>The euclidean algorithm for computing GCDs relies on the following
+observation.</p>
 <div class="element">
-<p><span class="label">Lemma</span> Let <span class="math inline">\(n\)</span> be a positive integer and <span class="math inline">\(a \equiv b \pmod{n}\)</span>. Then <span class="math inline">\(\gcd(a, n) = \gcd(b, n)\)</span>.</p>
+<p><span class="label">Lemma</span> Let <span
+class="math inline">\(n\)</span> be a positive integer and <span
+class="math inline">\(a \equiv b \pmod{n}\)</span>. Then <span
+class="math inline">\(\gcd(a, n) = \gcd(b, n)\)</span>.</p>
 </div>
-<p><em>Proof</em>. Define <span class="math inline">\(c = \gcd(a, n)\)</span> and <span class="math inline">\(d = \gcd(b, n)\)</span>. Let <span class="math inline">\(k\)</span> be an integer such that <span class="math inline">\(a - b = nk\)</span>. Since <span class="math inline">\(c\)</span> is a factor of both <span class="math inline">\(a\)</span> and <span class="math inline">\(n\)</span>, it is also a factor of <span class="math inline">\(a - nk = b\)</span>. Thus <span class="math inline">\(c\)</span> is a common factor of both <span class="math inline">\(b\)</span> and <span class="math inline">\(n\)</span> as well, so <span class="math inline">\(c \leq d\)</span> by definition of <span class="math inline">\(d\)</span>. On the other hand, the same logic shows that <span class="math inline">\(d\)</span> is a common factor of both <span class="math inline">\(a\)</span> and <span class="math inline">\(n\)</span>, so <span class="math inline">\(d \leq c\)</span>. Thus <span class="math inline">\(d = c\)</span>. <span style="float: right;"><span class="math inline">\(\Box\)</span></span></p>
+<p><em>Proof</em>. Define <span class="math inline">\(c = \gcd(a,
+n)\)</span> and <span class="math inline">\(d = \gcd(b, n)\)</span>. Let
+<span class="math inline">\(k\)</span> be an integer such that <span
+class="math inline">\(a - b = nk\)</span>. Since <span
+class="math inline">\(c\)</span> is a factor of both <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(n\)</span>, it is also a factor of <span
+class="math inline">\(a - nk = b\)</span>. Thus <span
+class="math inline">\(c\)</span> is a common factor of both <span
+class="math inline">\(b\)</span> and <span
+class="math inline">\(n\)</span> as well, so <span
+class="math inline">\(c \leq d\)</span> by definition of <span
+class="math inline">\(d\)</span>. On the other hand, the same logic
+shows that <span class="math inline">\(d\)</span> is a common factor of
+both <span class="math inline">\(a\)</span> and <span
+class="math inline">\(n\)</span>, so <span class="math inline">\(d \leq
+c\)</span>. Thus <span class="math inline">\(d = c\)</span>. <span
+style="float: right;"><span
+class="math inline">\(\Box\)</span></span></p>
 <div class="element">
-<p><span class="label">Corollary</span> Let <span class="math inline">\(n\)</span> be a positive integer and let <span class="math inline">\(r\)</span> be the remainder when an integer <span class="math inline">\(a\)</span> is divided by <span class="math inline">\(n\)</span>. Then <span class="math inline">\(\gcd(a, n) = \gcd(r, n)\)</span>.</p>
+<p><span class="label">Corollary</span> Let <span
+class="math inline">\(n\)</span> be a positive integer and let <span
+class="math inline">\(r\)</span> be the remainder when an integer <span
+class="math inline">\(a\)</span> is divided by <span
+class="math inline">\(n\)</span>. Then <span
+class="math inline">\(\gcd(a, n) = \gcd(r, n)\)</span>.</p>
 </div>
 <div class="element">
-<p><span class="label">Euclidean Algorithm</span> Suppose <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are two positive integers, and assume without loss of generality that <span class="math inline">\(b \geq a\)</span>. To find <span class="math inline">\(\gcd(a, b)\)</span>, do the following:</p>
-<p>Divide <span class="math inline">\(b\)</span> by <span class="math inline">\(a\)</span> and let <span class="math inline">\(r\)</span> be the remainder. Then:</p>
+<p><span class="label">Euclidean Algorithm</span> Suppose <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are two positive integers, and assume
+without loss of generality that <span class="math inline">\(b \geq
+a\)</span>. To find <span class="math inline">\(\gcd(a, b)\)</span>, do
+the following:</p>
+<p>Divide <span class="math inline">\(b\)</span> by <span
+class="math inline">\(a\)</span> and let <span
+class="math inline">\(r\)</span> be the remainder. Then:</p>
 <ul>
-<li>If <span class="math inline">\(r = 0\)</span>, output <span class="math inline">\(a\)</span>.</li>
-<li>Otherwise, replace <span class="math inline">\(b\)</span> with <span class="math inline">\(a\)</span> and <span class="math inline">\(a\)</span> with <span class="math inline">\(r\)</span>. Then repeat.</li>
+<li>If <span class="math inline">\(r = 0\)</span>, output <span
+class="math inline">\(a\)</span>.</li>
+<li>Otherwise, replace <span class="math inline">\(b\)</span> with <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(a\)</span> with <span
+class="math inline">\(r\)</span>. Then repeat.</li>
 </ul>
 </div>
-<p>Let’s work out an example. Say we want to compute <span class="math inline">\(\gcd(115, 35)\)</span>. We divide the bigger number by the smaller one and we get</p>
+<p>Let’s work out an example. Say we want to compute <span
+class="math inline">\(\gcd(115, 35)\)</span>. We divide the bigger
+number by the smaller one and we get</p>
 <p><span class="math display">\[ 115 = 3 \cdot 35 + 10. \]</span></p>
-<p>The remainder is nonzero, so we’ll divide again, but this time, we’ll divide the dividend (35) by the remainder (10). We get</p>
+<p>The remainder is nonzero, so we’ll divide again, but this time, we’ll
+divide the dividend (35) by the remainder (10). We get</p>
 <p><span class="math display">\[ 35 = 3 \cdot 10 + 5. \]</span></p>
 <p>The remainder is nonzero again, so we divide again:</p>
 <p><span class="math display">\[ 10 = 2 \cdot 5 + 0. \]</span></p>
-<p>This time, the remainder is 0, so we output the dividend: ie, 5. We have just calculated that <span class="math inline">\(\gcd(115, 35) = 5\)</span>. We did not have to factor 115 or 35 to do this; all it took was three divisions!</p>
+<p>This time, the remainder is 0, so we output the dividend: ie, 5. We
+have just calculated that <span class="math inline">\(\gcd(115, 35) =
+5\)</span>. We did not have to factor 115 or 35 to do this; all it took
+was three divisions!</p>
 <div class="element">
-<p><span class="label">Exercise</span> Calculate the following GCDs using the euclidean algorithm:</p>
+<p><span class="label">Exercise</span> Calculate the following GCDs
+using the euclidean algorithm:</p>
 <ol type="a">
 <li><span class="math inline">\(\gcd(180, 120)\)</span>.</li>
 <li><span class="math inline">\(\gcd(180, 81)\)</span>.</li>
 <li><span class="math inline">\(\gcd(121, 77)\)</span>.</li>
 </ol>
 </div>
-<p>This algorithm <a href="https://en.wikipedia.org/wiki/Euclidean_algorithm#Historical_development">dates back</a> to Euclid’s <em>Elements</em> (c. 300 BCE), but it’s incredibly efficient: it’s still used in modern programming libraries to implement GCD calculations! In particular:</p>
+<p>This algorithm <a
+href="https://en.wikipedia.org/wiki/Euclidean_algorithm#Historical_development">dates
+back</a> to Euclid’s <em>Elements</em> (c. 300 BCE), but it’s incredibly
+efficient: it’s still used in modern programming libraries to implement
+GCD calculations! In particular:</p>
 <div class="element">
-<span class="label">SageCell</span> Sage uses the euclidean algorithm to implement GCD calculations. And it’s <em>fast</em>; you can use it to calculate GCDs of some very large numbers! Try it!
+<span class="label">SageCell</span> Sage uses the euclidean algorithm to
+implement GCD calculations. And it’s <em>fast</em>; you can use it to
+calculate GCDs of some very large numbers! Try it!
 <div class="sage">
 <script type="text/x-sage">
 gcd(30414093201713378043612608166064768844377641568960512, 391640858566920)
@@ -759,18 +1175,44 @@ gcd(30414093201713378043612608166064768844377641568960512, 391640858566920)
 </div>
 </div>
 <h3 id="bezout">Bézout’s Theorem</h3>
-<p>Here’s a theorem that looks a little strange at first glance, but turns out to be surprisingly useful.</p>
+<p>Here’s a theorem that looks a little strange at first glance, but
+turns out to be surprisingly useful.</p>
 <div class="element">
-<p><span class="label">Bézout’s Theorem</span> Suppose <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are integers not both 0. Then <span class="math inline">\(\gcd(a, b)\)</span> can be written as an <em>integer linear combination</em> of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, ie, it can be written as <span class="math inline">\(ax + by\)</span> for some integers <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. Integers <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> such that <span class="math inline">\(\gcd(a, b) = ax + by\)</span> are called <em>Bézout coefficients</em>.</p>
+<p><span class="label">Bézout’s Theorem</span> Suppose <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are integers not both 0. Then <span
+class="math inline">\(\gcd(a, b)\)</span> can be written as an
+<em>integer linear combination</em> of <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>, ie, it can be written as <span
+class="math inline">\(ax + by\)</span> for some integers <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>. Integers <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> such that <span
+class="math inline">\(\gcd(a, b) = ax + by\)</span> are called
+<em>Bézout coefficients</em>.</p>
 </div>
-<p>In fact, the euclidean algorithm tells us how to find Bézout coefficients! Let’s work this out in an example. Suppose we’re interested in <span class="math inline">\(\gcd(115, 35)\)</span> again. We saw above that the following sequence of divisions showed us that <span class="math inline">\(\gcd(115, 35) = 5\)</span>.</p>
+<p>In fact, the euclidean algorithm tells us how to find Bézout
+coefficients! Let’s work this out in an example. Suppose we’re
+interested in <span class="math inline">\(\gcd(115, 35)\)</span> again.
+We saw above that the following sequence of divisions showed us that
+<span class="math inline">\(\gcd(115, 35) = 5\)</span>.</p>
 <p><span class="math display">\[ \begin{aligned}
 115 &amp;= 3 \cdot 35 + 10 \\
 35 &amp;= 3 \cdot 10 + 5 \\
 10 &amp;= 2 \cdot 5 + 0
 \end{aligned} \]</span></p>
-<p>If we rearrange the second equation, it tells us that <span class="math display">\[ 5 = 35 - 3 \cdot 10. \]</span> The first equation tells us that <span class="math inline">\(10 = 115 - 3 \cdot 35\)</span>, and we can plug this into the equation above to get <span class="math display">\[ 5 = 35 - 3 \cdot (115 - 3 \cdot 35) = (-3) \cdot 115 + 10 \cdot 35. \]</span> We’ve just written the GCD of 115 and 35 as an integer linear combination of these two numbers!</p>
-<p>Let’s do another longer example. Suppose we’re interested in <span class="math inline">\(\gcd(240, 46)\)</span>. Here is the sequence of divisions we would perform when running the euclidean algorithm:</p>
+<p>If we rearrange the second equation, it tells us that <span
+class="math display">\[ 5 = 35 - 3 \cdot 10. \]</span> The first
+equation tells us that <span class="math inline">\(10 = 115 - 3 \cdot
+35\)</span>, and we can plug this into the equation above to get <span
+class="math display">\[ 5 = 35 - 3 \cdot (115 - 3 \cdot 35) = (-3) \cdot
+115 + 10 \cdot 35. \]</span> We’ve just written the GCD of 115 and 35 as
+an integer linear combination of these two numbers!</p>
+<p>Let’s do another longer example. Suppose we’re interested in <span
+class="math inline">\(\gcd(240, 46)\)</span>. Here is the sequence of
+divisions we would perform when running the euclidean algorithm:</p>
 <p><span class="math display">\[ \begin{aligned}
 240 &amp;= 5 \cdot 46 + 10 \\
 46 &amp;= 4 \cdot 10 + 6 \\
@@ -778,8 +1220,9 @@ gcd(30414093201713378043612608166064768844377641568960512, 391640858566920)
 6 &amp;= 1 \cdot 4 + 2 \\
 4 &amp;= 2 \cdot 2 + 0
 \end{aligned} \]</span></p>
-<p>This tells us that <span class="math inline">\(\gcd(240, 46) = 2\)</span>. To compute Bézout coefficients, we work backwards:</p>
-<p><span class="math display">\[ \begin{aligned} 
+<p>This tells us that <span class="math inline">\(\gcd(240, 46) =
+2\)</span>. To compute Bézout coefficients, we work backwards:</p>
+<p><span class="math display">\[ \begin{aligned}
 2 &amp;= 6 - 1 \cdot 4 \\
 &amp;= 6 - 1 \cdot (10 - 1 \cdot 6) \\
 &amp;= 2 \cdot 6 - 10 \\
@@ -788,78 +1231,222 @@ gcd(30414093201713378043612608166064768844377641568960512, 391640858566920)
 &amp;= 2 \cdot 46 - 9 \cdot (240 - 5 \cdot 46) \\
 &amp;= 47 \cdot 46 - 9 \cdot 240.
 \end{aligned} \]</span></p>
-<p>We start by rewriting the division for the last nonzero remainder. We then alternate between substitution for the remainder directly above, and simplifying.</p>
-<p>This process, of “working backwards” through the sequence of divisions we did during the euclidean algorithm, always works: the result will always be the GCD written as a linear combination of the two numbers we started with. This process is called the <em>extended euclidean algorithm</em>.</p>
+<p>We start by rewriting the division for the last nonzero remainder. We
+then alternate between substitution for the remainder directly above,
+and simplifying.</p>
+<p>This process, of “working backwards” through the sequence of
+divisions we did during the euclidean algorithm, always works: the
+result will always be the GCD written as a linear combination of the two
+numbers we started with. This process is called the <em>extended
+euclidean algorithm</em>.</p>
 <div class="element">
-<p><span class="label">Exercise</span> Calculate Bézout coefficients for the following GCDs using the extended euclidean algorithm:</p>
+<p><span class="label">Exercise</span> Calculate Bézout coefficients for
+the following GCDs using the extended euclidean algorithm:</p>
 <ol type="a">
 <li><span class="math inline">\(\gcd(180, 120)\)</span>.</li>
 <li><span class="math inline">\(\gcd(180, 81)\)</span>.</li>
 <li><span class="math inline">\(\gcd(121, 77)\)</span>.</li>
 </ol>
 </div>
-<p>It’s worth remarking that the extended euclidean algorithm gives us <em>one</em> pair of Bézout coefficients, but will be others; Bézout coefficients are not unique!</p>
+<p>It’s worth remarking that the extended euclidean algorithm gives us
+<em>one</em> pair of Bézout coefficients, but will be others; Bézout
+coefficients are not unique!</p>
 <div class="element">
-<p><span class="label">Exercise</span> Observe that <span class="math inline">\(\gcd(42, 12) = 6\)</span>. Show that the pairs <span class="math inline">\((-1, 4)\)</span> and <span class="math inline">\((1, -3)\)</span> are both Bézout coefficients for 42 and 12.</p>
+<p><span class="label">Exercise</span> Observe that <span
+class="math inline">\(\gcd(42, 12) = 6\)</span>. Show that the pairs
+<span class="math inline">\((-1, 4)\)</span> and <span
+class="math inline">\((1, -3)\)</span> are both Bézout coefficients for
+42 and 12.</p>
 </div>
 <div class="element">
-<span class="label">SageCell</span> Sage can calculate Bézout coefficients using the function <code>xgcd</code>. The output is a triple where the first element is the GCD, and the second and third are the Bézout coefficients. Again, it’s very fast, even with huge numbers:
+<span class="label">SageCell</span> Sage can calculate Bézout
+coefficients using the function <code>xgcd</code>. The output is a
+triple where the first element is the GCD, and the second and third are
+the Bézout coefficients. Again, it’s very fast, even with huge numbers:
 <div class="sage">
 <script type="text/x-sage">
 xgcd(30414093201713378043612608166064768844377641568960512, 391640858566920)
 </script>
 </div>
 </div>
-<p>Here is a statement that might feel intuitive, but requires proof. The proof is a nice application of Bézout’s theorem.</p>
+<p>Here is a statement that might feel intuitive, but requires proof.
+The proof is a nice application of Bézout’s theorem.</p>
 <div class="element">
-<p><span class="label">Euclid’s Lemma</span> Suppose <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are integers and that <span class="math inline">\(d\)</span> is a divisor of <span class="math inline">\(ab\)</span> such that <span class="math inline">\(\gcd(a, d) = 1\)</span>. Then <span class="math inline">\(d\)</span> is a divisor of <span class="math inline">\(b\)</span>.</p>
+<p><span class="label">Euclid’s Lemma</span> Suppose <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are integers and that <span
+class="math inline">\(d\)</span> is a divisor of <span
+class="math inline">\(ab\)</span> such that <span
+class="math inline">\(\gcd(a, d) = 1\)</span>. Then <span
+class="math inline">\(d\)</span> is a divisor of <span
+class="math inline">\(b\)</span>.</p>
 </div>
-<p><em>Proof</em>. By Bézout’s theorem, there exist <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> such that <span class="math inline">\(1 = \gcd(a, d) = ax + dy\)</span>. Multiplying this equation by <span class="math inline">\(b\)</span>, we see that <span class="math display">\[ b = abx + bdy. \]</span> Observe that <span class="math inline">\(d\)</span> divides <span class="math inline">\(bdy\)</span>, and it also divides <span class="math inline">\(abx\)</span> since it divides <span class="math inline">\(ab\)</span>. Thus <span class="math inline">\(d\)</span> divides the sum <span class="math inline">\(abx + bdy = b\)</span>. <span style="float: right;"><span class="math inline">\(\Box\)</span></span></p>
+<p><em>Proof</em>. By Bézout’s theorem, there exist <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> such that <span class="math inline">\(1
+= \gcd(a, d) = ax + dy\)</span>. Multiplying this equation by <span
+class="math inline">\(b\)</span>, we see that <span
+class="math display">\[ b = abx + bdy. \]</span> Observe that <span
+class="math inline">\(d\)</span> divides <span
+class="math inline">\(bdy\)</span>, and it also divides <span
+class="math inline">\(abx\)</span> since it divides <span
+class="math inline">\(ab\)</span>. Thus <span
+class="math inline">\(d\)</span> divides the sum <span
+class="math inline">\(abx + bdy = b\)</span>. <span
+style="float: right;"><span
+class="math inline">\(\Box\)</span></span></p>
 <div class="element">
-<p><span class="label">Exercise</span> Explain why Euclid’s lemma as stated above implies the following: if <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are integers, <span class="math inline">\(p\)</span> is prime, and <span class="math inline">\(p\)</span> divides <span class="math inline">\(ab\)</span>, then either <span class="math inline">\(p\)</span> divides <span class="math inline">\(a\)</span> or <span class="math inline">\(p\)</span> divides <span class="math inline">\(b\)</span>.</p>
+<p><span class="label">Exercise</span> Explain why Euclid’s lemma as
+stated above implies the following: if <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are integers, <span
+class="math inline">\(p\)</span> is prime, and <span
+class="math inline">\(p\)</span> divides <span
+class="math inline">\(ab\)</span>, then either <span
+class="math inline">\(p\)</span> divides <span
+class="math inline">\(a\)</span> or <span
+class="math inline">\(p\)</span> divides <span
+class="math inline">\(b\)</span>.</p>
 </div>
 <h3 id="modular-inversion">Modular Inversion</h3>
-<p>Before discussing modular inversion, let’s take a step back. How do we solve an equation like the following for <span class="math inline">\(z\)</span>?</p>
+<p>Before discussing modular inversion, let’s take a step back. How do
+we solve an equation like the following for <span
+class="math inline">\(z\)</span>?</p>
 <p><span class="math display">\[ 5z = 7 \]</span></p>
-<p>We divide both sides by <span class="math inline">\(5\)</span>, of course! Stated differently, we multiply both sides by <span class="math inline">\(1/5\)</span>. And why do we do that? It’s because <span class="math inline">\((1/5) \cdot 5 = 1\)</span>, so by multiplying both sides by <span class="math inline">\(1/5\)</span>, we are able to cancel out the 5 that appears on the left-hand side of our equation and isolate the variable <span class="math inline">\(z\)</span>.</p>
-<p>Modular inversion gives us a way of recreating this process with congruences. Before jumping into the definitions, let’s look at an example. Suppose we’re interested in solving the congruence</p>
+<p>We divide both sides by <span class="math inline">\(5\)</span>, of
+course! Stated differently, we multiply both sides by <span
+class="math inline">\(1/5\)</span>. And why do we do that? It’s because
+<span class="math inline">\((1/5) \cdot 5 = 1\)</span>, so by
+multiplying both sides by <span class="math inline">\(1/5\)</span>, we
+are able to cancel out the 5 that appears on the left-hand side of our
+equation and isolate the variable <span
+class="math inline">\(z\)</span>.</p>
+<p>Modular inversion gives us a way of recreating this process with
+congruences. Before jumping into the definitions, let’s look at an
+example. Suppose we’re interested in solving the congruence</p>
 <p><span class="math display">\[ 5z \equiv 7 \pmod{11}. \]</span></p>
-<p>It doesn’t make sense to directly “divide both sides by <span class="math inline">\(5\)</span>,” because congruences only make sense when both sides of the congruence are integers and <span class="math inline">\(7/5\)</span> is not an integer. But if we can find an <em>integer</em> <span class="math inline">\(x\)</span> with the property that <span class="math inline">\(5x \equiv 1 \pmod{11}\)</span>, then we could multiply both sides of our congruence by <span class="math inline">\(x\)</span> and eliminate the <span class="math inline">\(5\)</span> on the left-hand side just like we did earlier (using the Modular Arithmetic Theorem!). And in fact there is such an integer <span class="math inline">\(x\)</span> – consider, for example, <span class="math inline">\(x = 9\)</span>. Then <span class="math inline">\(5x = 9 \cdot 5 = 45 \equiv 1 \pmod{11}\)</span>, so if we multiply both sides of our congruence by <span class="math inline">\(9\)</span>, we get</p>
-<p><span class="math display">\[ z = 1 \cdot z \equiv (5 \cdot 9) z = 9 \cdot (5 z) \equiv 9 \cdot 7 \pmod{11}. \]</span></p>
+<p>It doesn’t make sense to directly “divide both sides by <span
+class="math inline">\(5\)</span>,” because congruences only make sense
+when both sides of the congruence are integers and <span
+class="math inline">\(7/5\)</span> is not an integer. But if we can find
+an <em>integer</em> <span class="math inline">\(x\)</span> with the
+property that <span class="math inline">\(5x \equiv 1
+\pmod{11}\)</span>, then we could multiply both sides of our congruence
+by <span class="math inline">\(x\)</span> and eliminate the <span
+class="math inline">\(5\)</span> on the left-hand side just like we did
+earlier (using the Modular Arithmetic Theorem!). And in fact there is
+such an integer <span class="math inline">\(x\)</span> – consider, for
+example, <span class="math inline">\(x = 9\)</span>. Then <span
+class="math inline">\(5x = 9 \cdot 5 = 45 \equiv 1 \pmod{11}\)</span>,
+so if we multiply both sides of our congruence by <span
+class="math inline">\(9\)</span>, we get</p>
+<p><span class="math display">\[ z = 1 \cdot z \equiv (5 \cdot 9) z = 9
+\cdot (5 z) \equiv 9 \cdot 7 \pmod{11}. \]</span></p>
 <p>Thus</p>
-<p><span class="math display">\[ z \equiv 9 \cdot 7 = 63 \equiv 8 \pmod{11} \]</span></p>
-<p>and we’ve solved our congruence! The solution is <span class="math inline">\(z \equiv 8 \pmod{11}\)</span>.</p>
-<p>In this example, we magicked the number <span class="math inline">\(x = 9\)</span> out of thin air, but there is in fact a systematic way of finding this number which we will get to shortly. Let us first make some relevant definitions and observations.</p>
+<p><span class="math display">\[ z \equiv 9 \cdot 7 = 63 \equiv 8
+\pmod{11} \]</span></p>
+<p>and we’ve solved our congruence! The solution is <span
+class="math inline">\(z \equiv 8 \pmod{11}\)</span>.</p>
+<p>In this example, we magicked the number <span class="math inline">\(x
+= 9\)</span> out of thin air, but there is in fact a systematic way of
+finding this number which we will get to shortly. Let us first make some
+relevant definitions and observations.</p>
 <div class="element">
-<p><span class="label">Definition</span> Fix a positive integer <span class="math inline">\(n\)</span>. An integer <span class="math inline">\(a\)</span> is <em>invertible</em> mod <span class="math inline">\(n\)</span> (or a <em>unit</em> mod <span class="math inline">\(n\)</span>) if there exists another integer <span class="math inline">\(x\)</span> such that <span class="math inline">\(ax \equiv 1 \pmod{n}\)</span>. The number <span class="math inline">\(x\)</span> is then called an <em>inverse</em> of <span class="math inline">\(a\)</span> mod <span class="math inline">\(n\)</span>, and in symbols, one writes <span class="math inline">\(a^{-1} \equiv x \pmod{n}\)</span>.</p>
+<p><span class="label">Definition</span> Fix a positive integer <span
+class="math inline">\(n\)</span>. An integer <span
+class="math inline">\(a\)</span> is <em>invertible</em> mod <span
+class="math inline">\(n\)</span> (or a <em>unit</em> mod <span
+class="math inline">\(n\)</span>) if there exists another integer <span
+class="math inline">\(x\)</span> such that <span
+class="math inline">\(ax \equiv 1 \pmod{n}\)</span>. The number <span
+class="math inline">\(x\)</span> is then called an <em>inverse</em> of
+<span class="math inline">\(a\)</span> mod <span
+class="math inline">\(n\)</span>, and in symbols, one writes <span
+class="math inline">\(a^{-1} \equiv x \pmod{n}\)</span>.</p>
 </div>
-<p>For example, we saw above that <span class="math inline">\(9 \equiv 5^{-1} \pmod{11}\)</span>, because <span class="math inline">\(5 \cdot 9 \equiv 1 \pmod{11}\)</span>.</p>
+<p>For example, we saw above that <span class="math inline">\(9 \equiv
+5^{-1} \pmod{11}\)</span>, because <span class="math inline">\(5 \cdot 9
+\equiv 1 \pmod{11}\)</span>.</p>
 <p>It is important to note that inverses don’t always exist.</p>
 <div class="element">
-<p><span class="label">Exercise</span> Explain why 2 is not invertible mod 4.</p>
+<p><span class="label">Exercise</span> Explain why 2 is not invertible
+mod 4.</p>
 </div>
-<p>The following theorem characterizes exactly when inverses exist, and also tells us how to find inverses!</p>
+<p>The following theorem characterizes exactly when inverses exist, and
+also tells us how to find inverses!</p>
 <div class="element">
-<p><span class="label">Modular Inversion Theorem</span> Fix a positive integer <span class="math inline">\(n\)</span> and another integer <span class="math inline">\(a\)</span>. Then <span class="math inline">\(a\)</span> is invertible mod <span class="math inline">\(n\)</span> if and only if <span class="math inline">\(\gcd(a, n) = 1\)</span>. Moreover, if <span class="math inline">\(\gcd(a, n) = 1\)</span> and <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are Bézout coefficients for <span class="math inline">\(a\)</span> and <span class="math inline">\(n\)</span>, then <span class="math inline">\(x\)</span> is an inverse of <span class="math inline">\(a\)</span> mod <span class="math inline">\(n\)</span>.</p>
+<p><span class="label">Modular Inversion Theorem</span> Fix a positive
+integer <span class="math inline">\(n\)</span> and another integer <span
+class="math inline">\(a\)</span>. Then <span
+class="math inline">\(a\)</span> is invertible mod <span
+class="math inline">\(n\)</span> if and only if <span
+class="math inline">\(\gcd(a, n) = 1\)</span>. Moreover, if <span
+class="math inline">\(\gcd(a, n) = 1\)</span> and <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are Bézout coefficients for <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(n\)</span>, then <span
+class="math inline">\(x\)</span> is an inverse of <span
+class="math inline">\(a\)</span> mod <span
+class="math inline">\(n\)</span>.</p>
 </div>
-<p><em>Proof</em>. Suppose first that <span class="math inline">\(a\)</span> is invertible mod <span class="math inline">\(n\)</span>. Then there exists an integer <span class="math inline">\(x\)</span> such that <span class="math inline">\(ax \equiv 1 \pmod{n}\)</span>. This means that <span class="math inline">\(ax - 1\)</span> is a multiple of <span class="math inline">\(n\)</span>, so there exists an integer <span class="math inline">\(y\)</span> such that <span class="math inline">\(ax - 1 = ny\)</span>, or, in other words, <span class="math inline">\(ax - ny = 1\)</span>. Since <span class="math inline">\(a\)</span> and <span class="math inline">\(n\)</span> are both divisible by <span class="math inline">\(\gcd(a, n)\)</span>, the left-hand side of the equation <span class="math inline">\(ax - ny = 1\)</span> is divisible by <span class="math inline">\(\gcd(a, n)\)</span>, so the right-hand side must be divisible by <span class="math inline">\(\gcd(a, n)\)</span> also. But the only positive factor of 1 is 1 itself, so <span class="math inline">\(\gcd(a, n) = 1\)</span>.</p>
-<p>Conversely, suppose <span class="math inline">\(\gcd(a, n) = 1\)</span>. By Bézout’s theorem, there exist <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> such that <span class="math inline">\(ax + ny = 1\)</span>. This means that <span class="math inline">\(ax - 1\)</span> is a multiple of <span class="math inline">\(n\)</span>, so <span class="math inline">\(ax \equiv 1 \pmod{n}\)</span>. Thus <span class="math inline">\(x\)</span> is an inverse of <span class="math inline">\(a\)</span>. <span style="float: right;"><span class="math inline">\(\Box\)</span></span></p>
-<p>In other words, this theorem tells us that the euclidean algorithm is again what we use to figure out if a number is invertible mod <span class="math inline">\(n\)</span>, and to figure out what the inverse is.</p>
-<p>For example, suppose we’re interested in the inverse of 7 mod 23. We use the euclidean algorithm to compute <span class="math inline">\(\gcd(23, 7)\)</span>.</p>
+<p><em>Proof</em>. Suppose first that <span
+class="math inline">\(a\)</span> is invertible mod <span
+class="math inline">\(n\)</span>. Then there exists an integer <span
+class="math inline">\(x\)</span> such that <span
+class="math inline">\(ax \equiv 1 \pmod{n}\)</span>. This means that
+<span class="math inline">\(ax - 1\)</span> is a multiple of <span
+class="math inline">\(n\)</span>, so there exists an integer <span
+class="math inline">\(y\)</span> such that <span
+class="math inline">\(ax - 1 = ny\)</span>, or, in other words, <span
+class="math inline">\(ax - ny = 1\)</span>. Since <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(n\)</span> are both divisible by <span
+class="math inline">\(\gcd(a, n)\)</span>, the left-hand side of the
+equation <span class="math inline">\(ax - ny = 1\)</span> is divisible
+by <span class="math inline">\(\gcd(a, n)\)</span>, so the right-hand
+side must be divisible by <span class="math inline">\(\gcd(a,
+n)\)</span> also. But the only positive factor of 1 is 1 itself, so
+<span class="math inline">\(\gcd(a, n) = 1\)</span>.</p>
+<p>Conversely, suppose <span class="math inline">\(\gcd(a, n) =
+1\)</span>. By Bézout’s theorem, there exist <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> such that <span
+class="math inline">\(ax + ny = 1\)</span>. This means that <span
+class="math inline">\(ax - 1\)</span> is a multiple of <span
+class="math inline">\(n\)</span>, so <span class="math inline">\(ax
+\equiv 1 \pmod{n}\)</span>. Thus <span class="math inline">\(x\)</span>
+is an inverse of <span class="math inline">\(a\)</span>. <span
+style="float: right;"><span
+class="math inline">\(\Box\)</span></span></p>
+<p>In other words, this theorem tells us that the euclidean algorithm is
+again what we use to figure out if a number is invertible mod <span
+class="math inline">\(n\)</span>, and to figure out what the inverse
+is.</p>
+<p>For example, suppose we’re interested in the inverse of 7 mod 23. We
+use the euclidean algorithm to compute <span
+class="math inline">\(\gcd(23, 7)\)</span>.</p>
 <p><span class="math display">\[ \begin{aligned}
 23 &amp;= 3 \cdot 7 + 2 \\
-7 &amp;= 3 \cdot 2 + 1 \\ 
-2 &amp;= 2 \cdot 1 + 0 
+7 &amp;= 3 \cdot 2 + 1 \\
+2 &amp;= 2 \cdot 1 + 0
 \end{aligned} \]</span></p>
-<p>This tells us that <span class="math inline">\(\gcd(23, 7) = 1\)</span>, so 7 is in fact invertible mod 23. Moreover, working backwards, we see that</p>
+<p>This tells us that <span class="math inline">\(\gcd(23, 7) =
+1\)</span>, so 7 is in fact invertible mod 23. Moreover, working
+backwards, we see that</p>
 <p><span class="math display">\[ \begin{aligned}
 1 &amp;= 7 - 3 \cdot 2 \\
 &amp;= 7 - 3 \cdot (23 - 3 \cdot 7) \\
 &amp;= 10 \cdot 7 - 3 \cdot 23
 \end{aligned} \]</span></p>
-<p>so the Modular Inversion Theorem tells us that 10 is the inverse of 7 mod 23.</p>
+<p>so the Modular Inversion Theorem tells us that 10 is the inverse of 7
+mod 23.</p>
 <div class="element">
-<p><span class="label">Exercise</span> For each of the following, determine whether <span class="math inline">\(a\)</span> is invertible mod <span class="math inline">\(n\)</span>. If it is, find an inverse of <span class="math inline">\(a\)</span> mod <span class="math inline">\(n\)</span>.</p>
+<p><span class="label">Exercise</span> For each of the following,
+determine whether <span class="math inline">\(a\)</span> is invertible
+mod <span class="math inline">\(n\)</span>. If it is, find an inverse of
+<span class="math inline">\(a\)</span> mod <span
+class="math inline">\(n\)</span>.</p>
 <ol type="a">
 <li><span class="math inline">\(a = 14, n = 21\)</span></li>
 <li><span class="math inline">\(a = 3, n = 7\)</span></li>
@@ -867,7 +1454,8 @@ xgcd(30414093201713378043612608166064768844377641568960512, 391640858566920)
 </ol>
 </div>
 <div class="element">
-<p><span class="label">Exercise</span> Solve the following congruences for <span class="math inline">\(z\)</span>.</p>
+<p><span class="label">Exercise</span> Solve the following congruences
+for <span class="math inline">\(z\)</span>.</p>
 <ol type="a">
 <li><span class="math inline">\(2z \equiv 3 \pmod{11}\)</span></li>
 <li><span class="math inline">\(3z \equiv 2 \pmod{7}\)</span></li>
@@ -875,50 +1463,141 @@ xgcd(30414093201713378043612608166064768844377641568960512, 391640858566920)
 <li><span class="math inline">\(5z \equiv 17 \pmod{101}\)</span></li>
 </ol>
 </div>
-<p>We remarked earlier that Bézout coefficients aren’t unique, and inverses aren’t strictly unique either. Notice, for example, that <span class="math inline">\(3 \cdot 2 \equiv 1 \bmod{5}\)</span> and <span class="math inline">\(8 \cdot 2 \equiv 1 \bmod{5}\)</span>, so 8 and 3 are both inverses of 2 mod 5. However, notice that <span class="math inline">\(8 \equiv 3 \bmod{5}\)</span>. In other words, inverses are “kind of” unique when they exist – they are unique mod <span class="math inline">\(n\)</span>. This is what the following result says:</p>
+<p>We remarked earlier that Bézout coefficients aren’t unique, and
+inverses aren’t strictly unique either. Notice, for example, that <span
+class="math inline">\(3 \cdot 2 \equiv 1 \bmod{5}\)</span> and <span
+class="math inline">\(8 \cdot 2 \equiv 1 \bmod{5}\)</span>, so 8 and 3
+are both inverses of 2 mod 5. However, notice that <span
+class="math inline">\(8 \equiv 3 \bmod{5}\)</span>. In other words,
+inverses are “kind of” unique when they exist – they are unique mod
+<span class="math inline">\(n\)</span>. This is what the following
+result says:</p>
 <div class="element">
-<p><span class="label">Lemma</span> Fix a positive integer <span class="math inline">\(n\)</span> and suppose <span class="math inline">\(a\)</span> is invertible mod <span class="math inline">\(n\)</span>. If <span class="math inline">\(x\)</span> and <span class="math inline">\(x&#39;\)</span> are both inverses of <span class="math inline">\(a\)</span> mod <span class="math inline">\(n\)</span>, then <span class="math inline">\(x \equiv x&#39; \pmod{n}\)</span>.</p>
+<p><span class="label">Lemma</span> Fix a positive integer <span
+class="math inline">\(n\)</span> and suppose <span
+class="math inline">\(a\)</span> is invertible mod <span
+class="math inline">\(n\)</span>. If <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(x&#39;\)</span> are both inverses of <span
+class="math inline">\(a\)</span> mod <span
+class="math inline">\(n\)</span>, then <span class="math inline">\(x
+\equiv x&#39; \pmod{n}\)</span>.</p>
 </div>
-<p><em>Proof</em>. By definition of inverse, we know that <span class="math inline">\(ax \equiv 1 \bmod{n}\)</span>. Multiplying both sides by <span class="math inline">\(x&#39;\)</span> and applying the Modular Arithmetic Theorem, we see that <span class="math display">\[ x = 1 \cdot x \equiv (x&#39; a)x = x&#39;(ax) \equiv x&#39; \cdot 1 = x&#39; \pmod{n}, \]</span> which is what we wanted to show. <span style="float: right;"><span class="math inline">\(\Box\)</span></span></p>
+<p><em>Proof</em>. By definition of inverse, we know that <span
+class="math inline">\(ax \equiv 1 \bmod{n}\)</span>. Multiplying both
+sides by <span class="math inline">\(x&#39;\)</span> and applying the
+Modular Arithmetic Theorem, we see that <span class="math display">\[ x
+= 1 \cdot x \equiv (x&#39; a)x = x&#39;(ax) \equiv x&#39; \cdot 1 =
+x&#39; \pmod{n}, \]</span> which is what we wanted to show. <span
+style="float: right;"><span
+class="math inline">\(\Box\)</span></span></p>
 <div class="element">
-<span class="label">SageCell</span> Sage can calculate modular inverses using the function <code>inverse_mod</code>. You have to pass it two arguments: the number you want the inverse of, and then the modulus. For example, the following computes <span class="math inline">\(7^{-1} \bmod{23}\)</span>. Again, it’s fast: try it with big numbers!
+<span class="label">SageCell</span> Sage can calculate modular inverses
+using the function <code>inverse_mod</code>. You have to pass it two
+arguments: the number you want the inverse of, and then the modulus. For
+example, the following computes <span class="math inline">\(7^{-1}
+\bmod{23}\)</span>. Again, it’s fast: try it with big numbers!
 <div class="sage">
 <script type="text/x-sage">
 inverse_mod(7, 23)
 </script>
 </div>
 </div>
-<p>That’s plenty of modular arithmetic for now. Let’s get back to describing some more ciphers!</p>
+<p>That’s plenty of modular arithmetic for now. Let’s get back to
+describing some more ciphers!</p>
 <h2 id="affine-cipher">2.7. Affine Cipher</h2>
-<p>We’ve seen that, if we identify the letters <code>A</code> through <code>Z</code> in order with the numbers 0 through 25 in order, the encryption function for the Caesar cipher is <span class="math inline">\(E(x) = (x + b) \bmod{26}\)</span>, where <span class="math inline">\(b = 0, 1, \dotsc, 25\)</span> is the shift. We now generalize this. An affine cipher is one whose encryption function is of the form</p>
+<p>We’ve seen that, if we identify the letters <code>A</code> through
+<code>Z</code> in order with the numbers 0 through 25 in order, the
+encryption function for the Caesar cipher is <span
+class="math inline">\(E(x) = (x + b) \bmod{26}\)</span>, where <span
+class="math inline">\(b = 0, 1, \dotsc, 25\)</span> is the shift. We now
+generalize this. An affine cipher is one whose encryption function is of
+the form</p>
 <p><span class="math display">\[ E(x) = (ax + b) \bmod{26} \]</span></p>
-<p>for some integers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, which form the key. As we will see shortly, not any pair of integers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> will result in an affine encryption function above, but let us first consider an example. Suppose <span class="math inline">\(a = 3\)</span> and <span class="math inline">\(b = 5\)</span>, so that our encryption function is <span class="math inline">\(E(x) = (3x + 5) \bmod{26}\)</span>. To encrypt the letter <code>Y</code>, we compute</p>
-<p><span class="math display">\[ E(24) = (3 \cdot 24 + 5) \bmod{26} = (72 + 5) \bmod{26} = 77 \bmod{26} = 25. \]</span></p>
-<p>Thus the encryption of <code>Y</code> is the letter <code>Z</code>, which corresponds to 25.</p>
+<p>for some integers <span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>, which form the key. As we will see
+shortly, not any pair of integers <span class="math inline">\(a\)</span>
+and <span class="math inline">\(b\)</span> will result in an affine
+encryption function above, but let us first consider an example. Suppose
+<span class="math inline">\(a = 3\)</span> and <span
+class="math inline">\(b = 5\)</span>, so that our encryption function is
+<span class="math inline">\(E(x) = (3x + 5) \bmod{26}\)</span>. To
+encrypt the letter <code>Y</code>, we compute</p>
+<p><span class="math display">\[ E(24) = (3 \cdot 24 + 5) \bmod{26} =
+(72 + 5) \bmod{26} = 77 \bmod{26} = 25. \]</span></p>
+<p>Thus the encryption of <code>Y</code> is the letter <code>Z</code>,
+which corresponds to 25.</p>
 <div class="element">
-<p><span class="label">Exercise</span> Keeping the same encryption function as above with <span class="math inline">\(a = 3\)</span> and <span class="math inline">\(b = 5\)</span>, what is the encryption of <code>A</code>? What is the encryption of <code>D</code>?</p>
+<p><span class="label">Exercise</span> Keeping the same encryption
+function as above with <span class="math inline">\(a = 3\)</span> and
+<span class="math inline">\(b = 5\)</span>, what is the encryption of
+<code>A</code>? What is the encryption of <code>D</code>?</p>
 </div>
-<p>How does decryption work? Let’s start by stating the general result.</p>
+<p>How does decryption work? Let’s start by stating the general
+result.</p>
 <div class="element">
-<p><span class="label">Affine Cipher Lemma</span> Suppose <span class="math inline">\(E : \{0, \cdots, 25\} \to \{0, \cdots, 25\}\)</span> is a function of the form <span class="math display">\[ E(x) = ax + b \bmod{26} \]</span> for some integers <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. Then there exists a function <span class="math inline">\(D : \{0, \cdots, 25\} \to \{0, \cdots, 25\}\)</span> such that <span class="math inline">\(D(E(x)) = x\)</span> if and only if <span class="math inline">\(a\)</span> is invertible mod 26. Moreover, if <span class="math inline">\(c \equiv a^{-1} \pmod{26}\)</span>, then<br />
+<p><span class="label">Affine Cipher Lemma</span> Suppose <span
+class="math inline">\(E : \{0, \cdots, 25\} \to \{0, \cdots,
+25\}\)</span> is a function of the form <span class="math display">\[
+E(x) = ax + b \bmod{26} \]</span> for some integers <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>. Then there exists a function <span
+class="math inline">\(D : \{0, \cdots, 25\} \to \{0, \cdots,
+25\}\)</span> such that <span class="math inline">\(D(E(x)) = x\)</span>
+if and only if <span class="math inline">\(a\)</span> is invertible mod
+26. Moreover, if <span class="math inline">\(c \equiv a^{-1}
+\pmod{26}\)</span>, then<br />
 <span class="math display">\[ D(y) = c(y-b) \bmod{26}. \]</span></p>
 </div>
-<p>Let’s go back to our example with <span class="math inline">\(a = 3\)</span> and <span class="math inline">\(b = 5\)</span>. Using <code>inverse_mod(3, 26)</code> in Sage, I find that <span class="math inline">\(9 \equiv 3^{-1} \pmod{26}\)</span>, so the Affine Cipher Lemma tells us that the decryption function must be given by</p>
-<p><span class="math display">\[ D(y) = 9(y - 5) \bmod{26}. \]</span></p>
-<p>For example, suppose I want to decrypt the letter <code>Z</code>, which corresponds to <span class="math inline">\(y = 25\)</span>. We have <span class="math inline">\(D(25) = 9(25 - 5) \bmod{26} = 9 \cdot 20 \bmod{26} = 180 \bmod{26} = 24\)</span>, which corresponds to <code>Y</code>, exactly as we would have expected!</p>
+<p>Let’s go back to our example with <span class="math inline">\(a =
+3\)</span> and <span class="math inline">\(b = 5\)</span>. Using
+<code>inverse_mod(3, 26)</code> in Sage, I find that <span
+class="math inline">\(9 \equiv 3^{-1} \pmod{26}\)</span>, so the Affine
+Cipher Lemma tells us that the decryption function must be given by</p>
+<p><span class="math display">\[ D(y) = 9(y - 5) \bmod{26}.
+\]</span></p>
+<p>For example, suppose I want to decrypt the letter <code>Z</code>,
+which corresponds to <span class="math inline">\(y = 25\)</span>. We
+have <span class="math inline">\(D(25) = 9(25 - 5) \bmod{26} = 9 \cdot
+20 \bmod{26} = 180 \bmod{26} = 24\)</span>, which corresponds to
+<code>Y</code>, exactly as we would have expected!</p>
 <div class="element">
-<p><span class="label">Exercise</span> Alice and Bob are using the same affine encryption function as above, with <span class="math inline">\(a = 3\)</span> and <span class="math inline">\(b = 5\)</span>. Bob has just received the message <code>LNKRLFKH</code>. Decrypt the message.</p>
+<p><span class="label">Exercise</span> Alice and Bob are using the same
+affine encryption function as above, with <span class="math inline">\(a
+= 3\)</span> and <span class="math inline">\(b = 5\)</span>. Bob has
+just received the message <code>LNKRLFKH</code>. Decrypt the
+message.</p>
 </div>
 <div class="element">
-<p><span class="label">Exercise</span> Suppose the encryption function for an affine cipher is <span class="math inline">\(E(x) = 5x + 17 \bmod{26}\)</span>. What is the corresponding decryption function <span class="math inline">\(D\)</span>?</p>
+<p><span class="label">Exercise</span> Suppose the encryption function
+for an affine cipher is <span class="math inline">\(E(x) = 5x + 17
+\bmod{26}\)</span>. What is the corresponding decryption function <span
+class="math inline">\(D\)</span>?</p>
 </div>
 <div class="element">
-<p><span class="label">Proof Exercise</span> Prove the Affine Cipher Lemma.</p>
+<p><span class="label">Proof Exercise</span> Prove the Affine Cipher
+Lemma.</p>
 </div>
-<p>Notice that, of the numbers between 0 and 25, there are exactly 12 that are invertible mod 26 (the odds except 13, ie, 1, 3, 5, 7, 9, 11, 15, 17, 19, 21). This means that the number of pairs <span class="math inline">\((a, b)\)</span> such that <span class="math inline">\(E(x) = ax + b \bmod{26}\)</span> is a legitimate encryption function for an affine cipher is <span class="math inline">\(12 \cdot 26 = 312\)</span>. This is quite a bit larger than 26, and is probably already large enough that it would be a little tedious to try and check all possible keys to see if any result in something meaningful. That would probably only be worth doing if you knew the message had some very valuable information.</p>
-<p>In fact, we can increase the number of keys with a simple substitution cipher even more dramatically, as we’ll see next. Meanwhile, here’s a SageCell to play with!</p>
+<p>Notice that, of the numbers between 0 and 25, there are exactly 12
+that are invertible mod 26 (the odds except 13, ie, 1, 3, 5, 7, 9, 11,
+15, 17, 19, 21). This means that the number of pairs <span
+class="math inline">\((a, b)\)</span> such that <span
+class="math inline">\(E(x) = ax + b \bmod{26}\)</span> is a legitimate
+encryption function for an affine cipher is <span
+class="math inline">\(12 \cdot 26 = 312\)</span>. This is quite a bit
+larger than 26, and is probably already large enough that it would be a
+little tedious to try and check all possible keys to see if any result
+in something meaningful. That would probably only be worth doing if you
+knew the message had some very valuable information.</p>
+<p>In fact, we can increase the number of keys with a simple
+substitution cipher even more dramatically, as we’ll see next.
+Meanwhile, here’s a SageCell to play with!</p>
 <div id="sagecell-affine-cipher" class="element">
-<span class="label">SageCell</span> Alice has just sent you the message <code>VYOHVUTWVHPZUWTZUUBEYDUB</code>, encrypted using the affine cipher with <span class="math inline">\(a = 5\)</span> and <span class="math inline">\(b = 7\)</span>. Here is some code that implements the affine cipher. What is the message?
+<span class="label">SageCell</span> Alice has just sent you the message
+<code>VYOHVUTWVHPZUWTZUUBEYDUB</code>, encrypted using the affine cipher
+with <span class="math inline">\(a = 5\)</span> and <span
+class="math inline">\(b = 7\)</span>. Here is some code that implements
+the affine cipher. What is the message?
 <div class="sage">
 <script type="text/x-sage">
 from re import sub
@@ -974,17 +1653,31 @@ def _(a=slider(0, 25, 1, 1, label="a"),
 </div>
 </div>
 <div class="element">
-<p><span class="label">Exercise</span> The <em>Atbash cipher</em> is a simple substitution cipher in which encryption and decryption both simply reverse the order of the alphabet. In other words, <code>A</code> and <code>Z</code> are interchanged, <code>B</code> and <code>Y</code> are interchanged, and so forth. For example, the plaintext <code>APPLE</code> corresponds to the ciphertext <code>ZKKOV</code>. Show that the Atbash cipher is a special case of the affine cipher. What are the corresponding values of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>?</p>
+<p><span class="label">Exercise</span> The <em>Atbash cipher</em> is a
+simple substitution cipher in which encryption and decryption both
+simply reverse the order of the alphabet. In other words, <code>A</code>
+and <code>Z</code> are interchanged, <code>B</code> and <code>Y</code>
+are interchanged, and so forth. For example, the plaintext
+<code>APPLE</code> corresponds to the ciphertext <code>ZKKOV</code>.
+Show that the Atbash cipher is a special case of the affine cipher. What
+are the corresponding values of <span class="math inline">\(a\)</span>
+and <span class="math inline">\(b\)</span>?</p>
 </div>
 <div class="element">
 <p><span class="label">Exercise</span></p>
 <ol type="a">
-<li>Make sense of and justify the following statement: “Two affine ciphers in succession result in just another affine cipher.”</li>
-<li>Is it possible for “two affine ciphers in succession” to result in a <em>Caesar</em> cipher? Explain.</li>
+<li>Make sense of and justify the following statement: “Two affine
+ciphers in succession result in just another affine cipher.”</li>
+<li>Is it possible for “two affine ciphers in succession” to result in a
+<em>Caesar</em> cipher? Explain.</li>
 </ol>
 </div>
 <h2 id="simple-substitution">2.8. Simple Substitution</h2>
-<p>We can describe a general <em>simple substitution cipher</em> (also called <em>simple monoalphabetic substitition cipher</em> or a <em>monoalphabetic substitution cipher</em>) by using a full conversion table as a key. For example, we might use a table like the following:</p>
+<p>We can describe a general <em>simple substitution cipher</em> (also
+called <em>simple monoalphabetic substitition cipher</em> or a
+<em>monoalphabetic substitution cipher</em>) by using a full conversion
+table as a key. For example, we might use a table like the
+following:</p>
 <table style="display-style: block; margin: auto; text-align: center; font-family: monospace;">
 <thead>
 <tr class="header">
@@ -1151,26 +1844,43 @@ B
 </tr>
 </tbody>
 </table>
-<p>This tells us to convert every instance of <code>A</code> into <code>P</code>, every instance of <code>B</code> into <code>V</code>, and so forth, and to go backwards during decryption. For example, suppose Alice wants to encrypt the message:</p>
+<p>This tells us to convert every instance of <code>A</code> into
+<code>P</code>, every instance of <code>B</code> into <code>V</code>,
+and so forth, and to go backwards during decryption. For example,
+suppose Alice wants to encrypt the message:</p>
 <pre><code>You must destroy all of the horcruxes!</code></pre>
-<p>She again starts by encoding the message by removing spaces and punctuation and capitalizing everything:</p>
+<p>She again starts by encoding the message by removing spaces and
+punctuation and capitalizing everything:</p>
 <pre><code>YOUMUSTDESTROYALLOFTHEHORCRUXES</code></pre>
 <p>She then converts each letter using the table:</p>
 <pre><code>XEANAIGWDIGREXPFFECGTDTERJRALDI</code></pre>
-<p>This is the ciphertext she sends to Bob. To decrypt the message, Bob uses the same table backwards.</p>
-<p>Notice that, if the entire table is our key, the number of possible keys is</p>
-<p><span class="math display">\[ 26! = 403291461126605635584000000, \]</span></p>
-<p>ie, about 403 <em>septillion</em>. There are now <em>far</em> too many to try all of them!</p>
-<p>In spite of the massive increase in the number of keys, we’ll see later that simple substitution can still be easily broken using some ideas from probability theory. Meanwhile, let’s get some practice with this:</p>
+<p>This is the ciphertext she sends to Bob. To decrypt the message, Bob
+uses the same table backwards.</p>
+<p>Notice that, if the entire table is our key, the number of possible
+keys is</p>
+<p><span class="math display">\[ 26! = 403291461126605635584000000,
+\]</span></p>
+<p>ie, about 403 <em>septillion</em>. There are now <em>far</em> too
+many to try all of them!</p>
+<p>In spite of the massive increase in the number of keys, we’ll see
+later that simple substitution can still be easily broken using some
+ideas from probability theory. Meanwhile, let’s get some practice with
+this:</p>
 <div class="element">
-<p><span class="label">Exercise</span> Using the same table given above, do the following by hand:</p>
+<p><span class="label">Exercise</span> Using the same table given above,
+do the following by hand:</p>
 <ul>
 <li>Encrypt the message <code>The moon is pitted with holes!</code></li>
 <li>Decrypt the message <code>TEMPRDXEAWESQHGEWPX</code>.</li>
 </ul>
 </div>
 <div id="sagecell-simple-substitution" class="element">
-<span class="label">SageCell</span> Here’s a SageCell that implements simple substitution. The text box labeled “Key” represents the <em>encryption</em> key: the top row corresponds to letters of plaintext and the bottom row to letters of ciphertext. Don’t change anything in the first row. A plaintext letter in the top row corresponds to the ciphertext letter in the second row.
+<span class="label">SageCell</span> Here’s a SageCell that implements
+simple substitution. The text box labeled “Key” represents the
+<em>encryption</em> key: the top row corresponds to letters of plaintext
+and the bottom row to letters of ciphertext. Don’t change anything in
+the first row. A plaintext letter in the top row corresponds to the
+ciphertext letter in the second row.
 <div class="sage">
 <script type="text/x-sage">
 from re import sub
@@ -1230,9 +1940,31 @@ def _(input_key=input_box(default=key_start, label="Key", height=2, width=80),
 </div>
 </div>
 <h2 id="polybius-square">2.9. Polybius Square</h2>
-<p>The <em>Polybius square</em> is yet another simple substitution cipher, invented in Ancient Greece and made famous by the scholar Polybius (200–118 BCE). The same strategy was used <a href="https://en.wikipedia.org/wiki/Japanese_cryptology_from_the_1500s_to_Meiji">in Japan by Uesugi samurai clan</a>. During World War I, the German Imperial Army combined a Polybius square with rectangular transposition, resulting in the so-called <a href="https://en.wikipedia.org/wiki/ADFGVX_cipher">ADFGVX Cipher</a>.</p>
-<p>The Polybius square is still a simple substitution cipher in that it replaces single letters of plaintext with ciphertext and the substitution remains fixed over the entire message, but there is a a minor twist: each letter of plaintext is replaced by <em>two</em> letters of ciphertext. Nonetheless, we’ll see later that a Polybius square can be broken in exactly the same way as the simple substitution ciphers described in the previous section.</p>
-<p>The key for a Polybius square is a table with labeled rows and columns, and the alphabet for the messages we’re encrypting lives inside the table. For example, suppose the alphabet we’re encrypting includes the capital letters <code>A</code> through <code>Z</code> and the digits <code>0</code> through <code>9</code>. That’s 36 letters, which will fit perfectly inside a <span class="math inline">\(6 \times 6\)</span> grid. Following the Imperial German Army during World War I, let’s label the rows and columns with the letters <code>ADFGVX</code> to get a table as follows.</p>
+<p>The <em>Polybius square</em> is yet another simple substitution
+cipher, invented in Ancient Greece and made famous by the scholar
+Polybius (200–118 BCE). The same strategy was used <a
+href="https://en.wikipedia.org/wiki/Japanese_cryptology_from_the_1500s_to_Meiji">in
+Japan by Uesugi samurai clan</a>. During World War I, the German
+Imperial Army combined a Polybius square with rectangular transposition,
+resulting in the so-called <a
+href="https://en.wikipedia.org/wiki/ADFGVX_cipher">ADFGVX
+Cipher</a>.</p>
+<p>The Polybius square is still a simple substitution cipher in that it
+replaces single letters of plaintext with ciphertext and the
+substitution remains fixed over the entire message, but there is a a
+minor twist: each letter of plaintext is replaced by <em>two</em>
+letters of ciphertext. Nonetheless, we’ll see later that a Polybius
+square can be broken in exactly the same way as the simple substitution
+ciphers described in the previous section.</p>
+<p>The key for a Polybius square is a table with labeled rows and
+columns, and the alphabet for the messages we’re encrypting lives inside
+the table. For example, suppose the alphabet we’re encrypting includes
+the capital letters <code>A</code> through <code>Z</code> and the digits
+<code>0</code> through <code>9</code>. That’s 36 letters, which will fit
+perfectly inside a <span class="math inline">\(6 \times 6\)</span> grid.
+Following the Imperial German Army during World War I, let’s label the
+rows and columns with the letters <code>ADFGVX</code> to get a table as
+follows.</p>
 <table width="40%" style="margin: auto; font-family: monospace; text-align: center;">
 <tr>
 <th>
@@ -1395,13 +2127,21 @@ Z
 </td>
 </tr>
 </table>
-<p>This table is the key. To encrypt a message, we convert each letter in our plaintext to a pair of letters indicating the row and column of that letter in the table above. For example, the letter <code>K</code> would be replaced by <code>VG</code> because <code>K</code> appears in row <code>V</code> and column <code>G</code>. Similarly, the letter <code>S</code> would be replaced by <code>XA</code>. Suppose that Alice wants to encrypt the message</p>
+<p>This table is the key. To encrypt a message, we convert each letter
+in our plaintext to a pair of letters indicating the row and column of
+that letter in the table above. For example, the letter <code>K</code>
+would be replaced by <code>VG</code> because <code>K</code> appears in
+row <code>V</code> and column <code>G</code>. Similarly, the letter
+<code>S</code> would be replaced by <code>XA</code>. Suppose that Alice
+wants to encrypt the message</p>
 <pre><code>Storm the gates at 14:37.</code></pre>
 <p>She first encodes by dropping punctuation and capitalizing:</p>
 <pre><code>STORMTHEGATESAT1437</code></pre>
-<p>She then goes through and replaces each letter by the corresponding pair as we described above:</p>
+<p>She then goes through and replaces each letter by the corresponding
+pair as we described above:</p>
 <pre><code>XADDDVFGDXDDAXFAGGADDDFAXAADDDAFGAAVGV</code></pre>
-<p>This is the ciphertext. Bob, who knows the table, can then undo this process to decrypt the message.</p>
+<p>This is the ciphertext. Bob, who knows the table, can then undo this
+process to decrypt the message.</p>
 <div class="element">
 <p><span class="label">Exercise</span> Using the square given above:</p>
 <ul>
@@ -1409,34 +2149,84 @@ Z
 <li>Decrypt the message <code>XAAAADVGFAFVADDDAXADDDDGFVDX</code>.</li>
 </ul>
 </div>
-<h2 id="modular-linear-algebra">2.10. Interlude: Modular Linear Algebra</h2>
-<p>The Polybius square is the last of our simple substitution ciphers for now. Before turning our attention to our first polygraphic cipher, let’s look at how linear algebra interacts with modular arithmetic. Since linear algebra is not a prerequisite for this class, we’ll focus on <span class="math inline">\(2 \times 2\)</span> matrices for simplicity.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h3 id="times-2-matrices"><span class="math inline">\(2 \times 2\)</span> matrices</h3>
+<h2 id="modular-linear-algebra">2.10. Interlude: Modular Linear
+Algebra</h2>
+<p>The Polybius square is the last of our simple substitution ciphers
+for now. Before turning our attention to our first polygraphic cipher,
+let’s look at how linear algebra interacts with modular arithmetic.
+Since linear algebra is not a prerequisite for this class, we’ll focus
+on <span class="math inline">\(2 \times 2\)</span> matrices for
+simplicity.<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<h3 id="times-2-matrices"><span class="math inline">\(2 \times
+2\)</span> matrices</h3>
 <div class="element">
 <p><span class="label">Definition</span></p>
 <ul>
-<li><p>A <em><span class="math inline">\(2 \times 2\)</span> integer matrix</em> (or just <em>matrix</em> for short) is a <span class="math inline">\(2 \times 2\)</span> box of numbers <span class="math inline">\(A = \begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}\)</span> where <span class="math inline">\(a, b, c, d\)</span> are all integers.</p></li>
-<li><p>The <em>determinant</em> of <span class="math inline">\(A\)</span> is the integer <span class="math inline">\(\det(A) = ad - bc\)</span>.</p></li>
-<li><p>The <em>identity matrix</em> is the matrix <span class="math inline">\(I = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}\)</span>.</p></li>
-<li><p>Suppose <span class="math inline">\(A = \begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}\)</span> and <span class="math inline">\(B = \begin{bmatrix} a&#39; &amp; b&#39; \\ c&#39; &amp; d&#39; \end{bmatrix}\)</span> are two matrices. Their product <span class="math inline">\(AB\)</span> is defined to be: <span class="math display">\[ AB = \begin{bmatrix} aa&#39; + bc&#39; &amp; ab&#39; + bd&#39; \\ ca&#39; + dc&#39; &amp; cb&#39; + dd&#39; \end{bmatrix} \]</span></p></li>
+<li><p>A <em><span class="math inline">\(2 \times 2\)</span> integer
+matrix</em> (or just <em>matrix</em> for short) is a <span
+class="math inline">\(2 \times 2\)</span> box of numbers <span
+class="math inline">\(A = \begin{bmatrix} a &amp; b \\ c &amp; d
+\end{bmatrix}\)</span> where <span class="math inline">\(a, b, c,
+d\)</span> are all integers.</p></li>
+<li><p>The <em>determinant</em> of <span
+class="math inline">\(A\)</span> is the integer <span
+class="math inline">\(\det(A) = ad - bc\)</span>.</p></li>
+<li><p>The <em>identity matrix</em> is the matrix <span
+class="math inline">\(I = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1
+\end{bmatrix}\)</span>.</p></li>
+<li><p>Suppose <span class="math inline">\(A = \begin{bmatrix} a &amp; b
+\\ c &amp; d \end{bmatrix}\)</span> and <span class="math inline">\(B =
+\begin{bmatrix} a&#39; &amp; b&#39; \\ c&#39; &amp; d&#39;
+\end{bmatrix}\)</span> are two matrices. Their product <span
+class="math inline">\(AB\)</span> is defined to be: <span
+class="math display">\[ AB = \begin{bmatrix} aa&#39; + bc&#39; &amp;
+ab&#39; + bd&#39; \\ ca&#39; + dc&#39; &amp; cb&#39; + dd&#39;
+\end{bmatrix} \]</span></p></li>
 </ul>
 </div>
-<p>For example, <span class="math inline">\(A = \begin{bmatrix} 3 &amp; 2 \\ 1 &amp; 7 \end{bmatrix}\)</span> is a matrix and <span class="math inline">\(\det(A) = 3 \cdot 7 - 2 = 19\)</span>. Another matrix is <span class="math inline">\(B = \begin{bmatrix} 1 &amp; 4 \\ 2 &amp; 3 \end{bmatrix}\)</span>, and you should check by comparing against the definition above that <span class="math display">\[ AB = \begin{bmatrix} 7 &amp; 18 \\ 15 &amp; 25 \end{bmatrix} \]</span> You should also check that <span class="math display">\[ BA = \begin{bmatrix} 7 &amp; 30 \\ 9 &amp; 25 \end{bmatrix}. \]</span> Note that <span class="math inline">\(AB \neq BA\)</span>. In other words, matrix multiplication is not commutative!</p>
+<p>For example, <span class="math inline">\(A = \begin{bmatrix} 3 &amp;
+2 \\ 1 &amp; 7 \end{bmatrix}\)</span> is a matrix and <span
+class="math inline">\(\det(A) = 3 \cdot 7 - 2 = 19\)</span>. Another
+matrix is <span class="math inline">\(B = \begin{bmatrix} 1 &amp; 4 \\ 2
+&amp; 3 \end{bmatrix}\)</span>, and you should check by comparing
+against the definition above that <span class="math display">\[ AB =
+\begin{bmatrix} 7 &amp; 18 \\ 15 &amp; 25 \end{bmatrix} \]</span> You
+should also check that <span class="math display">\[ BA =
+\begin{bmatrix} 7 &amp; 30 \\ 9 &amp; 25 \end{bmatrix}. \]</span> Note
+that <span class="math inline">\(AB \neq BA\)</span>. In other words,
+matrix multiplication is not commutative!</p>
 <div class="element">
-<p><span class="label">Exercise</span> Let <span class="math inline">\(A\)</span> be a matrix (ie, a <span class="math inline">\(2 \times 2\)</span> integer matrix). Show that <span class="math inline">\(AI = IA = A\)</span>.</p>
+<p><span class="label">Exercise</span> Let <span
+class="math inline">\(A\)</span> be a matrix (ie, a <span
+class="math inline">\(2 \times 2\)</span> integer matrix). Show that
+<span class="math inline">\(AI = IA = A\)</span>.</p>
 </div>
 <div class="element">
-<p><span class="label">Theorem</span> (Multiplicativity of the Determinant) If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are matrices, then <span class="math inline">\(\det(I) = 1\)</span> and <span class="math display">\[ \det(AB) = \det(A)\det(B). \]</span></p>
+<p><span class="label">Theorem</span> (Multiplicativity of the
+Determinant) If <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are matrices, then <span
+class="math inline">\(\det(I) = 1\)</span> and <span
+class="math display">\[ \det(AB) = \det(A)\det(B). \]</span></p>
 </div>
 <div class="element">
 <p><span class="label">Definition</span></p>
 <ul>
-<li><p>A <em>vector</em> is <span class="math inline">\(v\)</span> a vertical column <span class="math inline">\(v = \begin{bmatrix} x \\ y \end{bmatrix}\)</span> where <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are both integers.</p></li>
-<li><p>If <span class="math inline">\(A = \begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}\)</span> is a matrix, the product <span class="math inline">\(Av\)</span> is defined to be: <span class="math display">\[ Av = \begin{bmatrix} ax + by \\ cx + dy \end{bmatrix} \]</span></p></li>
+<li><p>A <em>vector</em> is <span class="math inline">\(v\)</span> a
+vertical column <span class="math inline">\(v = \begin{bmatrix} x \\ y
+\end{bmatrix}\)</span> where <span class="math inline">\(x\)</span> and
+<span class="math inline">\(y\)</span> are both integers.</p></li>
+<li><p>If <span class="math inline">\(A = \begin{bmatrix} a &amp; b \\ c
+&amp; d \end{bmatrix}\)</span> is a matrix, the product <span
+class="math inline">\(Av\)</span> is defined to be: <span
+class="math display">\[ Av = \begin{bmatrix} ax + by \\ cx + dy
+\end{bmatrix} \]</span></p></li>
 </ul>
 </div>
 <div class="element">
-<span class="label">SageCell</span> Sage can do all of the above types of computations. Construct matrices using the <code>matrix</code> function, and compute determinants using the <code>det</code> function:
+<span class="label">SageCell</span> Sage can do all of the above types
+of computations. Construct matrices using the <code>matrix</code>
+function, and compute determinants using the <code>det</code> function:
 <div class="sage">
 <script type="text/x-sage">
 # This is how you input matrices into Sage
@@ -1455,7 +2245,8 @@ B = matrix([[1, 4], [2, 3]])
 A*B
 </script>
 </div>
-Construct vectors using the <code>vector</code> function, and again multiply using the <code>*</code> operator:
+Construct vectors using the <code>vector</code> function, and again
+multiply using the <code>*</code> operator:
 <div class="sage">
 <script type="text/x-sage">
 # This is how you input a matrix
@@ -1467,9 +2258,20 @@ A*v
 </script>
 </div>
 </div>
-<h3 id="congruences-and-inversion-for-matrices">Congruences and Inversion for Matrices</h3>
+<h3 id="congruences-and-inversion-for-matrices">Congruences and
+Inversion for Matrices</h3>
 <div class="element">
-<p><span class="label">Definition</span> Fix a positive integer <span class="math inline">\(n\)</span> and suppose <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are both matrices: <span class="math display">\[ A = \begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix} \quad\text{and}\quad B = \begin{bmatrix} a&#39; &amp; b&#39; \\ c&#39; &amp; d&#39; \end{bmatrix} \]</span> We say that <span class="math inline">\(A \equiv B \pmod{n}\)</span> if all four of the entries of the two matrices are congruent mod <span class="math inline">\(n\)</span>, ie, if all of the following are true: <span class="math display">\[ \begin{aligned}
+<p><span class="label">Definition</span> Fix a positive integer <span
+class="math inline">\(n\)</span> and suppose <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are both matrices: <span
+class="math display">\[ A = \begin{bmatrix} a &amp; b \\ c &amp; d
+\end{bmatrix} \quad\text{and}\quad B = \begin{bmatrix} a&#39; &amp;
+b&#39; \\ c&#39; &amp; d&#39; \end{bmatrix} \]</span> We say that <span
+class="math inline">\(A \equiv B \pmod{n}\)</span> if all four of the
+entries of the two matrices are congruent mod <span
+class="math inline">\(n\)</span>, ie, if all of the following are true:
+<span class="math display">\[ \begin{aligned}
 a &amp;\equiv a&#39; &amp;&amp;\pmod{n} \\
 b &amp;\equiv b&#39; &amp;&amp;\pmod{n} \\
 c &amp;\equiv c&#39; &amp;&amp;\pmod{n} \\
@@ -1477,21 +2279,56 @@ d &amp;\equiv d&#39; &amp;&amp;\pmod{n}
 \end{aligned} \]</span></p>
 </div>
 <div class="element">
-<p><span class="label">Definition</span> A matrix <span class="math inline">\(A\)</span> is <em>invertible mod <span class="math inline">\(n\)</span></em> if there exists a matrix <span class="math inline">\(X\)</span> such that <span class="math inline">\(AX \equiv I \bmod{n}\)</span>. In this case, <span class="math inline">\(X\)</span> is called an <em>inverse of <span class="math inline">\(A\)</span> mod <span class="math inline">\(n\)</span></em>. In symbols, we write <span class="math inline">\(X \equiv A^{-1} \pmod{n}\)</span>.</p>
+<p><span class="label">Definition</span> A matrix <span
+class="math inline">\(A\)</span> is <em>invertible mod <span
+class="math inline">\(n\)</span></em> if there exists a matrix <span
+class="math inline">\(X\)</span> such that <span
+class="math inline">\(AX \equiv I \bmod{n}\)</span>. In this case, <span
+class="math inline">\(X\)</span> is called an <em>inverse of <span
+class="math inline">\(A\)</span> mod <span
+class="math inline">\(n\)</span></em>. In symbols, we write <span
+class="math inline">\(X \equiv A^{-1} \pmod{n}\)</span>.</p>
 </div>
 <div class="element">
-<p><span class="label">Matrix Inversion Theorem</span> Suppose <span class="math display">\[A = \begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}\]</span> is a matrix. Then <span class="math inline">\(A\)</span> is invertible if and only if <span class="math inline">\(\det(A)\)</span> is invertible mod <span class="math inline">\(n\)</span>. Moreover, if <span class="math inline">\(e \equiv \det(A)^{-1} \pmod{n}\)</span>, then <span class="math display">\[ X = \begin{bmatrix} ed &amp; -eb \\ -ec &amp; ea \end{bmatrix} \]</span> is an inverse of <span class="math inline">\(A\)</span> mod <span class="math inline">\(n\)</span>.</p>
+<p><span class="label">Matrix Inversion Theorem</span> Suppose <span
+class="math display">\[A = \begin{bmatrix} a &amp; b \\ c &amp; d
+\end{bmatrix}\]</span> is a matrix. Then <span
+class="math inline">\(A\)</span> is invertible if and only if <span
+class="math inline">\(\det(A)\)</span> is invertible mod <span
+class="math inline">\(n\)</span>. Moreover, if <span
+class="math inline">\(e \equiv \det(A)^{-1} \pmod{n}\)</span>, then
+<span class="math display">\[ X = \begin{bmatrix} ed &amp; -eb \\ -ec
+&amp; ea \end{bmatrix} \]</span> is an inverse of <span
+class="math inline">\(A\)</span> mod <span
+class="math inline">\(n\)</span>.</p>
 </div>
 <p>Suppose, for example, that we’re interested in the matrix</p>
-<p><span class="math display">\[ A = \begin{bmatrix} 3 &amp; 2 \\ 1 &amp; 7 \end{bmatrix}. \]</span></p>
-<p>We know that <span class="math inline">\(\det(A) = 19\)</span> is invertible mod 26, so <span class="math inline">\(A\)</span> is also invertible mod 26. We have <span class="math inline">\(19^{-1} \equiv 11 \pmod{26}\)</span>, so the formula for the inverse from the Matrix Inversion Theorem tells us that</p>
-<p><span class="math display">\[ A^{-1} \equiv \begin{bmatrix} 11 \cdot 7 &amp; -11 \cdot 2 \\ -11 \cdot 1 &amp; 11 \cdot 3 \end{bmatrix} = \begin{bmatrix} 77 &amp; -22 \\ -11 &amp; 33 \end{bmatrix} \equiv \begin{bmatrix} 25 &amp; 4 \\ 15 &amp; 7 \end{bmatrix} \pmod{26}. \]</span></p>
+<p><span class="math display">\[ A = \begin{bmatrix} 3 &amp; 2 \\ 1
+&amp; 7 \end{bmatrix}. \]</span></p>
+<p>We know that <span class="math inline">\(\det(A) = 19\)</span> is
+invertible mod 26, so <span class="math inline">\(A\)</span> is also
+invertible mod 26. We have <span class="math inline">\(19^{-1} \equiv 11
+\pmod{26}\)</span>, so the formula for the inverse from the Matrix
+Inversion Theorem tells us that</p>
+<p><span class="math display">\[ A^{-1} \equiv \begin{bmatrix} 11 \cdot
+7 &amp; -11 \cdot 2 \\ -11 \cdot 1 &amp; 11 \cdot 3 \end{bmatrix} =
+\begin{bmatrix} 77 &amp; -22 \\ -11 &amp; 33 \end{bmatrix} \equiv
+\begin{bmatrix} 25 &amp; 4 \\ 15 &amp; 7 \end{bmatrix} \pmod{26}.
+\]</span></p>
 <p>In other words,</p>
-<p><span class="math display">\[ X = \begin{bmatrix} 25 &amp; 4 \\ 15 &amp; 7 \end{bmatrix} \]</span></p>
-<p>is an inverse of <span class="math inline">\(A\)</span> mod 26. Let’s check this:</p>
-<p><span class="math display">\[ AX = \begin{bmatrix} 3 &amp; 2 \\ 1 &amp; 7 \end{bmatrix} \begin{bmatrix} 25 &amp; 4 \\ 15 &amp; 7 \end{bmatrix} = \begin{bmatrix} 105 &amp; 26 \\ 130 &amp; 53 \end{bmatrix} \equiv \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix} = I \pmod{26}.  \]</span></p>
+<p><span class="math display">\[ X = \begin{bmatrix} 25 &amp; 4 \\ 15
+&amp; 7 \end{bmatrix} \]</span></p>
+<p>is an inverse of <span class="math inline">\(A\)</span> mod 26. Let’s
+check this:</p>
+<p><span class="math display">\[ AX = \begin{bmatrix} 3 &amp; 2 \\ 1
+&amp; 7 \end{bmatrix} \begin{bmatrix} 25 &amp; 4 \\ 15 &amp; 7
+\end{bmatrix} = \begin{bmatrix} 105 &amp; 26 \\ 130 &amp; 53
+\end{bmatrix} \equiv \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1
+\end{bmatrix} = I \pmod{26}.  \]</span></p>
 <div class="element">
-<span class="label">SageCell</span> The syntax for inverting a matrix mod <span class="math inline">\(n\)</span> in Sage is a little long. Notice where the matrix goes and where the modulus goes:
+<span class="label">SageCell</span> The syntax for inverting a matrix
+mod <span class="math inline">\(n\)</span> in Sage is a little long.
+Notice where the matrix goes and where the modulus goes:
 <div class="sage">
 <script type="text/x-sage">
 A = matrix([[3, 2], [1, 7]])
@@ -1501,31 +2338,80 @@ A.change_ring(IntegerModRing(26)).inverse().lift()
 </div>
 </div>
 <h2 id="hill-cipher">2.11. Hill Cipher</h2>
-<p>We now turn our attention to our first polygraphic cipher: the <em>Hill cipher</em>. We’ll focus on the digraphic case, which replaces 2 letters of plaintext at a time.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>To encrypt messages using a Hill cipher, we start by our usual encoding. We also make the usual identification of the letters <code>A</code> through <code>Z</code> with the numbers 0 through 25. Suppose for example that we want to encrypt the following:</p>
+<p>We now turn our attention to our first polygraphic cipher: the
+<em>Hill cipher</em>. We’ll focus on the digraphic case, which replaces
+2 letters of plaintext at a time.<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>To encrypt messages using a Hill cipher, we start by our usual
+encoding. We also make the usual identification of the letters
+<code>A</code> through <code>Z</code> with the numbers 0 through 25.
+Suppose for example that we want to encrypt the following:</p>
 <pre><code> Y  O  U  H  A  V  E  S  A  V  E  D  U  S  A  L  L
 24 14 20  7  0 21  4 18  0 21  4  3 20 18  0 11 11</code></pre>
-<p>The key for a Hill cipher is a matrix that is invertible mod 26. For example, we saw above that the matrix <span class="math display">\[ A = \begin{bmatrix} 3 &amp; 2 \\ 1 &amp; 7 \end{bmatrix} \]</span> has determinant 19, which is invertible mod 26, so the matrix inversion theorem tells us that <span class="math inline">\(A\)</span> is an invertible matrix mod 26; we can use this as our key.</p>
-<p>We are now going to go through our list of numbers, and replace each pair of numbers with the result of multiplying that pair by the matrix <span class="math inline">\(A\)</span> mod 26. For example, for the first pair, 24 and 14, we make a vector by stacking these two numbers on top of each other:</p>
-<p><span class="math display">\[ v = \begin{bmatrix} 24 \\ 14 \end{bmatrix} \]</span></p>
+<p>The key for a Hill cipher is a matrix that is invertible mod 26. For
+example, we saw above that the matrix <span class="math display">\[ A =
+\begin{bmatrix} 3 &amp; 2 \\ 1 &amp; 7 \end{bmatrix} \]</span> has
+determinant 19, which is invertible mod 26, so the matrix inversion
+theorem tells us that <span class="math inline">\(A\)</span> is an
+invertible matrix mod 26; we can use this as our key.</p>
+<p>We are now going to go through our list of numbers, and replace each
+pair of numbers with the result of multiplying that pair by the matrix
+<span class="math inline">\(A\)</span> mod 26. For example, for the
+first pair, 24 and 14, we make a vector by stacking these two numbers on
+top of each other:</p>
+<p><span class="math display">\[ v = \begin{bmatrix} 24 \\ 14
+\end{bmatrix} \]</span></p>
 <p>We then compute</p>
-<p><span class="math display">\[ Av \bmod{26} = \begin{bmatrix} 3 &amp; 2 \\ 1 &amp; 7 \end{bmatrix} \begin{bmatrix} 24 \\ 14 \end{bmatrix} \bmod{26} = \begin{bmatrix} 100 \\ 122 \end{bmatrix} \bmod{26} = \begin{bmatrix} 22 \\ 18 \end{bmatrix} \]</span></p>
-<p>In other words, the first two numbers will be replaced by 22 and 18. In other words, the first two letters of the message will be replaced by <code>W</code> and <code>S</code>, respectively.</p>
-<p>We then do the same thing with the next pair of numbers, 20 and 7. We get 22 and 17, so the third and fourth letters are replaced by <code>W</code> and <code>R</code>. We keep going like this until we reach the very end. In this particular case, we have an odd number of letters, so we should tack on a random letter at the end. For example, maybe we tack on the letter <code>Z</code>, which corresponds to 25. The last pair of numbers is then 11 and 25. Multiplying by <span class="math inline">\(A\)</span> mod 26 gives us 5 and 4, so we replace the last two letters with <code>F</code> and <code>E</code>.</p>
+<p><span class="math display">\[ Av \bmod{26} = \begin{bmatrix} 3 &amp;
+2 \\ 1 &amp; 7 \end{bmatrix} \begin{bmatrix} 24 \\ 14 \end{bmatrix}
+\bmod{26} = \begin{bmatrix} 100 \\ 122 \end{bmatrix} \bmod{26} =
+\begin{bmatrix} 22 \\ 18 \end{bmatrix} \]</span></p>
+<p>In other words, the first two numbers will be replaced by 22 and 18.
+In other words, the first two letters of the message will be replaced by
+<code>W</code> and <code>S</code>, respectively.</p>
+<p>We then do the same thing with the next pair of numbers, 20 and 7. We
+get 22 and 17, so the third and fourth letters are replaced by
+<code>W</code> and <code>R</code>. We keep going like this until we
+reach the very end. In this particular case, we have an odd number of
+letters, so we should tack on a random letter at the end. For example,
+maybe we tack on the letter <code>Z</code>, which corresponds to 25. The
+last pair of numbers is then 11 and 25. Multiplying by <span
+class="math inline">\(A\)</span> mod 26 gives us 5 and 4, so we replace
+the last two letters with <code>F</code> and <code>E</code>.</p>
 <p>The net result is the ciphertext <code>WSWRQRWAQRSZSQWZFE</code>.</p>
-<p>As you might expect, to decrypt, we multiply pairs of numbers by the <em>inverse</em> of <span class="math inline">\(A\)</span> mod 26. For example, suppose we start with the ciphertext we computed above. We look at the associated list of numbers:</p>
+<p>As you might expect, to decrypt, we multiply pairs of numbers by the
+<em>inverse</em> of <span class="math inline">\(A\)</span> mod 26. For
+example, suppose we start with the ciphertext we computed above. We look
+at the associated list of numbers:</p>
 <pre><code> W  S  W  R  Q  R  W  A  Q  R  S  Z  S  Q  W  Z  F  E
 22 18 22 17 16 17 22  0 16 17 18 25 18 16 22 25  5  4</code></pre>
 <p>We saw above that</p>
-<p><span class="math display">\[ X = \begin{bmatrix} 25 &amp; 4 \\ 15 &amp; 7 \end{bmatrix} \]</span></p>
-<p>is an inverse of <span class="math inline">\(A\)</span>, so now we’re going to repeat the same process we went through during encryption, but now using the matrix <span class="math inline">\(X\)</span> in place of the matrix <span class="math inline">\(A\)</span>. We start with the vector</p>
-<p><span class="math display">\[ v = \begin{bmatrix} 22 \\ 18 \end{bmatrix} \]</span></p>
+<p><span class="math display">\[ X = \begin{bmatrix} 25 &amp; 4 \\ 15
+&amp; 7 \end{bmatrix} \]</span></p>
+<p>is an inverse of <span class="math inline">\(A\)</span>, so now we’re
+going to repeat the same process we went through during encryption, but
+now using the matrix <span class="math inline">\(X\)</span> in place of
+the matrix <span class="math inline">\(A\)</span>. We start with the
+vector</p>
+<p><span class="math display">\[ v = \begin{bmatrix} 22 \\ 18
+\end{bmatrix} \]</span></p>
 <p>consisting of the first two numbers. We then compute</p>
-<p><span class="math display">\[ Xv \bmod{26} = \begin{bmatrix} 25 &amp; 4 \\ 15 &amp; 7 \end{bmatrix}\begin{bmatrix} 22 \\ 18 \end{bmatrix} \bmod{26} = \begin{bmatrix}
-622 \\ 456 \end{bmatrix} \bmod{26} = \begin{bmatrix} 24 \\ 14 \end{bmatrix}.\]</span></p>
-<p>Since 24 and 14 correspond to <code>Y</code> and <code>O</code> respectively, the first two letters of the decrypted message will be <code>YO</code> (as we’d expect). We keep going like this through the entire ciphertext to recover the plaintext. Of course, we’ll find the message <code>YOUHAVESAVEDUSALLZ</code> at the end, and Bob has to remember that the <code>Z</code> was probably a random letter tacked onto the end.</p>
+<p><span class="math display">\[ Xv \bmod{26} = \begin{bmatrix} 25 &amp;
+4 \\ 15 &amp; 7 \end{bmatrix}\begin{bmatrix} 22 \\ 18 \end{bmatrix}
+\bmod{26} = \begin{bmatrix}
+622 \\ 456 \end{bmatrix} \bmod{26} = \begin{bmatrix} 24 \\ 14
+\end{bmatrix}.\]</span></p>
+<p>Since 24 and 14 correspond to <code>Y</code> and <code>O</code>
+respectively, the first two letters of the decrypted message will be
+<code>YO</code> (as we’d expect). We keep going like this through the
+entire ciphertext to recover the plaintext. Of course, we’ll find the
+message <code>YOUHAVESAVEDUSALLZ</code> at the end, and Bob has to
+remember that the <code>Z</code> was probably a random letter tacked
+onto the end.</p>
 <div class="element">
-<p><span class="label">Exercise</span> Use the matrix <span class="math display">\[ A = \begin{bmatrix} 3 &amp; -1 \\ 2 &amp; 5 \end{bmatrix} \]</span> as the key for a Hill cipher.</p>
+<p><span class="label">Exercise</span> Use the matrix <span
+class="math display">\[ A = \begin{bmatrix} 3 &amp; -1 \\ 2 &amp; 5
+\end{bmatrix} \]</span> as the key for a Hill cipher.</p>
 <ul>
 <li>Encrypt the message <code>Go to Lake Lerna</code>.</li>
 <li>Decrypt the message <code>RNCQYVFRRLZI</code>.</li>
@@ -1602,9 +2488,25 @@ def _(A=input_box(default="[[3, 2], [1, 7]]", label="A", width=40),
 </div>
 </div>
 <h2 id="playfair-cipher">2.12. Playfair Cipher</h2>
-<p>The <em>Playfair cipher</em> is another digraphic cipher, like the Hill cipher we just described above. It was invented by Charles Wheatstone in 1854, but is named after Lord Playfair, who promoted its use. The encryption and decryption is a little complicated to describe, but there is no sophisticated mathematics involved.</p>
-<p>The key for a Playfair cipher is a <span class="math inline">\(5 \times 5\)</span> grid of letters, each letter appearing exactly once. Of course, such a grid only fits 25 letters, but there are 26 letters in the English alphabet! The typical solution is to treat <code>I</code> and <code>J</code> as the same letter, which is what we will do. (You could instead imagine a variant where we use a <span class="math inline">\(6 \times 6\)</span> grid that includes all 26 letters and all 10 digits, like the one we used for a Polybius square but without the row and column labels.)</p>
-<p>A convenient and “easy-to-remember” way of constructing such a grid is to start with a secret key word. Suppose, for example, that our key word is <code>ALPHABET</code>. We then start filling out our grid by writing out the letters of our key word across the rows, skipping over any letter that we’ve already written down.</p>
+<p>The <em>Playfair cipher</em> is another digraphic cipher, like the
+Hill cipher we just described above. It was invented by Charles
+Wheatstone in 1854, but is named after Lord Playfair, who promoted its
+use. The encryption and decryption is a little complicated to describe,
+but there is no sophisticated mathematics involved.</p>
+<p>The key for a Playfair cipher is a <span class="math inline">\(5
+\times 5\)</span> grid of letters, each letter appearing exactly once.
+Of course, such a grid only fits 25 letters, but there are 26 letters in
+the English alphabet! The typical solution is to treat <code>I</code>
+and <code>J</code> as the same letter, which is what we will do. (You
+could instead imagine a variant where we use a <span
+class="math inline">\(6 \times 6\)</span> grid that includes all 26
+letters and all 10 digits, like the one we used for a Polybius square
+but without the row and column labels.)</p>
+<p>A convenient and “easy-to-remember” way of constructing such a grid
+is to start with a secret key word. Suppose, for example, that our key
+word is <code>ALPHABET</code>. We then start filling out our grid by
+writing out the letters of our key word across the rows, skipping over
+any letter that we’ve already written down.</p>
 <table width="30%" style="margin: auto; font-family: monospace; text-align: center;">
 <tr>
 <td>
@@ -1677,7 +2579,9 @@ T
 </td>
 </tr>
 </table>
-<p>We then fill out the square by listing all of the remaining letters of the alphabet, skipping over anything we’ve already written down and remembering that <code>I</code> and <code>J</code> are the same.</p>
+<p>We then fill out the square by listing all of the remaining letters
+of the alphabet, skipping over anything we’ve already written down and
+remembering that <code>I</code> and <code>J</code> are the same.</p>
 <table width="30%" style="margin: auto; font-family: monospace; text-align: center;">
 <tr>
 <td>
@@ -1767,13 +2671,19 @@ Z
 </table>
 <p>We next encode our message by doing the following:</p>
 <ol type="1">
-<li>As usual, we remove all non-alphabet characters and capitalize everything.</li>
+<li>As usual, we remove all non-alphabet characters and capitalize
+everything.</li>
 <li>Replace all instances of <code>J</code> with <code>I</code>.</li>
 <li>Group the letters into pairs.</li>
-<li>If there are any pairs where both letters are the same, we insert the letter <code>X</code> in between the two letters of that pair and then regroup into pairs.</li>
-<li>If there is an unpaired letter at the end, insert the letter <code>X</code> after it.</li>
+<li>If there are any pairs where both letters are the same, we insert
+the letter <code>X</code> in between the two letters of that pair and
+then regroup into pairs.</li>
+<li>If there is an unpaired letter at the end, insert the letter
+<code>X</code> after it.</li>
 </ol>
-<p>Suppose, for example, that we want to encrypt the message <code>hidden jewels in trees</code>. Here is what the encoding looks like after each step:</p>
+<p>Suppose, for example, that we want to encrypt the message
+<code>hidden jewels in trees</code>. Here is what the encoding looks
+like after each step:</p>
 <ol type="1">
 <li><code>HIDDENJEWELSINTHETREES</code></li>
 <li><code>HIDDENIEWELSINTHETREES</code></li>
@@ -1782,14 +2692,27 @@ Z
 <code>HI DX DE NI EW EL SI NT HE TR EX ES</code></li>
 <li><code>HI DX DE NI EW EL SI NT HE TR EX ES</code></li>
 </ol>
-<p>Note that we might have to apply rule 4 multiple times. We had to apply rule 4 twice above (first to eliminate the <code>DD</code>, and then to replace the <code>EE</code>).</p>
-<p>To encrypt, we replace each pair with another pair using the grid by following these rules:</p>
+<p>Note that we might have to apply rule 4 multiple times. We had to
+apply rule 4 twice above (first to eliminate the <code>DD</code>, and
+then to replace the <code>EE</code>).</p>
+<p>To encrypt, we replace each pair with another pair using the grid by
+following these rules:</p>
 <ul>
-<li>(Row Rule) If both letters in the pair occur in the same row, replace each letter of the pair with the letter that appears immediately to its right (wrapping around to the left side of the row if needed).</li>
-<li>(Column Rule) If both letters in the pair occur in the same column, replace each letter of the pair with the letter that appears immediately below it (wrapping around to the top of the column if needed).</li>
-<li>(Rectangle Rule) Otherwise, the two letters define a rectangle inside the grid, and we replace each letter with the letter on the same row but the opposite side of that rectangle.</li>
+<li>(Row Rule) If both letters in the pair occur in the same row,
+replace each letter of the pair with the letter that appears immediately
+to its right (wrapping around to the left side of the row if
+needed).</li>
+<li>(Column Rule) If both letters in the pair occur in the same column,
+replace each letter of the pair with the letter that appears immediately
+below it (wrapping around to the top of the column if needed).</li>
+<li>(Rectangle Rule) Otherwise, the two letters define a rectangle
+inside the grid, and we replace each letter with the letter on the same
+row but the opposite side of that rectangle.</li>
 </ul>
-<p>Returning to our example: we start with the pair <code>HI</code>. These are marked in bold below; they do not appear in the same row or column, so the Rectangle Rule applies. The rectangle defined by these two letters is indicated in black.</p>
+<p>Returning to our example: we start with the pair <code>HI</code>.
+These are marked in bold below; they do not appear in the same row or
+column, so the Rectangle Rule applies. The rectangle defined by these
+two letters is indicated in black.</p>
 <table width="30%" style="margin: auto; font-family: monospace; text-align: center;">
 <tr>
 <td style="color: #dddddd">
@@ -1877,8 +2800,12 @@ Z
 </td>
 </tr>
 </table>
-<p>The letter in the same row as <code>H</code> but the opposite side is <code>L</code>, and the letter in the same row as <code>I</code> but the opposite side is <code>M</code>. Thus <code>HI</code> gets replaced by <code>LM</code>.</p>
-<p>Next we encrypt <code>DX</code>. These also define a rectangle, as depicted below, and get replaced by <code>CY</code>.</p>
+<p>The letter in the same row as <code>H</code> but the opposite side is
+<code>L</code>, and the letter in the same row as <code>I</code> but the
+opposite side is <code>M</code>. Thus <code>HI</code> gets replaced by
+<code>LM</code>.</p>
+<p>Next we encrypt <code>DX</code>. These also define a rectangle, as
+depicted below, and get replaced by <code>CY</code>.</p>
 <table width="30%" style="margin: auto; font-family: monospace; text-align: center;">
 <tr>
 <td style="color: #dddddd">
@@ -1966,7 +2893,10 @@ Z
 </td>
 </tr>
 </table>
-<p>Next we have <code>DE</code>. These two letters are on the same row, indicated in black below. We therefore apply the Row Rule and replace each one with the letter immediately to its right, obtaining <code>FT</code>.</p>
+<p>Next we have <code>DE</code>. These two letters are on the same row,
+indicated in black below. We therefore apply the Row Rule and replace
+each one with the letter immediately to its right, obtaining
+<code>FT</code>.</p>
 <table width="30%" style="margin: auto; font-family: monospace; text-align: center;">
 <tr>
 <td style="color: #dddddd">
@@ -2054,7 +2984,12 @@ Z
 </td>
 </tr>
 </table>
-<p>And then we encrypt <code>NI</code>. These also lie on the same row, indicated in black below, so we apply the row rule and replace each letter with the letter immediately to its right. For the letter <code>N</code>, we have to wrap around to the beginning to <code>G</code>. Thus <code>NI</code> gets replaced by <code>GK</code>.</p>
+<p>And then we encrypt <code>NI</code>. These also lie on the same row,
+indicated in black below, so we apply the row rule and replace each
+letter with the letter immediately to its right. For the letter
+<code>N</code>, we have to wrap around to the beginning to
+<code>G</code>. Thus <code>NI</code> gets replaced by
+<code>GK</code>.</p>
 <table width="30%" style="margin: auto; font-family: monospace; text-align: center;">
 <tr>
 <td style="color: #dddddd">
@@ -2236,18 +3171,27 @@ Z
 LM CY FT GK __ __ __ __ __ __ __ __</code></pre>
 </div>
 <div class="element">
-<p><span class="label">Exercise</span> Using the same grid, encode and encrypt the following messages:</p>
+<p><span class="label">Exercise</span> Using the same grid, encode and
+encrypt the following messages:</p>
 <ol type="a">
 <li><code>Meet at aviary</code></li>
 <li><code>Launch balloon at noon</code></li>
 </ol>
 </div>
-<p>To decrypt messages, we have to undo this process. We follow almost the same three rules, except the Column Rule for decryption involves replacing each letter that appears immediately <em>above</em> it, and the Row Rule involves replacing each letter with the letter that appears immediately to the <em>left</em> of it. The recipient also has to decode the message by inferring which <code>X</code>s should be removed and how to correctly punctuate the message.</p>
+<p>To decrypt messages, we have to undo this process. We follow almost
+the same three rules, except the Column Rule for decryption involves
+replacing each letter that appears immediately <em>above</em> it, and
+the Row Rule involves replacing each letter with the letter that appears
+immediately to the <em>left</em> of it. The recipient also has to decode
+the message by inferring which <code>X</code>s should be removed and how
+to correctly punctuate the message.</p>
 <div class="element">
-<p><span class="label">Exercise</span> Using the same grid, decrypt and decode the message <code>OV CQ QI UG RY</code>.</p>
+<p><span class="label">Exercise</span> Using the same grid, decrypt and
+decode the message <code>OV CQ QI UG RY</code>.</p>
 </div>
 <div id="sagecell-playfair-cipher" class="element">
-<span class="label">SageCell</span> Here’s a SageCell, contributed by Rahul Avasarala, that implements a Playfair cipher.
+<span class="label">SageCell</span> Here’s a SageCell, contributed by
+Rahul Avasarala, that implements a Playfair cipher.
 <div class="sage">
 <script type="text/x-sage">
 # Code contributed by Rahul Avasarala
@@ -2369,29 +3313,67 @@ def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=80)
 </div>
 </div>
 <h2 id="vignere-cipher">2.13. Vignère Cipher</h2>
-<p>The <em>Vignère cipher</em> is our first example of polyalphabetic substitution: ie, a substitution cipher in which the substitution scheme changes over the course of the message. It is closely related to the Caesar cipher and was first described by Giovan Battista Bellaso in 1553; it carries the name of Blaise de Vignère due to a misattribution in the 1800s. The cipher resisted all attempts to break it for three centuries, until work of Friedrich Kasiski in 1863.</p>
-<p>The Vignère cipher makes use of modular arithmetic and of the correspondence between the letters <code>A</code> through <code>Z</code> and the numbers 0 through 25 that we’ve seen above. The key for a Vignère cipher is a finite sequence of shifts. A convenient and “easy-to-remember” way of constructing such a sequence is to have a secret key word, and then associate each letter of that word with the corresponding number to get the sequence of shifts. For example, if our secret word is <code>ASGARD</code>, the corresponding sequence of numbers is <span class="math inline">\((0, 18, 6, 0, 17, 3)\)</span>, because <code>A</code> corresponds to 0, <code>S</code> corresponds to 18, etc.</p>
-<p>To encrypt a message, we start by encoding it in the usual way: remove all non-alphabet characters and capitalize everything. Suppose, for example, that we want to encrypt the message <code>Keep Loki Away</code>. We encode to <code>KEEPLOKIAWAY</code> and then we associate to each letter the corresponding number 0 through 25.</p>
+<p>The <em>Vignère cipher</em> is our first example of polyalphabetic
+substitution: ie, a substitution cipher in which the substitution scheme
+changes over the course of the message. It is closely related to the
+Caesar cipher and was first described by Giovan Battista Bellaso in
+1553; it carries the name of Blaise de Vignère due to a misattribution
+in the 1800s. The cipher resisted all attempts to break it for three
+centuries, until work of Friedrich Kasiski in 1863.</p>
+<p>The Vignère cipher makes use of modular arithmetic and of the
+correspondence between the letters <code>A</code> through <code>Z</code>
+and the numbers 0 through 25 that we’ve seen above. The key for a
+Vignère cipher is a finite sequence of shifts. A convenient and
+“easy-to-remember” way of constructing such a sequence is to have a
+secret key word, and then associate each letter of that word with the
+corresponding number to get the sequence of shifts. For example, if our
+secret word is <code>ASGARD</code>, the corresponding sequence of
+numbers is <span class="math inline">\((0, 18, 6, 0, 17, 3)\)</span>,
+because <code>A</code> corresponds to 0, <code>S</code> corresponds to
+18, etc.</p>
+<p>To encrypt a message, we start by encoding it in the usual way:
+remove all non-alphabet characters and capitalize everything. Suppose,
+for example, that we want to encrypt the message
+<code>Keep Loki Away</code>. We encode to <code>KEEPLOKIAWAY</code> and
+then we associate to each letter the corresponding number 0 through
+25.</p>
 <pre><code> K  E  E  P  L  O  K  I  A  W  A  Y
 10  4  4 15 11 14 10  8  0 22  0 24</code></pre>
-<p>We will then perform addition mod 26 to each of these numbers. We’ll use the first element of our key sequence for the first number, the second for the second, and so forth; when we finish the key, we repeat it from the beginning. We then convert those sums back to numbers using the usual correspondence. Using the key <span class="math inline">\((0, 18, 6, 0, 17, 3)\)</span> corresponding to the key word <code>ASGARD</code> from above, we have:</p>
+<p>We will then perform addition mod 26 to each of these numbers. We’ll
+use the first element of our key sequence for the first number, the
+second for the second, and so forth; when we finish the key, we repeat
+it from the beginning. We then convert those sums back to numbers using
+the usual correspondence. Using the key <span class="math inline">\((0,
+18, 6, 0, 17, 3)\)</span> corresponding to the key word
+<code>ASGARD</code> from above, we have:</p>
 <pre><code>Encoded          :  K  E  E  P  L  O  K  I  A  W  A  Y
 Numbers (1)      : 10  4  4 15 11 14 10  8  0 22  0 24
 Key Word         :  A  S  G  A  R  D  A  S  G  A  R  D
 Key Number (2)   :  0 18  6  0 17  3  0 18  6  0 17  3
 (1) + (2) mod 26 : 10 22 10 15  2 17 10  0  6 22 17  1
 Encrypted        :  K  W  K  P  C  R  K  A  G  W  R  B</code></pre>
-<p>Thus <code>KWKPCRKAGWRB</code> is our ciphertext. Notice that the first <code>E</code> of the plaintext was encrypted to <code>W</code>, while the second <code>E</code> was encrypted to <code>K</code>. Similarly, the first <code>A</code> was encrypted to <code>G</code>, while the second <code>A</code> was encrypted to <code>R</code>. (Coincidentally, the first <code>K</code> and the second <code>K</code> are both encrypted to the letter <code>K</code>.) This is what is meant when we say that the Vignère cipher is polyalphabetic, or that the substitution scheme changes over the course of the message.</p>
-<p>Decryption, of course, works almost exactly the same way — except that we subtract mod 26 instead of adding!</p>
+<p>Thus <code>KWKPCRKAGWRB</code> is our ciphertext. Notice that the
+first <code>E</code> of the plaintext was encrypted to <code>W</code>,
+while the second <code>E</code> was encrypted to <code>K</code>.
+Similarly, the first <code>A</code> was encrypted to <code>G</code>,
+while the second <code>A</code> was encrypted to <code>R</code>.
+(Coincidentally, the first <code>K</code> and the second <code>K</code>
+are both encrypted to the letter <code>K</code>.) This is what is meant
+when we say that the Vignère cipher is polyalphabetic, or that the
+substitution scheme changes over the course of the message.</p>
+<p>Decryption, of course, works almost exactly the same way — except
+that we subtract mod 26 instead of adding!</p>
 <div class="element">
-<p><span class="label">Exercise</span> Continue to use the key word <code>ASGARD</code>.</p>
+<p><span class="label">Exercise</span> Continue to use the key word
+<code>ASGARD</code>.</p>
 <ul>
 <li>Encrypt the message <code>Protect Odin from Fenrir</code>.</li>
 <li>Decrypt the message <code>RSMNRUOCOSTRMATG</code>. </span></li>
 </ul>
 </div>
 <div id="sagecell-vignere-cipher" class="element">
-<span class="label">SageCell</span> Here is a SageCell implementing the Vignère cipher.
+<span class="label">SageCell</span> Here is a SageCell implementing the
+Vignère cipher.
 <div class="sage">
 <script type="text/x-sage">
 from re import sub
@@ -2443,25 +3425,45 @@ def _(keyword=input_box(default="ASGARD", label="Key", height=2, width=80),
 </div>
 </div>
 <h2 id="one-time-pad">2.14. One-Time Pad</h2>
-<p>The <em>one-time pad</em> is a special case of the Vignère cipher where the key sequence is:</p>
+<p>The <em>one-time pad</em> is a special case of the Vignère cipher
+where the key sequence is:</p>
 <ul>
 <li>never re-used,</li>
 <li>at least as long as the plaintext,</li>
 <li>“unrelated to the plaintext,” and</li>
-<li>“totally random,” in the sense that each number 0 through 25 is equally likely in each position of the key.</li>
+<li>“totally random,” in the sense that each number 0 through 25 is
+equally likely in each position of the key.</li>
 </ul>
-<p>If you understand how the Vignère cipher works, you also understand the one-time pad works. The only noteworthy difference is that the key sequence must not be generated using a key words, because words won’t have the property that each letter is equally likely!</p>
-<p>We’ll return to the one-time pad again. We’ll want to make precise what we mean by “unrelated to the plaintext” and “totally random” above, and we’ll see that it has a property called <em>perfect secrecy</em>, which means that the security of the one-time pad can be mathematically guaranteed!</p>
+<p>If you understand how the Vignère cipher works, you also understand
+the one-time pad works. The only noteworthy difference is that the key
+sequence must not be generated using a key words, because words won’t
+have the property that each letter is equally likely!</p>
+<p>We’ll return to the one-time pad again. We’ll want to make precise
+what we mean by “unrelated to the plaintext” and “totally random” above,
+and we’ll see that it has a property called <em>perfect secrecy</em>,
+which means that the security of the one-time pad can be mathematically
+guaranteed!</p>
 <div class="element">
-<p><span class="label">Exercise</span> While “perfect secrecy” sounds great, the one-time pad is generally not very practical. Why not? <em>Hint</em>. If Alice and Bob have a way of sharing a secret key that’s at least as long as the plaintext that they want to share…</p>
+<p><span class="label">Exercise</span> While “perfect secrecy” sounds
+great, the one-time pad is generally not very practical. Why not?
+<em>Hint</em>. If Alice and Bob have a way of sharing a secret key
+that’s at least as long as the plaintext that they want to share…</p>
 </div>
-<section class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>If you’ve studied linear algebra, you’ll likely be able to convince yourself that everything here generalizes to <span class="math inline">\(n \times n\)</span> matrices.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>If you knew something about linear algebra beforehand and were able to generalize the previous section to <span class="math inline">\(n \times n\)</span> matrices in your head, you can probably also generalize this section.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>If you’ve studied linear algebra, you’ll likely be able
+to convince yourself that everything here generalizes to <span
+class="math inline">\(n \times n\)</span> matrices.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If you knew something about linear algebra beforehand
+and were able to generalize the previous section to <span
+class="math inline">\(n \times n\)</span> matrices in your head, you can
+probably also generalize this section.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section>
+</aside>
 
 </main>
 
