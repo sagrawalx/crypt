@@ -172,7 +172,7 @@ Here is an example of the encryption and decryption process in a small example a
 
 When generating his elliptic curve Elgamal public key, Bob chooses the elliptic curve $E$ defined by $y^2 = x^3 + 3x + 4$ mod $p = 7$ and the point $P = (5, 5) \in E$. 
 
-```sage
+```python
 E = EllipticCurve(GF(7), [3, 4])
 P = E(5, 5)
 ```
@@ -181,7 +181,7 @@ By running `P.order()`, we find that $\mathrm{ord}_E(P) = 10$. Suppose Bob choos
 
 Now suppose Alice wants to send Bob a message. She sets up her Sage session by pulling the following information from Bob's public key. 
 
-```sage
+```python
 E = EllipticCurve(GF(7), [3, 4])
 P = E(5, 5)
 order = 10
