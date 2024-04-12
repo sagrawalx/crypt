@@ -97,7 +97,7 @@ Shishir Agrawal
 
 <div>
 Start: 2022-10-28 <br/>
-Update: 2024-03-26 <br/>
+Update: 2024-04-12 <br/>
 <a href="https://github.com/sagrawalx/crypt">Source</a> <br/>
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
 </div>
@@ -371,11 +371,11 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(key=input_box(default="CRASH", label="Key", height=2, width=80), 
-      text=input_box(default="Hide! The baboons are coming for you.", label="Input", height=5, width=80), 
+def _(key=input_box(default="CRASH", label="Key", height=2, width=70), 
+      text=input_box(default="Hide! The baboons are coming for you.", label="Input", height=5, width=70), 
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     output = eval(actions)(text, key)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>
@@ -1029,10 +1029,10 @@ def output_div(label: str, content: str):
 
 @interact
 def _(shift=slider(0, 25, 1, 7, label="Shift"),
-      text=input_box(default="TLLAHANYHMMPAPOHSSHATPKUPNOA", label="Input", height=5, width=80),
+      text=input_box(default="TLLAHANYHMMPAPOHSSHATPKUPNOA", label="Input", height=5, width=70),
       actions=selector(["decrypt", "encrypt"], buttons=True, label="Action")):
     output = eval(actions)(text, shift)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 <p>Once you’ve decrypted the message, play with the SageCell! You can
@@ -1641,14 +1641,14 @@ def output_div(label: str, content: str):
 @interact
 def _(a=slider(0, 25, 1, 1, label="a"),
       b=slider(0, 25, 1, 0, label="b"),
-      text=input_box(default="VYOHVUTWVHPZUWTZUUBEYDUB", label="Input", height=5, width=80), 
+      text=input_box(default="VYOHVUTWVHPZUWTZUUBEYDUB", label="Input", height=5, width=70), 
       actions=selector(["decrypt", "encrypt"], buttons=True, label="Action")):
     
     if gcd(a, 26) != 1:
         raise Exception("a must be invertible mod 26")
     
     output = eval(actions)(text, a, b)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>
@@ -1926,8 +1926,8 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(input_key=input_box(default=key_start, label="Key", height=2, width=80), 
-      text=input_box(default="Hide! The baboons are coming for you.", label="Input", height=5, width=80), 
+def _(input_key=input_box(default=key_start, label="Key", height=2, width=70), 
+      text=input_box(default="Hide! The baboons are coming for you.", label="Input", height=5, width=70), 
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     
     # Validate key
@@ -1935,7 +1935,7 @@ def _(input_key=input_box(default=key_start, label="Key", height=2, width=80),
     
     # Encrypt or decrypt
     output = eval(actions)(text, key)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>
@@ -2476,14 +2476,14 @@ def output_div(label: str, content: str):
 
 @interact
 def _(A=input_box(default="[[3, 2], [1, 7]]", label="A", width=40), 
-      text=input_box(default="YOUHAVESAVEDUSALL", label="Input", height=5, width=80), 
+      text=input_box(default="YOUHAVESAVEDUSALL", label="Input", height=5, width=70), 
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     A = matrix(A)
     if gcd(det(A), 26) != 1:
         raise Exception("Matrix A must be invertible mod 26.")
     
     output = eval(actions)(text, A)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>
@@ -3294,8 +3294,8 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=80),
-      text=input_box(default="Hidden Jewels in the Trees!!!!!", label="Input", height=5, width=80),
+def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=70),
+      text=input_box(default="Hidden Jewels in the Trees!!!!!", label="Input", height=5, width=70),
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     
     letter_to_coord, coord_to_letter = generate_key(keyword)
@@ -3308,7 +3308,7 @@ def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=80)
     output_div("Grid", s)
     
     output = eval(actions)(text, letter_to_coord, coord_to_letter)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{output}</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{output}</textarea>')
 </script>
 </div>
 </div>
@@ -3415,12 +3415,12 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(keyword=input_box(default="ASGARD", label="Key", height=2, width=80), 
-      text=input_box(default="TZURYDSKRAZQTZKSVUPWTT", label="Input", height=5, width=80), 
+def _(keyword=input_box(default="ASGARD", label="Key", height=2, width=70), 
+      text=input_box(default="TZURYDSKRAZQTZKSVUPWTT", label="Input", height=5, width=70), 
       actions=selector(["decrypt", "encrypt"], buttons=True, label="Action")):
     key = numerify(keyword)
     output = eval(actions)(text, key)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>
