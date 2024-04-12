@@ -313,10 +313,10 @@ def validate(input_key):
     return {x: y for x, y in zip(alphabet, input_key[27:])}
 
 @interact
-def _(cipher=input_box(default=ciphertext, label="Input", height=5, width=80),
-      known=input_box(default="LONDON", label="Known", height=2, width=80),
-      sample=input_box(default=sampletext, label="Sample", height=5, width=80),
-      input_key=input_box(default=key_start, label="Key", height=2, width=80)):
+def _(cipher=input_box(default=ciphertext, label="Input", height=5, width=70),
+      known=input_box(default="LONDON", label="Known", height=2, width=70),
+      sample=input_box(default=sampletext, label="Sample", height=5, width=70),
+      input_key=input_box(default=key_start, label="Key", height=2, width=70)):
     if not cipher.isalpha() or not cipher.isupper():
         raise Exception("Ciphertext must consist only of uppercase characters")
     
@@ -329,7 +329,7 @@ def _(cipher=input_box(default=ciphertext, label="Input", height=5, width=80),
     sample_freq = counts_to_freqs(Counter(sample))
     cipher_freq = counts_to_freqs(Counter(cipher))
     
-    o = '<table width="100%" style="font-size: 0.6em; text-align: center;"><tr><td></td>'
+    o = '<table width="90%" style="font-size: 0.6em; text-align: center;"><tr><td></td>'
     for x in alphabet:
         o += f"<td>{x}</td>"
     o += "</tr>"
@@ -382,7 +382,7 @@ def _(cipher=input_box(default=ciphertext, label="Input", height=5, width=80),
     
     # Display decrypted text
     output = decrypt(cipher, key)
-    output_div("Output", f'<div style="inline-size: 48.5em; overflow-wrap: break-word;">{ output }</div>')  
+    output_div("Output", f'<div style="inline-size: 45em; overflow-wrap: break-word;">{ output }</div>')  
 </script>
 </div>
 </div>

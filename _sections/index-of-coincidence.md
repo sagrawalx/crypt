@@ -84,10 +84,10 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(text1=input_box(default=samples[0], label="Text 1", height=5, width=80),
-      text2=input_box(default=samples[1], label="Text 2", height=5, width=80),
-      text3=input_box(default=samples[2], label="Text 3", height=5, width=80),
-      text4=input_box(default=samples[3], label="Text 4", height=5, width=80)):
+def _(text1=input_box(default=samples[0], label="Text 1", height=5, width=70),
+      text2=input_box(default=samples[1], label="Text 2", height=5, width=70),
+      text3=input_box(default=samples[2], label="Text 3", height=5, width=70),
+      text4=input_box(default=samples[3], label="Text 4", height=5, width=70)):
     
     texts = [text1, text2, text3, text4]
     texts = [encode(s) for s in texts]

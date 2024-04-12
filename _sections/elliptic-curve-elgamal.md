@@ -99,11 +99,11 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(text=input_box(default="HIBOB", label="Input", height=2, width=80),
-      s=input_box(default="10", label="s", width=80),
-      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=80),
-      a=input_box(default="2231", label="a", width=80),
-      b=input_box(default="924384923849", label="b", width=80)):
+def _(text=input_box(default="HIBOB", label="Input", height=2, width=70),
+      s=input_box(default="10", label="s", width=62),
+      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=62),
+      a=input_box(default="2231", label="a", width=62),
+      b=input_box(default="924384923849", label="b", width=62)):
     
     text = encode(text)
     o = f"Probability of encoding failure: {float(0.5^s)}"
@@ -115,7 +115,7 @@ def _(text=input_box(default="HIBOB", label="Input", height=2, width=80),
     
     E = EllipticCurve(GF(p), [a, b])  
     o = elliptic_encode(text, E, s)
-    output_div("Output", f'<textarea readonly rows="2" cols="80">{ tuple(o) }</textarea>')
+    output_div("Output", f'<textarea readonly rows="2" cols="70">{ tuple(o) }</textarea>')
 </script>
 </div>
 Here is another SageCell that implements the decoding step.
@@ -147,16 +147,16 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(M=input_box(default="(33404810, 14631728016432515480233802166029066516512428400786216396603964460676414, 1)", label="Input", width=80),
-      s=input_box(default="10", label="s", width=80),
-      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=80),
-      a=input_box(default="2231", label="a", width=80),
-      b=input_box(default="924384923849", label="b", width=80)):
+def _(M=input_box(default="(33404810, 14631728016432515480233802166029066516512428400786216396603964460676414, 1)", label="Input", width=62),
+      s=input_box(default="10", label="s", width=62),
+      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=62),
+      a=input_box(default="2231", label="a", width=62),
+      b=input_box(default="924384923849", label="b", width=62)):
     
     E = EllipticCurve(GF(p), [a, b])  
     M = E(M)
     o = elliptic_decode(M, E, s)
-    output_div("Output", f'<textarea readonly rows="2" cols="80">{ o }</textarea>')
+    output_div("Output", f'<textarea readonly rows="2" cols="70">{ o }</textarea>')
 </script>
 </div>
 </div>
@@ -318,14 +318,14 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(text=input_box(default="HIBOB", label="Input", height=2, width=80),
-      s=input_box(default="10", label="s", width=80),
-      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=80),
-      a=input_box(default="2231", label="a", width=80),
-      b=input_box(default="924384923849", label="b", width=80),
-      P=input_box(default="(28242533037372562028376915025599704895624883370665290980560308139223847, 27339484572109674275112696180600875534462601488783406730716833705598007, 1)", label="P", width=80),
-      order=input_box(default="31624898780568028223033578567554928906213834570791083268618301693807894", label="order", width=80),
-      Q=input_box(default="(14860594925009170003954530097202645513024232456550100199567054270027585, 31448458171617918642007942988642343116727272631897730366311554311900365, 1)", label="Q", width=80)):
+def _(text=input_box(default="HIBOB", label="Input", height=2, width=70),
+      s=input_box(default="10", label="s", width=62),
+      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=62),
+      a=input_box(default="2231", label="a", width=62),
+      b=input_box(default="924384923849", label="b", width=62),
+      P=input_box(default="(28242533037372562028376915025599704895624883370665290980560308139223847, 27339484572109674275112696180600875534462601488783406730716833705598007, 1)", label="P", width=62),
+      order=input_box(default="31624898780568028223033578567554928906213834570791083268618301693807894", label="order", width=62),
+      Q=input_box(default="(14860594925009170003954530097202645513024232456550100199567054270027585, 31448458171617918642007942988642343116727272631897730366311554311900365, 1)", label="Q", width=62)):
     
     text = encode(text)
     o = f"Probability of encoding failure: {float(0.5^s)}"
@@ -343,7 +343,7 @@ def _(text=input_box(default="HIBOB", label="Input", height=2, width=80),
     R = encrypt(M, E, P, order, Q)
     o = (tuple(R[0]), tuple(R[1]))
     
-    output_div("Output", f'<textarea readonly rows="2" cols="80">{ o }</textarea>')
+    output_div("Output", f'<textarea readonly rows="2" cols="70">{ o }</textarea>')
 </script>
 </div>
 
@@ -386,15 +386,15 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(cipher=input_box(default="((12439165645636780372408872819196985400098429041444905471841965054215852, 13168353947844887098155880466151122665060908575026632194378808065612145, 1), (10653009826871052250391884872759053215859987410006331499967649660641664, 4230942832501466957956641218702916607547526549773148196384944547108179, 1))", label="Input", width=80),
-      s=input_box(default="10", label="s", width=80),
-      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=80),
-      a=input_box(default="2231", label="a", width=80),
-      b=input_box(default="924384923849", label="b", width=80),
-      P=input_box(default="(28242533037372562028376915025599704895624883370665290980560308139223847, 27339484572109674275112696180600875534462601488783406730716833705598007, 1)", label="P", width=80),
-      order=input_box(default="31624898780568028223033578567554928906213834570791083268618301693807894", label="order", width=80),
-      Q=input_box(default="(14860594925009170003954530097202645513024232456550100199567054270027585, 31448458171617918642007942988642343116727272631897730366311554311900365, 1)", label="Q", width=80),
-      k=input_box(default="3378570623517000468044706849659752427201103476704244805424841619588371", label="K", width=80)):
+def _(cipher=input_box(default="((12439165645636780372408872819196985400098429041444905471841965054215852, 13168353947844887098155880466151122665060908575026632194378808065612145, 1), (10653009826871052250391884872759053215859987410006331499967649660641664, 4230942832501466957956641218702916607547526549773148196384944547108179, 1))", label="Input", width=62),
+      s=input_box(default="10", label="s", width=62),
+      p=input_box(default="31624898780568028223033578567554929233454460200496038308094584218593743", label="p", width=62),
+      a=input_box(default="2231", label="a", width=62),
+      b=input_box(default="924384923849", label="b", width=62),
+      P=input_box(default="(28242533037372562028376915025599704895624883370665290980560308139223847, 27339484572109674275112696180600875534462601488783406730716833705598007, 1)", label="P", width=62),
+      order=input_box(default="31624898780568028223033578567554928906213834570791083268618301693807894", label="order", width=62),
+      Q=input_box(default="(14860594925009170003954530097202645513024232456550100199567054270027585, 31448458171617918642007942988642343116727272631897730366311554311900365, 1)", label="Q", width=62),
+      k=input_box(default="3378570623517000468044706849659752427201103476704244805424841619588371", label="K", width=62)):
     
     E = EllipticCurve(GF(p), [a, b])  
     P = E(P)
@@ -404,7 +404,7 @@ def _(cipher=input_box(default="((1243916564563678037240887281919698540009842904
     M = decrypt(R, E, k)
     o = elliptic_decode(M, E, s)
     
-    output_div("Output", f'<textarea readonly rows="2" cols="80">{ o }</textarea>')
+    output_div("Output", f'<textarea readonly rows="2" cols="70">{ o }</textarea>')
 </script>
 </div> 
 </div>

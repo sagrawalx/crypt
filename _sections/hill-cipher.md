@@ -119,14 +119,14 @@ def output_div(label: str, content: str):
 
 @interact
 def _(A=input_box(default="[[3, 2], [1, 7]]", label="A", width=40), 
-      text=input_box(default="YOUHAVESAVEDUSALL", label="Input", height=5, width=80), 
+      text=input_box(default="YOUHAVESAVEDUSALL", label="Input", height=5, width=70), 
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     A = matrix(A)
     if gcd(det(A), 26) != 1:
         raise Exception("Matrix A must be invertible mod 26.")
     
     output = eval(actions)(text, A)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>

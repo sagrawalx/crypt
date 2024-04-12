@@ -191,10 +191,10 @@ def output_div(label: str, content: str):
 
 @interact
 def _(shift=slider(0, 25, 1, 7, label="Shift"),
-      text=input_box(default="TLLAHANYHMMPAPOHSSHATPKUPNOA", label="Input", height=5, width=80),
+      text=input_box(default="TLLAHANYHMMPAPOHSSHATPKUPNOA", label="Input", height=5, width=70),
       actions=selector(["decrypt", "encrypt"], buttons=True, label="Action")):
     output = eval(actions)(text, shift)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 Once you've decrypted the message, play with the SageCell! You can use it to encrypt as well as decrypt messages using the Caesar cipher with any shift. What is the plaintext corresponding to `VSSWIZIPX` with a shift of 4? What is the ciphertext for the message `Muir College` with a shift of 2? 

@@ -39,9 +39,9 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(a=input_box(default="-1", label="a", width=80), 
-      b=input_box(default="0", label="b", width=80),
-      r=input_box(default="3", label="View", width=80),
+def _(a=input_box(default="-1", label="a", width=62), 
+      b=input_box(default="0", label="b", width=62),
+      r=input_box(default="3", label="View", width=62),
       ):
     
     var("x y")

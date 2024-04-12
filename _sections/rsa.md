@@ -70,10 +70,10 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(text=input_box(default="HIBOB", label="Input", height=2, width=80),
+def _(text=input_box(default="HIBOB", label="Input", height=2, width=70),
       actions=selector(["integerify", "deintegerify"], buttons=True, label="Action")):
     output = eval(actions)(text)
-    output_div("Output", f'<textarea readonly rows="2" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="2" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>
@@ -139,7 +139,7 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
     
 @interact
-def _(bits=input_box(default="10", label="Bits", width=72)):
+def _(bits=input_box(default="10", label="Bits", width=62)):
     p = random_prime(2^bits-1, lbound=2^(bits-1))
     q = random_prime(2^bits-1, lbound=2^(bits-1))
     n = p*q
@@ -208,10 +208,10 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(n=input_box(default="717820673049189281018479026338616874477777570300534678926289", label="n", width=72),
-      e=input_box(default="214320273459987081422530851104153021999292494860068474396359", label="e", width=72),
-      d=input_box(default="637365142515768052967427740225606348702321505441761588369459", label="d", width=72),
-      text=input_box(default="Hi Bob!", label="Input", height=2, width=80),
+def _(n=input_box(default="717820673049189281018479026338616874477777570300534678926289", label="n", width=62),
+      e=input_box(default="214320273459987081422530851104153021999292494860068474396359", label="e", width=62),
+      d=input_box(default="637365142515768052967427740225606348702321505441761588369459", label="d", width=62),
+      text=input_box(default="Hi Bob!", label="Input", height=2, width=70),
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     if actions == "encrypt":
         output = encrypt(text, n, e)
@@ -222,7 +222,7 @@ def _(n=input_box(default="71782067304918928101847902633861687447777757030053467
         except: 
             output = "Decryption key required for decryption!"
         output = decrypt(int(text), n, d)
-    output_div("Output", f'<textarea readonly rows="2" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="2" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>

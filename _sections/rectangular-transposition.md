@@ -169,11 +169,11 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(key=input_box(default="CRASH", label="Key", height=2, width=80), 
-      text=input_box(default="Hide! The baboons are coming for you.", label="Input", height=5, width=80), 
+def _(key=input_box(default="CRASH", label="Key", height=2, width=70), 
+      text=input_box(default="Hide! The baboons are coming for you.", label="Input", height=5, width=70), 
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     output = eval(actions)(text, key)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div>
 </div>

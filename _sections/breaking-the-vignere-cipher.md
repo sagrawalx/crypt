@@ -88,9 +88,9 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(text=input_box(default=ciphertext, label="Input", height=5, width=80),
-      period=input_box(default="5", label="Period", width=72),
-      shifts=input_box(default="[0,0,0,0,0]", label="Shifts", width=72)):
+def _(text=input_box(default=ciphertext, label="Input", height=5, width=70),
+      period=input_box(default="5", label="Period", width=62),
+      shifts=input_box(default="[0,0,0,0,0]", label="Shifts", width=62)):
     if not text.isalpha() or not text.isupper():
         raise Exception("Ciphertext must consist only of uppercase characters")
     if int(period) != period or period < 1:
@@ -127,7 +127,7 @@ def _(text=input_box(default=ciphertext, label="Input", height=5, width=80),
     else:
         output = decrypt(text, shifts)
     
-    output_div("Output", f'<div style="inline-size: 48.5em; overflow-wrap: break-word;">{ output }</div>')
+    output_div("Output", f'<div style="inline-size: 45em; overflow-wrap: break-word;">{ output }</div>')
 </script>
 </div>
 </div>

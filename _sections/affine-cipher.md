@@ -94,14 +94,14 @@ def output_div(label: str, content: str):
 @interact
 def _(a=slider(0, 25, 1, 1, label="a"),
       b=slider(0, 25, 1, 0, label="b"),
-      text=input_box(default="VYOHVUTWVHPZUWTZUUBEYDUB", label="Input", height=5, width=80), 
+      text=input_box(default="VYOHVUTWVHPZUWTZUUBEYDUB", label="Input", height=5, width=70), 
       actions=selector(["decrypt", "encrypt"], buttons=True, label="Action")):
     
     if gcd(a, 26) != 1:
         raise Exception("a must be invertible mod 26")
     
     output = eval(actions)(text, a, b)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{ output }</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{ output }</textarea>')
 </script>
 </div> 
 </div> 

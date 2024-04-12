@@ -467,8 +467,8 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=80),
-      text=input_box(default="Hidden Jewels in the Trees!!!!!", label="Input", height=5, width=80),
+def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=70),
+      text=input_box(default="Hidden Jewels in the Trees!!!!!", label="Input", height=5, width=70),
       actions=selector(["encrypt", "decrypt"], buttons=True, label="Action")):
     
     letter_to_coord, coord_to_letter = generate_key(keyword)
@@ -481,7 +481,7 @@ def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=80)
     output_div("Grid", s)
     
     output = eval(actions)(text, letter_to_coord, coord_to_letter)
-    output_div("Output", f'<textarea readonly rows="5" cols="80">{output}</textarea>')
+    output_div("Output", f'<textarea readonly rows="5" cols="70">{output}</textarea>')
 </script>
 </div>
 </div>

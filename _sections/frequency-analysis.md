@@ -193,15 +193,15 @@ def frequency_dict(text: str):
     return {x: (1.0 * c.get(x, 0) / len(text)) for x in alphabet}
 
 @interact
-def _(text1=input_box(default=samples[0], label="Text 1", height=5, width=80),
-      text2=input_box(default=samples[1], label="Text 2", height=5, width=80),
-      text3=input_box(default=samples[2], label="Text 3", height=5, width=80),
-      text4=input_box(default=samples[3], label="Text 4", height=5, width=80)):
+def _(text1=input_box(default=samples[0], label="Text 1", height=5, width=70),
+      text2=input_box(default=samples[1], label="Text 2", height=5, width=70),
+      text3=input_box(default=samples[2], label="Text 3", height=5, width=70),
+      text4=input_box(default=samples[3], label="Text 4", height=5, width=70)):
     
     # Build table of frequencies
     alphabet = list(build_alphabet(name="upper"))
     
-    o = '<table style="font-size: 0.6em; text-align: center;"><tr><td>Text</td>'
+    o = '<table style="font-size: 0.85em; text-align: center;"><tr><td>Text</td>'
     for x in alphabet:
         o += f"<td>{x}</td>"
     o += "</tr>"
@@ -330,9 +330,9 @@ def validate(input_key):
     return {x: y for x, y in zip(alphabet, input_key[27:])}
 
 @interact
-def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=80),
-      sample=input_box(default=sampletext, label="Sample", height=5, width=80),
-      input_key=input_box(default=key_start, label="Key", height=2, width=80)):  
+def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=70),
+      sample=input_box(default=sampletext, label="Sample", height=5, width=70),
+      input_key=input_box(default=key_start, label="Key", height=2, width=70)):  
     if not cipher.isalpha() or not cipher.isupper():
         raise Exception("Ciphertext must consist only of uppercase characters")
     
@@ -345,7 +345,7 @@ def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=80),
     sample_freq = counts_to_freqs(Counter(sample))
     cipher_freq = counts_to_freqs(Counter(cipher))
     
-    o = '<table style="font-size: 0.6em; text-align: center;"><tr><td></td>'
+    o = '<table style="font-size: 0.85em; text-align: center;"><tr><td></td>'
     for x in alphabet:
         o += f"<td>{x}</td>"
     o += "</tr>"
@@ -374,7 +374,7 @@ def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=80),
     
     # Display decrypted text
     output = decrypt(cipher, key)
-    output_div("Output", f'<div style="inline-size: 48.5em; overflow-wrap: break-word;">{ output }</div>')
+    output_div("Output", f'<div style="inline-size: 45em; overflow-wrap: break-word;">{ output }</div>')
 </script>
 </div>
 </div>

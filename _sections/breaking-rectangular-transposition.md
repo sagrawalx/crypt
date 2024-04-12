@@ -367,10 +367,10 @@ def output_div(label: str, content: str):
     pretty_print(html(s))
 
 @interact
-def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=80), 
-      sample=input_box(default=sampletext, label="Sample", height=5, width=80),
+def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=70), 
+      sample=input_box(default=sampletext, label="Sample", height=5, width=70),
       period=slider(1, 26, 1, 4, label="Period"),
-      sigma=input_box(default="[1,2,3,4]", label="Sigma", height=1, width=72)):
+      sigma=input_box(default="[1,2,3,4]", label="Sigma", height=1, width=62)):
     # Input validation
     if not cipher.isalpha() or not cipher.isupper():
         raise Exception("Ciphertext must consist only of uppercase characters")
@@ -401,7 +401,7 @@ def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=80),
         output_div("Output", s)
     else:
         output = apply_inv_permutation(cipher, sigma)
-        s = '<div style="inline-size: 48.5em; overflow-wrap: break-word;">'
+        s = '<div style="inline-size: 45em; overflow-wrap: break-word;">'
         s += output
         s += "</div>"
         output_div("Output", s)
