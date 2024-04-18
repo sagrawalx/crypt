@@ -345,15 +345,15 @@ def _(cipher=input_box(default=ciphertext, label="Cipher", height=5, width=70),
     sample_freq = counts_to_freqs(Counter(sample))
     cipher_freq = counts_to_freqs(Counter(cipher))
     
-    o = '<table style="font-size: 0.85em; text-align: center;"><tr><td></td>'
+    o = '<table style="font-size: 0.7em; text-align: center;"><tr><td></td>'
     for x in alphabet:
-        o += f"<td>{x}</td>"
+        o += f"<td style='padding-right: 0.5em;'>{x}</td>"
     o += "</tr>"
     for i, f in enumerate([cipher_freq, sample_freq]):
         y = "Cipher" if i == 0 else "Sample"
-        o += f"<tr><td>{y}</td>"
+        o += f"<tr><td style='padding-right: 0.5em;'>{y}</td>"
         for x in alphabet:
-            o += f"<td>{100*f.get(x, 0):.1f}</td>"
+            o += f"<td style='padding-right: 0.5em;'>{100*f.get(x, 0):.1f}</td>"
         o += "</tr>"
     
     o += "</table>"
