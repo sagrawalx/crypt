@@ -40,9 +40,9 @@ chapters:
       sagecells:
         - "Frequency Comparison"
         - "Frequency Analysis"
-        - "Breaking Rectangular Transposition"
         - "Index of Coincidence Comparison"
         - "Breaking Vignère"
+        - "Breaking Rectangular Transposition"
         - "Known Plaintext Attack"
     - name: Modern Cryptography
       sections:
