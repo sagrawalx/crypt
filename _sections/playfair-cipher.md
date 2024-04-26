@@ -486,3 +486,11 @@ def _(keyword=input_box(default="ALPHABET", label="Keyword", height=5, width=70)
 </div>
 </div>
 
+<div class="element">
+<span class="label">Exercise</span>
+There's a problem with the 5-step encoding scheme described above: it can sometimes fail to produce encoded plaintext without any repeat pairs. 
+
+a. Can you find the problem? Hint: Consider encoding `BOX`. 
+b. Describe how you might fix this problem. 
+b. (Sage Exercise) Can you edit the SageCell above to implement your suggested fix?
+</div>
