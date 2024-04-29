@@ -111,13 +111,13 @@ def _(text=input_box(default=ciphertext, label="Input", height=5, width=70),
     
     o = "<table style='text-align: center; font-size: 0.7em;'>"
     for i in range(period):
-        o += f"<tr><td rowspan=2 style='padding-right: 0.5em;>Col {i+1}</td>"
-        o += "<td style='padding-right: 0.5em;>Letter</td>"
+        o += f"<tr><td rowspan=2 style='padding-right: 0.5em;'>Col {i+1}</td>"
+        o += "<td style='padding-right: 0.5em;'>Letter</td>"
         for j in range(26):
-            o += f"<td style='padding-right: 0.5em;>{ranked[i][j]}</td>"
-        o += "</tr><tr><td style='padding-right: 0.5em;>Shift</td>"
+            o += f"<td style='padding-right: 0.5em;'>{ranked[i][j]}</td>"
+        o += "</tr><tr><td style='padding-right: 0.5em;'>Shift</td>"
         for j in range(26):
-            o += f"<td style='padding-right: 0.5em;>{shift_to_E(ranked[i][j])}</td>"
+            o += f"<td style='padding-right: 0.5em;'>{shift_to_E(ranked[i][j])}</td>"
         o += "</tr>"
     o += "</table>"
     output_div("Ranks", o)
