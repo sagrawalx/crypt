@@ -1,4 +1,4 @@
-With Euler's theorem in hand, we can now compute large powers in modular arithmetic very quickly. We saw this briefly above, but let's now explain the process systematically. Suppose we have a positive integer $n$ and an integer $a$ with $\gcd(a, n) = 1$, and that we want to compute $a^m \bmod{n}$ for some large number $n$. 
+With Euler's theorem in hand, we can now compute large powers in modular arithmetic very quickly. We saw this briefly above, but let's now explain the process systematically. Suppose we have a positive integer $n$ and an integer $a$ with $\gcd(a, n) = 1$, and that we want to compute $a^m \bmod{n}$ for some large number $m$. 
 
 The first step is to calculate $r = m \bmod{\phi(n)}$. Indeed, if we do this, then we have $m = \phi(n)q + r$, so
 $$ a^m = a^{\phi(n)q + r} = (a^{\phi(n)})^q a^r \equiv 1^q a^r = a^r \pmod{n} $$
