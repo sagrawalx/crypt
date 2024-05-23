@@ -57,7 +57,7 @@ a^{2^2d} &\equiv -1 \pmod{n} \\
 &\,\vdots \\
 a^{2^{s-1}d} &\equiv -1 \pmod{n}
 \end{aligned} $$
-If $n$ is *not* a strong probable prime to base $a$, then $a$ is called a *witness for the compositness* of $a$, or a *Miller-Rabin witness* for $a$. 
+If $n$ is *not* a strong probable prime to base $a$, then $a$ is called a *witness for the compositness* of $n$, or a *Miller-Rabin witness* for $n$. 
 </div>
 
 Using this definition, the Miller-Rabin Lemma can be restated as saying simply that "every prime number is a strong probable prime to any base." This is equivalent to the contrapositive, ie, the statement that "if $n$ is *not* a strong probable prime to some base $a$, then $n$ must be composite."

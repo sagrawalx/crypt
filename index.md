@@ -25,7 +25,7 @@ This text was written with Math 187A at UC San Diego in mind. This course was de
 * Diez, Cetinkaya-Rundel, and Barr. [*OpenIntro Statistics*](https://www.openintro.org/book/os/).
 * Burton. *Elementary Number Theory*.
 
-Comments and feedback from the students and TAs of [Math 187A in Winter 2023](https://sagrawalx.github.io/teaching/teaching/wi23_math187a/), and from Aranya Lahiri and his Math 187A students in Spring 2023, were indispensable. 
+Comments and feedback from the students and TAs of [Math 187A in Winter 2023](https://sagrawalx.github.io/teaching/teaching/wi23_math187a/) and [in Spring 2024](https://sagrawalx.github.io/teaching/teaching/sp24_math187a/), and from Aranya Lahiri and his Math 187A students in Spring 2023 and Fall 2023, were indispensable. 
 
 Software used in the making of this text includes [SageMath](https://www.sagemath.org/) (and [SageCell](https://sagecell.sagemath.org/)), [KaTeX](https://katex.org/), [Jekyll](https://jekyllrb.com/) (with [jekyll-pandoc](https://github.com/mfenner/jekyll-pandoc)), and probably other things I'm forgetting to mention. 
 
