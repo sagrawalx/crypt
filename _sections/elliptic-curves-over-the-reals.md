@@ -115,7 +115,7 @@ As indicated in the picture, we will define $P+Q$ to be the negative of this thi
 <span class="label">Exercise</span>
 
 a. Let $S = (2, 5)$. Check that $S$ is on the same curve $y^2 = x^3 + 17$.
-b. What is the third point of the intersection on between the curve $y^2 = x^3 + 17$ and the secand line connecting $Q = (-1, 4)$ and $S$? 
+b. What is the third point of the intersection on between the curve $y^2 = x^3 + 17$ and the secant line connecting $Q = (-1, 4)$ and $S$? 
 c. What is $Q + S$? 
 d. With $P = (-2, 3)$ and $R = (4, 9)$ on $y^2 = x^3 + 17$ as above, what is $P + R$? 
 </div>
